@@ -1,0 +1,461 @@
+Hi.
+I'm Trevor Hastie.
+And I'm Rob Tibshirani.
+Cut.
+I'm not--
+And then you say, welcome to the course [INAUDIBLE].
+Hi, I'm Trevor Hastie.
+And I'm Rob--
+Cut.
+[LAUGHING]
+Hi, I'm Trevor.
+No, I'm Rob Tibshirani.
+And I'm Trevor Hastie.
+And welcome to our course on statistical learning.
+It's the first online course we've ever given.
+And we're excited to tell you about it.
+And a little nervous, as you can hear.
+So by way of background, what is statistical learning?
+Trevor and I are both statisticians.
+We were actually graduate students here at
+Stanford in the '80s.
+We've known each other for about 30 years.
+Oh, my goodness.
+And back then, well, we did applied statistics, like a lot
+of statisticians did.
+Statistics has been around since about 1900 or before.
+But in the 1980s, people in computer science developed the
+field of machine learning.
+Especially, neural networks became a very hot topic.
+I was at University of Toronto, and
+Trevor was at Bell Labs.
+And one of the first neural networks was developed at Bell
+Labs to solve the ZIP code recognition problem, which
+we'll show you a little bit about in a few slides.
+So around that time, Trevor and I and then some
+colleagues, Jerry Friedman, Brad Efron--
+[? Neil Bryman ?]
+And actually, you'll hear from Jerry and Brad,
+both in this course.
+We have some interviews with them.
+About that time, we started to work on the area of machine
+learning and sort of developed our own view of it, which is
+now called statistical learning.
+So along with colleagues here at Stanford and other places,
+we developed this field of statistical learning.
+So in this course, we'll talk to you about some of the
+developments in this area and give lots of examples.
+So let's start with our first example, which is a computer
+program playing Jeopardy called Watson that IBM built.
+And it beat the players in a three game match.
+And the people at IBM who developed the system said it
+was really a triumph of machine learning.
+There were a lot of very smart technology, both hardware, but
+also the software and the algorithms were based on
+machine learning.
+So this was a watershed moment, I think, for the area
+of artificial intelligence and machine learning.
+Google is a big user of data and a big analyzer of data.
+And here's a quote that came in the New York Times in 2009
+from Hal Varian, who's the Chief Economist at Google.
+You can see the quote there. "I keep saying that the sexy
+job in the next 10 years will be statisticians."
+And indeed, there's a picture of Carrie Grimes, who was a
+graduate from Stanford Statistics.
+She was one of the first statisticians hired at Google.
+Now Google has many statisticians.
+Our next example-- this is a picture of Nate
+Silver on the right.
+Nate has a masters in economics, but he calls
+himself a statistician.
+And he writes-- at least he did write a blog called
+FiveThirtyEight for the New York Times.
+And in that blog, he predicted the outcome of the 2012
+Presidential and Senate elections very well.
+As a matter of fact, he got all the Senate races right.
+And the Presidential election, he predicted very accurately
+using statistics, using carefully sampled data from
+various places, some careful analysis.
+He did an extremely accurate job of predicting the election
+when a lot of news outlets weren't sure
+who's going to win.
+Pretty nerdy looking guy, isn't he, Rob?
+Yes.
+But he's really famous.
+And--
+He's like a rock star these days.
+Yes.
+We joke about--
+when you're a statistician, when you go to a party and
+someone says, what do you do?
+When you say, I'm a statistician,
+they run for the door.
+But nowadays, we can say, well, we do machine learning.
+And well, they still run for the door.
+But they take a little longer to get there.
+In fact, we now call ourselves data scientists.
+It's a trendier word.
+So we're going to run through a number of statistical
+learning problems.
+You can see there's a bunch of examples on this page.
+And we'll go through them one by one, just to give you a
+flavor of what sort of problems we're going to be
+thinking about.
+So the first data set we're going to look at is on
+prostate cancer.
+This is a relatively small data set, 97 men, sampled from
+97 men with prostate cancer actually by a Stanford
+physician, Doctor Stamey, in the late '80s.
+And what we have is the PSA measurement for each subject,
+along with a number of clinical and blood
+measurements from the patients.
+Some measurements are on the cancer itself and some
+measurements from the blood, the measurements to do with
+cancer size and the severity of the cancer.
+And this is a scatter plot matrix, which
+actually shows the data.
+And you see on the diagonal is the name
+of each of the variables.
+And each little plot is a pair of variable.
+So you get in one picture, if you've got a relatively small
+number of variables, you can see all the data at once in a
+picture like this.
+And you can see the nature of the data, what variables are
+correlated and so on.
+And so this is a good way of getting a view of your data.
+And in this particular case, the goal was to try and
+predict the PSA from the other measurements.
+So it's along the top.
+And you can see there's some correlations between these
+measurements.
+This is actually another view of these data which looks
+rather similar except in one instance over here, which is--
+this is the log weight.
+These variables are on the log scale.
+And this is log weight.
+And you notice there's a point over here.
+It looks like somewhat of an outlier.
+Well, it turns out on the log scale, it looks
+a bit like an outlier.
+But when you look on the normal scale, it's enormous.
+And basically, that was a typo.
+And that would say--
+if that was a real measurement, it would say that
+this particular patient would have a 449 gram prostate.
+Well, we got a message from a retired urologist, Doctor
+Steven Link, who pointed this out to us.
+And so we corrected an earlier published version of this
+scatter plot.
+Which is a good thing to remember.
+The first thing to do when you get a set of data for analysis
+is not to run it through a fancy algorithm.
+Make some graphs, some plots.
+Look at the data.
+I think in the old days before computers, people did that
+much more because it was easier.
+I mean, you do it by hand.
+And your analysis took many, many hours.
+So people would look first at the data much more.
+And we need to remember that, that even with big data, you
+should look at it first before you jump in with an analysis.
+So the next example is phonemes for two vowel sounds.
+And this is looking at-- this graph has the log periodograms
+for two different phonemes, the power at different
+frequencies for two different phonemes, AA and AO.
+How do you pronounce those, Trevor?
+AA is odd, and AO is ought.
+So as you can tell, Trevor talks funny.
+But hopefully, during the course, you'll be able to--
+Well, how can you say it, then?
+Odd and ought?
+OK.
+So you see the log periodograms at various
+frequencies of these two vowel sounds as spoken by different
+people, the orange and the green.
+And the goal here is to try to classify the two vowel sounds
+based on the power at different frequencies.
+So on the bottom, we see a logit model's been fit to the
+data, looking at trying to classify the two classes from
+each other based on the power of different frequencies.
+The logit model's from logistic regression, which is
+used to classify into one of the two vowel sounds, based on
+the log periodogram.
+And we'll cover it in detail in the course.
+And the coefficients, the estimated coefficients from
+the logistical model are in the gray profiles here in the
+bottom plot.
+And you can see, they're very non-smooth.
+You'd be hard pressed to tell where the important
+frequencies were.
+But when you apply a kind of smoothing, which we'll also
+discuss in the course--
+we use the fact that the nearby frequencies should be
+similar, which the gray did not exploit.
+We get the red curve.
+And the red curve shows you pretty clearly that the
+important frequencies--
+looks like the one vowel sound's got more power around
+25, and the other vowel sound has more power
+around just before 50.
+Predict whether someone will have a heart attack on the
+basis of demographic, diet, and clinical measurements.
+So these are some data on actually
+men from South Africa.
+The red ones are those that had heart disease, and the
+blue points are those that didn't.
+It's a case controlled sample.
+So all the heart attack cases were taken as cases, and a
+sample of the controls remained.
+And the idea was to understand the risk
+factors in heart disease.
+Now when you have a binary response like this, you can
+color the scatter plot matrix so you can see the points,
+which is rather handy.
+And these data come from a region of South Africa where
+the risk of heart disease is very high.
+It's over 5% for this age group.
+The people, especially men around there, eat lots of--
+these were men.
+They eat lots of meat.
+They have meat for all three meals.
+And in fact, meat's so prevalent, chickens regard it
+as a vegetable.
+Poor chicken.
+Rob loves that joke.
+I used to love that joke.
+OK.
+So again, you can see there's correlations in these data.
+And the goal here is to fit a model that jointly involves
+all these different risk factors in coming up with a
+risk model for heart disease, which in this case, is as I
+said, colored in red.
+Our next example is email spam detection.
+As everyone uses email, and spam is definitely a problem,
+so spam filters are a very important application of
+statistical machine learning.
+The data on this table actually--
+I think it's from maybe the late '90s.
+Is that right?
+Before-- before--
+yeah.
+Late '90s, exactly.
+It's from Hewlett Packard.
+So this is a person named George who
+worked at Hewlett Packard.
+So this was early in the days of email, where as well spam
+was also not very sophisticated.
+So what we have here is data from over 4,000 emails sent to
+an individual named George at HP Labs.
+Each one's been hand labeled as either being
+spam or good email.
+And the goal here is to try to predict--
+Actually, they call good email ham these days, Rob.
+OK.
+So a goal was to try to classify spam from ham based
+on the frequencies of words in the email.
+So here we just have a summary table of some of the more
+important features.
+So it's based on words and characters in the email.
+So for example, this is saying that if this email had George
+in it, it was more likely to be good email than spam.
+Back then, if your name's George, and you saw George in
+your email, it was more likely to be good email.
+Nowadays, of course, spam is much more sophisticated.
+They know your name.
+They know a lot about your life.
+And the fact that your name's in it actually may be a
+smaller chance it's actually good email.
+But back then, spammers were much less sophisticated.
+So for example, if your name was in it, it more chance to
+be hot email.
+What's with that remove word, Rob?
+Remove.
+OK.
+So I guess it probably said something like, don't remove.
+Is that right?
+I think it says, if you want to be removed
+from this list, click.
+I see.
+That's usually a spam.
+So the goal was that--
+and we'll talk about this example in detail-- to use the
+57 features--
+and these are seven of those features--
+as a classifier together to try to predict whether an
+email is spam or ham.
+Identify the numbers in a hand written ZIP code.
+This is what we were alluding to earlier.
+Here's some handwritten digits taken from envelopes.
+And the goal is to, based on an image of any of these
+digits, say what the digit is, to classify into
+the 10 digit classes.
+Well to humans, this looks like a pretty easy task.
+We're pretty good at pattern recognition.
+It turns out it's a notoriously
+difficult task for computers.
+They're getting better and better all the time.
+So this was one of the first learning tasks that was used
+to develop neural networks.
+Neural networks were first brought to
+bear on this problem.
+And we thought this should be an easy problem to crack.
+It turns out it's really difficult.
+Actually, I remember the first time, Trevor, that we worked
+on a machine learning problem, it was this problem.
+And you were working at Bell Labs.
+I visited Bell Labs.
+And you had just gotten this data.
+And you said, these people in artificial intelligence are
+working on this.
+And we thought, oh, let's try some statistical methods.
+And we tried discriminant analysis, right?
+That's right.
+And we got an error rate of about
+eight and a half percent.
+And the best error rate--
+In about 20 minutes or so.
+Right.
+And the best error rate anyone else had was about 4% or 5% at
+that point.
+We thought, oh, this is going to be easy.
+We're already at 8% in 10 or 15 minutes.
+Six months later--
+Six months later, we were maybe at the same place.
+So we realize actually--
+as often is the case, you can get some of the
+signal pretty quickly.
+But getting down to a very good error rate, in this case,
+trying to classify some of the harder to classify things,
+like maybe this four--
+or actually, most of these are pretty easy.
+But if you look at the database, some of them are
+very hard, so hard that the human eye can't really tell
+what they are or has difficulty.
+And those are the ones that machine learning algorithms
+area really challenged by.
+Anyway, it's a lovely problem.
+And it's fascinated machine learners and statisticians for
+a long time.
+So the next example comes from medicine, classifying a tissue
+sample into one of several cancer classes based on the
+gene expression profile.
+So Trevor and I both work in a medical school part time here
+at Stanford.
+And a lot of what we do and others do is to try to use
+machine learning, statistical learning, big data analysis to
+learn about data in cancer and other diseases.
+So this is an example of that.
+This is data in breast cancer.
+It's called gene expression data.
+So this has been collected from gene chips.
+And what we see here on the left is a matrix of data.
+Each row is a gene.
+And there's about 8,000 genes here I think.
+And each column is a patient.
+And this is called a heat map.
+So what this heat map is representing is low and high
+gene expression for a given patient for a given gene, so
+green being low and red meaning high.
+And gene expression means the gene is working.
+So if a gene is expressing, it's working hard in the cell.
+If it's not expressing, it quiet.
+It's silent.
+And the goal is to try to figure out which genes--
+well, try to figure out the pattern of gene expression.
+These are patients.
+These are women with breast cancer.
+Trying to figure out the common patterns of gene
+expression for women with breast cancer and seeing where
+there's subcategories of breast cancer showing
+different gene expression.
+So what we see here is a heat map of the full data.
+88 women in the columns and about 8,000 genes in the rows.
+And hierarchical clustering, which we'll discuss in the
+last part of this course, is being applied to the columns.
+And you see the clustering tree at the top here, which
+has been expanded for your view at the top.
+And hierarchical clustering is being used to divide these
+women into roughly one, two, three, four, five, six
+subgroups based on the gene expression.
+They're very effective, especially with these colors.
+You can just see these clusters standing out.
+Yeah.
+Hierarchical clustering and heat maps have actually been a
+very important contribution for genomics, which this is an
+example of, simply because they enable you to see and to
+organize the full set of data on just a single picture.
+In the bottom right here, we've drilled down to look
+more at the gene expression.
+For example, this subgroup here, these red patients, seem
+to be high largely in these genes and
+maybe in these genes.
+So we'll talk about this example in detail later on in
+the course.
+Establish the relationship between salary and demographic
+variables in population survey data.
+So here's some survey data.
+We see income from the central Atlantic region
+of the USA in 2009.
+And you see what you might expect to see.
+As a function of age, income initially goes up, then levels
+off, and then finally goes down as people get older.
+Incomes gradually increase with year as the cost of
+living increases.
+And incomes change with education level.
+That's the right hand plot Those are box plots.
+And so here we see three of the
+variables that affect income.
+And again, the goal is-- we'll use regression models to try
+and understand the roles of these variables together and
+see if there's interactions and so on.
+And the last example is Landsat images
+of land use in Australia.
+So this is a rural area of Australia.
+Those are harsh colors, Rob.
+Did you choose those colors.
+You probably did, Trevor.
+You're the color [INAUDIBLE].
+This is before--
+When did that happen?
+I didn't see the news memo.
+OK.
+So these are from Landsat images.
+So let's start here in this panel.
+So this is again a rural area of Australia where the land
+use has been labeled, I think, actually by graduate students
+or researchers into one of one, two,
+three, four, five, six--
+They don't have to pay the graduate students as much
+there as we do.
+So they've been labeled in these columns indicating the
+different labels.
+These are the true labels.
+And the goal is to try to predict these true labels from
+the spectral bands at four frequencies taken from a
+satellite image.
+And so here's the power at the different frequencies in four
+spectral bands.
+So we have features which are-- now they're pretty
+complicated because we have features, spatial features,
+four layers of them.
+And we're going to try to use those combination of features
+to predict the land use that we see here.
+Pixel by pixel, right?
+Pixel by pixel.
+Although we might want to use the fact that nearby pixels
+are more likely to be the same land use than ones
+that are far away.
+And we'll talk about classifiers.
+I think the one we use here is actually nearest neighbor, a
+very simple classifier.
+And that produces the prediction
+in the bottom right.
+And you can see it's quite good.
+It's not perfect.
+There's a few mistakes it makes.
+But it's, for the most part, quite accurate.
+OK.
+So that's the end of the series of examples.
+In the next session, we'll just tell you some notation
+and how we set up problems for supervised learning, which
+we'll use for the rest of the course.
