@@ -1,0 +1,215 @@
+OK, we're going to talk about statistical learning and
+models now.
+I'm going to tell you what models of good for, how we use
+them, and what are some of the issues involved.
+OK so we see three plots in front of us.
+These are sales figures from a marketing campaign as a
+function of amount spent on TV ads, radio ads,
+and newspaper ads.
+And you can see at least in the first two there's somewhat
+of a trend.
+And, in fact, we've summarized the trend by a little linear
+regression line in each.
+And so we see that there's some relationship.
+The first two, again, look stronger than the third.
+Now, in a situation like this, we typically like to know the
+joint relationship between the response sales and all three
+of these together.
+We want to understand how they operate together
+to influence sales.
+So you can think of that as wanting to model sales as a
+function of TV, radio, and
+newspaper all jointly together.
+So how do we do that?
+So before we get into the details
+let's set up some notation.
+So here, sales is the response, or the target, that
+we wish to predict or model.
+And we usually refer to it as Y. We use the letter Y to
+refer to it.
+TV is one of the features or inputs or predictors, and
+we'll call it X1.
+Likewise, radio is X2 and so on.
+So in this case, we've got three predictors, and we can
+refer to them collectively by a vector as X equal to, with
+three components X1, X2, and X3.
+And vectors we generally think of as column vectors.
+And so that's a little bit of notation.
+And so now in this small compact notation, we can write
+our model as Y equals function of X plus error.
+OK and this error, it's just a catch all.
+It captures the measurement errors maybe in Y and other
+discrepancies.
+Our function of X is never going to model Y perfectly.
+So there's going to be a lot of things we can't capture
+with the function.
+And that's caught up in the error.
+And, again, f of X here is now a function of this vector X
+which has these three arguments, three components.
+So what is the function f of X good for?
+So with a good f, we can make predictions of what new points
+X equals to little x.
+So this notation capital X equals little x.
+You know, capital X, we think as the variable, having these
+three components.
+And little x is an instance also with three components,
+particular values for newspaper, radio, and TV.
+With the model we can understand which
+components of X--
+in general, it'll have P components, if there's P
+predictors--
+are important in explaining Y, and which are irrelevant.
+For example, if we model in income as a function of
+demographic variables, seniority and years of
+education might have a big impact on income, but marital
+status typically does not.
+And we'd like our model to be able to tell us that.
+And depending on the complexity of f, we may be
+able to understand how each component Xj affects Y, in
+what particular fashion it affects Y. So models have many
+uses and those amongst them.
+OK, well, what is this function f?
+And is there an ideal f?
+So in the plot, we've got a large sample of points from a
+population.
+There is just a single X in this case and a response Y.
+And you can see, it's a scatter plot, so we see
+there's a lot of points.
+There is 2,000 points here.
+Let's think of this as actually the whole population
+or rather as a representation of a very large population.
+And so now let's think of what a good function f might be.
+And let's say not just the whole function, but let's
+think what value would we like f to have at say the value of
+X equals 4.
+So at this point over here.
+We want to query f at all values of X. But we are
+wondering what it should be at the value 4.
+So you'll notice that at the X equals 4, there are many
+values of Y. But a function can only take on one value.
+The function is going to deliver back one value.
+So what is a good value?
+Well, one good value is to deliver back the average
+values of those Y's who have X equal to 4.
+And that we write in this sort of mathy notation over here
+that says the function at the value 4 is the expected value
+of Y given X equals 4.
+And that expected value is just a fancy word for average.
+It's actually a conditional average given X equals 4.
+Since we can only deliver one value of the function at X
+equals 4, the average seems like a good value.
+And if we do that at each value of X, so at every single
+value of X, we deliver back the average of the Y's that
+have that value of X. Say, for example, at X equals 5, again,
+we want to have the average value in this little
+conditional slice here.
+That will trace out this little red curve that we have.
+And that's called the regression function.
+So the regression function gives you the conditional
+expectation of Y given X at each value of X. So that, in a
+sense, is the ideal function for a population in this case
+of Y and a single X.
+So let's talk more about this regression function.
+It's also defined for a vector X. So if X has got three
+components, for example, it's going to be the conditional
+expectation of Y given the three particular instances of
+the three components of X. So if you think about that, let's
+think of X as being two dimensional because we can
+think in three dimensions.
+So let's say X lies on the table, two dimensional X, and
+Y stands up vertically.
+So the idea is the same.
+We've got a whole continuous cloud of Y's and X's.
+We go to a particular point X with two coordinates, X1 and
+X2, and we say, what's a good value for the
+function at that point?
+Well, we're just going to go up in the slice and average
+the Y's above that point.
+And we'll do that at all points in the plane.
+We say that's the ideal or optimal predictor of Y with
+regard for the function.
+And what that means is actually it's with regard to a
+loss function.
+What it means is that particular choice of the
+function f of X will minimize the sum of squared errors.
+Which we write in this fashion, again, expected value
+of Y minus g of X of all functions g at each point X.
+So it minimizes the average prediction errors.
+Now, at each point X, we're going to make mistakes because
+if we use this function to predict Y. Because there's
+lots of Y's at each point X. Right?
+And so the areas that we make, we call, in
+this case, them epsilons.
+And those are the irreducible error.
+You might know the ideal function f, but, of course, it
+doesn't make perfect predictions at each point X.
+So it has to make some errors.
+But, on average, it does well.
+For any estimate f hat of X. And that's what we tend to do.
+We tend to put these little hats on estimators to show
+that they've been estimated from data.
+And so f hat of X is an estimate of f of X, we can
+expand the squared prediction error at X into two pieces.
+There's the irreducible piece which is just the variance of
+the errors.
+And there's the reducible piece which is the difference
+between our estimate, f hat of X, and the true
+function, f of X. OK.
+And that's a squared component.
+So this expected prediction error breaks up
+into these two pieces.
+So that's important to bear in mind.
+So if we want to improve our model, it's this first piece,
+the reducible piece that we can improve by maybe changing
+the way we estimate f of X. OK, so that's all nice.
+This is a kind of, up to now, has been somewhat of a
+theoretical exercise.
+Well, how do we estimate the function f?
+So the problem is we can't carry out this recipe of
+conditional expectation or conditional averaging exactly
+because at any given X in our data set, we might not have
+many points to average.
+We might not have any points to average.
+In the figure, we've got a much smaller data set now.
+And we've still got the point X equals 4.
+And if you look there, you'll see carefully that the solid
+point is one point up, I put on the plot,
+the solid green point.
+There's actually no data points whose X
+value is exactly 4.
+So how can we compute the conditional
+expectation or average?
+Well, what we can do is relax the idea of at the point X to
+at in a neighborhood of the point X. And so that's what
+the notation here refers to.
+N of x or script N of x is a neighborhood of points defined
+in some way around the target point which is
+this X equals 4 here.
+And it keeps the spirit of conditional expectation.
+It's close to the target point X. And if we make that
+neighborhood wide enough, we'll have enough points in
+the neighborhood to average.
+And we'll use their average to estimate the conditional
+expectation.
+So this is called nearest neighbors or local averaging.
+It's a very clever idea.
+It's not my idea.
+It has been invented long time ago.
+And, of course, you'll move this neighborhood, you'll
+slide this neighborhood along the x-axis.
+And as you compute the averages, as you slide in
+along, it'll trace out a curve.
+So that's actually a very good estimate of the function f.
+It's not going to be perfect because the little window, it
+has a certain width.
+And so as we can see, some points of the true f may be
+lower and some points higher.
+But on average, it does quite well.
+So we had a pretty powerful tool here for estimating this
+conditional expectation, just relax the definition, and
+compute the nearest neighbor average.
+And that gives us a fairly flexible way
+of footing a function.
+We'll see in the next section that this doesn't always work,
+especially as the dimensions get larger.
+And we'll have to have ways of dealing with it.

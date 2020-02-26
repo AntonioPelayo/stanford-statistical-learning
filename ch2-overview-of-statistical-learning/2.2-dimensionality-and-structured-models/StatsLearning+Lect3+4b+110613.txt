@@ -1,0 +1,228 @@
+OK, here we are going to see situations where our nearest
+neighbor averaging doesn't work so well.
+And we're going to have to the find ways to deal with that.
+Nearest neighbor averaging, which is the one we just saw,
+can be pretty good for small p, small numbers or variables.
+Here we had just one variable.
+But small, maybe p less than or equal to 4 and largeish N.
+Large N so that we have enough points in each neighbor to
+average to give us our estimate.
+Now this is just one version of a whole class of techniques
+called smoothers.
+And we're going to discuss later on in this course much
+cleverer ways of doing this kind of averaging such as
+kernel and spline smoothing.
+Now there's a problem though.
+Nearest neighbor methods can be really
+lousy when P is large.
+And the reason has got the name the curse of
+dimensionality.
+What it boils down to is that nearest neighbors tend to be
+far away in high dimensions.
+So and that creates a problem.
+We need to get a reasonable fraction of the N values of yi
+to average to bring the variance down.
+So we need to average the number of points in each
+neighborhood so that our estimate has got a nice,
+reasonably small variance.
+And let's suppose we want 10% of the data points to be in
+each interval.
+The problem is that 10% neighborhood in high
+dimensions need no longer be local.
+So we loose the spirit of estimating the conditional
+expectation by local averaging.
+So let's look at a little example of that.
+In the left panel, we've got values of two
+variables, X1 and X2.
+And they are actually uniformly distributed in this
+little cube with edges minus 1 to plus 1, minus 1 to plus 1.
+And we form two 10% neighborhoods in this case.
+The first neighborhood is just involving the variable X1,
+ignoring X2.
+And so that's indicated by the vertical dotted lines.
+Our target point is at 0.
+And so we spread out a neighborhood to the left and
+right until we capture 10% of the data points with respect
+to the variable X1.
+And the dotted line indicates the width of the neighborhood.
+Alternatively, if we want to find a neighborhood in two
+dimensions, we spread out a circle centered at the target
+point, which is the red dot there, until we've captured
+10% of the points.
+Now notice the radius of the circle in two dimensions is
+much bigger than the radius of the circle in one dimension
+which is just the width between
+these two dotted lines.
+And so to capture 10% of the points in two dimensions, we
+have to go out further and so we are less local than we are
+in one dimension.
+And so we can take this example further.
+And on the right hand plot, I've shown you how far you
+have to go out in one, two, three, five, and 10
+dimensions.
+In 10 dimensions, these are different versions of this
+problem as the dimensions get higher In order to capture a
+certain fraction of the volume.
+OK, and so take, for example, 10% or 0.1
+fraction of the volume.
+So for p equals 1, if the data is uniform, you roughly go out
+10% of the distance.
+In two dimensions, we store you went more.
+Look what happens in five dimensions.
+In five dimensions, you have to go out to about 0.9 on each
+coordinate axes to get 10% of the data.
+That's just about the whole radius of this sphere.
+And in 10 dimensions, you actually have to go break out
+of this sphere in order to get points in the corner to
+capture the 10%.
+So the bottom line here is it's really hard to find new
+neighborhoods in high dimensions and stay local.
+If this problem didn't exist, we would use the near neighbor
+averaging as the sole basis for doing estimation.
+So how do we deal with this?
+Well, we introduce structure to our models.
+And so the simplest structural model is a linear model.
+And so here we have an example of a linear model.
+We've got p features.
+It's just got p plus 1 parameters.
+And it says the function of X, we can
+approximate by a linear function.
+So there's a coefficient on each of
+the X's and at intercept.
+So that's one of the simplest structural models.
+We can estimate the parameters of the model by fitting the
+model to training data.
+And we'll be talking more about how you do that.
+And when we use such a structural model, and, of
+course, this structural model is going to avoid the curse of
+dimensionality.
+Because it's not relying on any local properties and
+nearest neighbor averaging.
+That's just fitting quite a rigid model to all the data.
+Now a linear model is almost never correct.
+But it often serves as a good approximation, an interpretive
+approximation to the unknown true function f of X. So
+here's our same little example data set.
+And we can see in the top plot, a linear model gives a
+reasonable fit to the data, not perfect.
+In the bottom plot, we've augmented our linear model.
+And we've included a quadratic term.
+So we put in our X, and we put in an X squared as well.
+And we see that fits the data much better.
+It's also a linear model.
+But it's linear in some transformed values of X. And
+notice now we've put hats on each of the parameters,
+suggesting they've been estimated, in this case, from
+this training data.
+These little hats indicate that they've been estimated
+from the training data.
+So those are two parametric models, structured models that
+seem to do a good job in this case.
+Here's a two dimensional example.
+Again, seniority, years of education, and income.
+And this is simulated data.
+And so the blue surface is actually showing you the true
+function from which the data was simulated with errors.
+We can see the errors aren't big.
+Each of those data points comes from a particular pair
+of years of education and seniority with some error.
+And the little line segments in the data points
+show you the error.
+OK.
+so we can write that as income as a function of education and
+seniority plus some error.
+So this is with truth.
+We actually know this in this case.
+And here is a linear regression model fit to those
+simulation data.
+So it's an approximation.
+It captures the important elements of the relationship
+but doesn't capture everything.
+OK.
+It's got three parameters.
+Here's a more flexible regression model.
+We've actually fit this using a technique
+called thin plate splines.
+And that's a nice smooth version of a
+two dimensional smoother.
+It's different from nearest neighbor averaging.
+It's got some nicer properties.
+And you can see, this does a pretty good job.
+If we go back to the generating data and the
+generating surface, this thin plate spline actually captures
+more of the essence of what's going on there.
+And for thin plate splines, we're going to talk about them
+later in Chapter 7.
+There's a tuning parameter that controls how smooth the
+surfaces is.
+Here's an example of a thin plate spline.
+We basically tuned the parameter all
+the way down to 0.
+And this surface actually goes through
+every single data point.
+In this case, that's overfitting.
+the data.
+We expect to have some errors.
+Because with true function generate
+data points with errors.
+So this is known as overfitting.
+We are overfitting the training data.
+So this is an example where we've got a family of
+functions, and we've got a way of controlling the complexity.
+So there's some trade offs when building models.
+One trade off is prediction accuracy versus
+interpretability.
+So linear models are easy to interpret.
+We've just got a few parameters.
+Thin plate splines are not.
+They give you a whole surface back.
+And if given a surface back in 10 dimensions, it's hard to
+understand what it's actually telling you.
+We can have a good fit versus over-fit or under-fit.
+So in this previous example, the middle one was a good
+fit.The linear was slightly under-fit.
+And the last one was over-fit.
+So how do we know when the fit is just right?
+We need to be able to select amongst those.
+Parsimony versus black-box.
+Parsimony means having a model that's simpler and can be
+transmitted with a small number of parameters and
+explained in a simple fashion, involved, maybe, in a subset
+of the predictors.
+And so those models if they do as well as say a black-box
+predictor, like the thin plate spline was somewhat of a
+black-box predictor.
+We'd prefer the simpler model.
+Here's a little schematic which shows a variety of the
+methods that we are going to be discussing in this course.
+And they are ordered by interpretability and
+flexibility.
+And at the top, there are two versions of linear regression,
+subset selection and lasso, which we'll talk about, that
+actually even think the linear regression models too complex
+and try and reduce it by throwing
+out some of the variables.
+Linear models and least squares.
+Slightly more flexible, but you loose some
+interpretability because now all the
+variables are thrown in.
+Then we have generalize additive models which allow
+for transformations in an automatic way
+of each of the variables.
+And then at the high flexibility, low
+interoperability, and bagging, boosting, and
+support vector machines.
+We'll discuss all these techniques but
+later on in the course.
+OK, so we covered linear regression.
+And we covered nearest neighbor averaging.
+And we talked about ways, places where that's
+not going to work.
+And so we've briefly introduced a number of other
+different methods.
+And they are all listed on the screen, different methods that
+they can use to solve the problem when the dimensions
+are high and when linearity doesn't work.
+But we have to choose amongst these methods.
+And so we need to develop ways of making those choices.
+And that's what we're going to cover in the next segment.

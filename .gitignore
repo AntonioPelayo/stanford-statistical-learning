@@ -1,8 +1,10 @@
 # Hidden system files
 .DS_Store
 .swp
+*Rapp.history
 
-# Reference folder
+# Folders
+/python/.ipynb_checkpoints
 /references
 
 # Media files
