@@ -1,0 +1,289 @@
+Hello, everyone.
+We're going to continue now our discussion
+of supervised learning.
+Linear regression is the topic, and actually, as we'll
+see, it's a very simple method.
+But that's not a bad thing.
+Simple's actually good.
+As we'll see, it's very useful, and also the concepts
+we learned in linear regression are useful for a
+lot of the different topics in the course.
+So this is chapter three of our book.
+Let's look at the first slide.
+As we say, linear regression is a simpler approach to
+supervised learning that assumes the dependence of the
+outcome, Y, on the predictors, X1 through Xp, is linear.
+Now, let's look at that assumption.
+So in this little cartoon example, the true regression
+function is red.
+And it's not linear, but it's pretty close to linear.
+And the approximation in blue there, the blue line, it looks
+like a pretty good approximation.
+Especially if the noise around the true red curve, as we'll
+see, is substantial, the regression curve in blue could
+be quite a good approximation.
+So although this model is very simple--
+I think there's been sort of a tendency of people to think
+simple is bad.
+We want to use things that are complicated and fancy and
+impressive.
+Well, actually, I want to say the opposite.
+Simple is actually very good.
+And this model being very simple, it actually works
+extremely well in a lot of situations.
+And in addition, the concepts we learn in regression are
+important for a lot of the other supervised learning
+techniques in the course.
+So it's important to start slowly, to learn the concepts
+of the simple method, both for the method itself and for the
+future methods in the course.
+So what is the regression model?
+Well, before I define the model, let's actually look at
+the advertising data, which I've got in the next slide.
+This data looks at sales as a function of three kinds of
+advertising, TV, radio, and newspaper.
+And here I've got scatter plots of the sales versus each
+of the three predictors individually.
+And you can see the approximations by the
+regression line are pretty good.
+Looks like, for the most part, they're reasonable
+approximations.
+On the left side, maybe for low TV advertising, the sales
+are actually lower than expected,
+which we can see here.
+But for the most part, the linear approximation is
+reasonable, partly because, again, the amount of noise
+around the curve, around the line, is quite large.
+So even the actual regression function was nonlinear, we
+wouldn't be able to see it from this data.
+So this is an example of how it's this crude approximation,
+which is potentially quite useful.
+So what are the questions we might ask of this kind of
+data, and would you might ask the regression model to help
+us to answer?
+Well, one question is, is the relationship between the
+budget of advertising and sales.
+That's the sort of overall global question, is, do these
+predictors have anything to say about the outcome?
+Furthermore, how strong is that relationship?
+The relationship might be there, but it might be so weak
+as not to be useful.
+Now, assuming there is a relationship, which media
+contributed to sales?
+Is it TV, radio, or newspaper, or maybe all of them?
+If we want to use this model to predict, how well can we
+predict future sales?
+Is the relationship linear?
+We just discussed that already.
+If it's not linear, maybe if we use a nonlinear model,
+we'll be able to make better predictions.
+Is there synergy among the advertised media?
+In other words, do the media work on their own in a certain
+way, or do they work in combination?
+And we'll talk about ways of looking at synergy later in
+this section.
+OK, well, what is linear regression?
+Well, let's start with the simplest case, where a simple
+model with just a single predictor.
+And this is the model here.
+It says that the outcome is just a linear function of the
+single predictor, x, with noise, with errors,
+[INAUDIBLE] epsilon.
+So this is just the equation of a line.
+We've added some noise at the end to allow the points to
+deviate from the line.
+The parameters that the constants, beta 0 and beta one
+are called parameters or coefficients.
+They're unknown.
+And we're going to find the best values to make the line
+fit as well as possible.
+So you see a lot terminology.
+Those parameters are called the intercept and slope,
+respectively, because they're the intercept and
+slope of the line.
+And again, we're going to find the best-fitting values to
+find the line that best fits the data.
+And we'll talk about that in the next slide.
+But suppose we have for the moment some good values for
+the slope and intercept.
+Then we can predict the future values simply by plugging them
+into the equation.
+So if we have a value of x, we want it for
+what you want to predict.
+The x might be, for example, the advertising
+you budget for TV.
+And we have our coefficients that we've estimated.
+We simply plugged them into the equation, and our
+prediction for future sales at that value of x is given by
+this equation.
+And you'll see throughout the course, as is standard in
+statistics, we put a hat, this little symbol, over top of a
+parameter to indicate the estimated value which we've
+estimated from data.
+So that's a sort of funny way.
+That's become a standard convention.
+So how do we find the best values of the parameters?
+Well, let's suppose we have the prediction for a given
+value of the parameters at each value in the data set.
+Then the residual, what's called the residual, is the
+discrepancy between the actual outcome and
+the predicted outcome.
+So we define the residual sum of squares as the total square
+discrepancy between the actual outcome and the fit.
+The equivalent, if you write that out in detail, it looks
+like this, right?
+This is the error, the residual for the first
+observation, square, second, et cetera.
+So it makes sense to say, well, I want to choose the
+values of these parameters, the intercept and slope, to
+make that as small as possible.
+In other words, I want the line to fit the points as
+closely as possible.
+Let's see.
+This next slide--
+I'll come back to the equation in the previous slide, but
+this next slide shows in pictures.
+So here are the points.
+Each of these residuals is the distance of each
+point from the line.
+And I square up these distances.
+I don't care if I'm below or above.
+I'm not going to give any preference.
+But I want the total score squared distance of all points
+to the line to be as small as possible.
+Because I want the line to be as close as
+possible to the points.
+This is called the least squares line.
+There's a unique line that fits the best in this sense.
+And the equations for the
+slope-intercept are given here.
+Here's the slope and the intercept.
+So just basically a formula involving the observations for
+the slope-intercept, and these [INAUDIBLE]
+the least squares estimates.
+These are the ones that minimize the sum of squares.
+Of course, a computer program like R or pretty much any
+other statistical program will compute that for you.
+You don't need to do it by hand.
+OK, so we have our data for a single predictor.
+We've obtained the least squares estimates.
+Well, one question we want to know is how
+precise are those estimates.
+In particular, we want to know what?
+We want to know, for example, is the slope 0?
+If the slope is 0, that means there's no relationship
+between y and x.
+Suppose we obtained a slope of 0.5.
+Is that bigger than 0 or not?
+Well, we need a measure of precision.
+How close is that actually to 0?
+Maybe if we got a new dataset from the same population, we
+get a slope of minus 0.1.
+Then the 0.5 is not as impressive as it sounds.
+So we need what's called the standard error for the slope
+and intercept.
+Well, here are the formulas for the standard errors of the
+slope and intercept.
+Here's the one we really care about.
+This is the square standard error of the slope.
+It's sigma squared, where sigma squared is the noise,
+the variance of the errors around the line.
+And this is interesting.
+It says this is the spread of the x's around their mean.
+This actually makes sense.
+It says, the standard error of the slope is bigger if my
+noise variance is bigger.
+That makes sense.
+The more noise around the line, the
+less precise the slope.
+This says the more spread out the x's, the more
+precise the slope is.
+And that actually makes sense.
+I go back to this slide.
+The more spread out these points are, the more I have
+the slope pinned down.
+Think of like a teeter totter.
+Imagine I had the points, they were all actually concentrated
+around 150.
+Then this slope could vary a lot.
+I could turn it, change the slope, and still fit the
+points about the same.
+But the more the points are spread out in x across the
+horizontal axis, the better pinned down I have the slope,
+the less slop it has to turn.
+So this also says you have a choice of which observations
+to measure.
+And so maybe in an experiment where you can design, you
+should pick your predictor values, the x's, as spread out
+as possible in order to get the slopes estimated as
+precisely as possible.
+OK So that's the formula for the standard error of the
+slope and for the intercept.
+And what we do with these?
+Well, one thing we can do is form what's
+called confidence intervals.
+So a confidence interval is defined as a range so that it
+has a property that with high confidence, 95%, say, which is
+the number that we'll pick, that that range contains the
+true value with that confidence.
+In other words, to be specific, if you want a
+confidence interval of 95%, we take the estimate of our slope
+plus or minus twice the estimate of
+the standard error.
+And this, if errors are normally distributed, which we
+typically assume, approximately, this will
+contain the true value, the true slope,
+with probability 0.95.
+OK, so what we get from that is a confidence interval,
+which is a lower point and an upper point, which contains
+the true value with probability 0.95 under
+repeated sampling.
+Now, what does that mean?
+[INAUDIBLE] a little tricky to interpret that.
+Let's see in a little more detail what
+that actually means.
+Let's think of a true value of beta, beta one, which might be
+0 in particular, which means the slope is 0.
+And now let's draw a line at beta one.
+Now imagine that we draw a dataset like the one we drew,
+and we get a confidence interval from this formula,
+and that conference interval looks like this.
+So this one contains a true value because they've got the
+line is in between in the bracket.
+Now I get a second dataset from the same population, and
+I form this confidence interval from that dataset.
+It looks a little different, but it also
+contains a true value.
+Now I get a third data set, and I do the least squares
+computation.
+I form the confidence interval.
+Unluckily, it doesn't contain the true value.
+It's sitting over here.
+It's above beta one.
+Beta one's below the whole interval.
+And I get another dataset.
+Maybe I miss it on the other side this time.
+And I get another dataset, and I contain the true value.
+So we can imagine doing this experiment many, many times,
+each time getting a new dataset from the population,
+doing least squares computation, and forming the
+confidence interval.
+And what the theory tells us is that if I form, say, 100
+confidence intervals, 100 of these brackets, 95% of the
+time, they will contain the true value.
+The other 5% of the time, they will not
+contain the true value.
+So I can be pretty sure that the interval contains the true
+value if I form the confidence interval in this way.
+I can be sure at probability 0.95.
+So for the advertising data, the confidence interval for
+beta one is 0.042 to 0.053.
+This is for TV sales.
+So this tells me that the true slope for TV advertising is--
+first of all, it's greater than 0.
+In other words, having TV advertising does have a
+positive effect on sales, as one would expect.
+OK, so that completes our discussion of standard errors
+and confidence intervals.
+In the next segment, we'll talk about hypothesis testing,
+which is a closely related idea to confidence intervals.

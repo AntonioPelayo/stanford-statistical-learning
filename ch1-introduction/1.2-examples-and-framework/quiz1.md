@@ -2,12 +2,13 @@
 ## 1.2 Review Questions
 ### 1.2.R1
 1/1 point (graded)
+
 Which of the following are supervised learning problems? More than one box can be checked.
 
 - [x] Predict whether a website user will click on an ad
 - [ ] Find clusters of genes that interact with each other
 - [x] Classify a handwritten digit as 0-9 from labeled examples
-- [x]Find stocks that are likely to rise
+- [x] Find stocks that are likely to rise
 
 Explanation: 
 Problems with clearly defined "predictors" and

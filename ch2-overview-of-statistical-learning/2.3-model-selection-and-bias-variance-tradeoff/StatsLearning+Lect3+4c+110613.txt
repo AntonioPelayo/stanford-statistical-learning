@@ -1,0 +1,198 @@
+OK, so we've seen a variety of different models, from linear
+models, which are rather simple and easy to work with
+and interpret, to more complex models like nearest neighbor
+average and thin plate splines.
+And we need to know how to decide amongst these models.
+And so we need a way of assessing model accuracy, and
+when is a model adequate?
+And when may we improve it?
+OK, so suppose we have a model, f hat of x, that's been
+put through some training data.
+And we'll denote the training data by Tr.
+And that consists of n data pairs, xi yi.
+And remember, the notation of xi means the i-th observation,
+and x may be a vector.
+So it may have a bunch of components.
+yi is typically a single y, a scalar.
+And we want to see how well this model performs.
+Well, we could compute the average squared prediction
+error over the training data.
+So that means we take our y, observe y.
+We subtract from it f hat of x.
+We square the difference to get rid of the sign.
+And we just average those over all the training data.
+Well, as you may imagine, this may be biased towards more
+overfit models.
+We saw with that thin plate spline, we could fit the
+training data exactly.
+We could make this means squared error sub train, we
+could make it zero.
+Instead, we should, if possible, compute it using a
+fresh test data set, which we'll call Te.
+So that's an additional, say, m data pairs xi yi different
+from the training set.
+And then we compute the similar quantity, which we'll
+call mean squared error sub Te.
+And that may be a better reflection of the performance
+of our model.
+OK, so now I'm going to show you some examples.
+We got back to one dimensional function fitting.
+In the left hand panel, we see the black curve, which is
+actually simulated.
+So it's a generating curve.
+That's the true function that we want to estimate.
+The points are data points, generated from
+that curve with error.
+And then we actually see--
+you have to look carefully in the plot-- we see three
+different models fit to these data.
+There's the orange model, the blue model,
+and the green model.
+And they're ordered in complexity.
+The orange model is a linear model.
+The blue model is a more flexible model, maybe some
+kind of spline, one dimensional version of the
+thin plate spline.
+And then the green one is a much more
+flexible version of that.
+You can see it gets closer to the data.
+Now since this is a simulated example, we can compute the
+mean squared error on a very large population of test data.
+And so in the right hand plot, we plot the mean squared error
+for this large population of test data.
+And that's the red curve.
+And you'll notice that it starts off high for the very
+rigid model.
+It drops down and becomes quite low for
+the in between model.
+But then for the more flexible model, it
+starts increasing again.
+Of course, the mean squared error on the training data--
+that's the grey curve--
+just keeps on decreasing.
+Because the more flexible the model, the closer it gets to
+the data point.
+But for the mean squared error on the test data, we can see
+there's a magic point, which is the point at which it
+minimizes the mean squared error.
+And in this case, that's this point over here.
+And it turns out it's pretty much spot on for the medium
+flexible model in this figure.
+And if you look closely at the plot, you will see that the
+blue curve actually gets fairly close
+to the black curve.
+OK.
+Again, because this is a simulation model, the
+horizontal dotted line is the mean squared error that the
+true function makes for data from this population.
+And of course, that is the irreducible error, which we
+call the variance of epsilon.
+Here's another example of the same kind.
+But here, the two functions are actually very smooth.
+Same setup.
+Well, now we see that the mean squared error, the linear
+model does pretty well.
+The best model is not much different
+from the linear model.
+And the wiggly one, of course, is overfitting again and so
+it's making big prediction errors.
+The training arrow, again, keeps on going down.
+And finally, here's quite a wiggly true
+function on the left.
+The linear model does a really lousy job.
+The most flexible model does about the best.
+The blue model and the green model are pretty good, pretty
+close together, in terms of the mean squared
+error on the test data.
+So I think this drums home the point.
+Again, the training mean squared error just keeps on
+going down.
+So this drums home the point that if we want to have a
+model that has good prediction error--
+and that's measured here in terms of mean squared
+prediction error on the test data--
+we'd like to be able to estimate this curve.
+And one way you can do that, the red curve.
+You can do that is to have a hold our test data set, that
+you can value the performance of your different models on
+the test data set.
+And we're going to talk about ways of doing this later on in
+the course.
+I want to tell you about one aspect of this, which is
+called a bias-variance trade-off.
+So again, we've got a f hat of x, which is fit to the
+training data.
+And let's say x0 y0 is a test observation drawn from the
+population.
+And we're going to evaluate the model at the single test
+observation, OK?
+And let's supposed the true model is given by the function
+f again, where f is the regression function or the
+conditional expectation in the population.
+So let's look at the expected prediction error
+between f hat at x 0.
+So that's the predicted model.
+The fitted model on the training data evaluated at the
+new point x 0.
+And see what the expected distance is from the test
+point, y 0.
+So this expectation averages over the variability of the
+new y 0, as well as the variability that went into the
+training set used to build f hat.
+So it turns out that we can break this.
+We can break up this expression into
+three pieces exactly.
+The one piece is again the irreducible error that comes
+from the random variation in the new test point, y 0, about
+the true function f.
+But these other two pieces break up the reducible part of
+the error, what we called the reducible part before, into
+two components.
+One is called the variance of f hat.
+And that's the variance that comes from having different
+trainings sets.
+If I got a new training set and I fit my model again, I'd
+have a different function f hat.
+But if I were to look at many, many different training sets,
+there would be variability in my prediction at x 0.
+And then, a quantity called the bias of f hat.
+And what the bias is is the difference between the average
+prediction at x 0 averaged over all these different
+training sets, and the truth f of x 0.
+And what you have is, typically as the flexibility
+of f hat increases, its variance increases.
+Because it's going after the individual training set that
+you've provided, which will of course be different from the
+next training set.
+But its bias decreases.
+So choosing the flexibility based on average test error
+amounts to what we call a bias-variance trade-off.
+This will come up a lot in future parts of the course.
+For those three examples, we see the
+bias-variance trade-off.
+Again, in this part the red curve is the mean squared
+error on the test data.
+And then below it, we have the two components of that mean
+squared error, the two important components, which
+are the bias and the variance.
+And in the left plot, we've got the bias decreasing and
+then flattening off as we get more flexible, and the
+variance increasing.
+And when you add those two components, you get the
+u-shaped curve.
+And in the middle and last plots that correspond to the
+other two examples, the same decomposition is given.
+And because the nature of their problem changed, the
+trade-off is changing.
+OK, so we've seen now that choosing the amount of
+flexibility of a model amounts to a bias-variance trade-off.
+And depending on the problem, we might want to make the
+trade-off in a different place.
+And we can use the validation set or left out data to help
+us make that choice.
+But that's the choice that needs to be made
+to select the model.
+Now, we've been addressing this in terms
+of regression problems.
+In the next segment, we're going to see how all this
+works for classification problems.
