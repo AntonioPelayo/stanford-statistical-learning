@@ -3,9 +3,9 @@
 .swp
 *Rapp.history
 *.Rhistory
+*.ipynb_checkpoints
 
 # Folders
-/python/.ipynb_checkpoints
 /references
 
 # Media files

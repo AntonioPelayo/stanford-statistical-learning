@@ -1,0 +1,309 @@
+OK, up till now, we've talked about estimating regression
+functions for quantitative response.
+And we've seen how to do model selection there.
+Now we're going to move to classification problems.
+And here, we've got a different
+kind of response variable.
+It's what we call a qualitative variable.
+For example, email is one of two classes, spam or ham, ham
+being the good email.
+And if we classify in digits, it's one of the class is 0, 1,
+up to 9, and so it's a slightly different problem.
+And our goals are slightly different as well.
+Here, our goals up to build a classifier, which we might
+call c of x, that assigns a class label from our set c to
+a future, unlabeled observation x, where is x is
+the feature vector.
+We'd also like to assess the uncertainty in each
+classification, and we'd also like to understand the roles
+of the different predictors amongst the x's in producing
+that classify.
+And so we are going to see how we do that in the
+next number of slides.
+OK.
+To try and parallel our development for the
+quantitative response, I've made up a
+little simulation example.
+And we've got one x, one y.
+The y takes on two values in this example.
+The values are just coded as 0 and 1.
+And we've got a big sample of these y's from a population.
+So each little vertical bar here indicates an occurrence
+of a zero, the orange vertical bars, as a
+function of the x's.
+And at the top, we've got where the ones occurred, OK?
+So this scatter plot's much harder to read.
+You can't really see what's going on.
+And there's a black curve drawn in the figure.
+And the back curve was what actually generated the data.
+The black curve is actually showing us the probability of
+a one in the model that I used to generate the data.
+And so up in this region over here, the high values of x,
+there's a higher probability of a one, close to 90% of
+getting a one.
+And so of course, we see more blue ones there than we see
+zeroes down there.
+And even though it's hard to see, there's a higher density
+of zeroes in this region over here, where the probability is
+0.4 of being a one, versus a zero it's 0.6.
+OK, so we want to talk about what is an ideal
+classifier c of x.
+OK, so let's define these probabilities that I was
+talking about.
+And we'll call p sub k of x, this quantity over here,
+that's a conditional probability that y is k given
+x equals x.
+In this case, we're just looking at probability of one
+in the plot.
+We're just showing the probability that y is one is
+only two classes.
+But in general, they'll be, say, capital K classes.
+And they'll be capital K of these conditional
+probabilities.
+Now in classification problems, those conditional
+probabilities completely capture the distribution, the
+conditional distribution, of y given x.
+And it turns out, that those also deliver the ideal
+classifier.
+We call the Bayes Optimal Classifier the classifier that
+classifies to the class for which the conditional
+probability for that element of the class is largest.
+It makes sense.
+You go to any point.
+So here we've gone to point 5 in the x space.
+And you look above it, and you see that there's about 80%
+probability of a one, and 20% probability of a zero.
+And now we're going to say, well, if you were to classify
+to one class at that point, which class would
+you classify to?
+Well, you're going to classify to the majority class, OK?
+And that's called the Bayes Optimal Classifier.
+Here's the same example, except now we've only got a
+handful of points.
+We've got 100 points having one of the two class labels.
+The story is the same as before.
+We can't compute the conditional probabilities
+exactly, say, at the point 5.
+Because in this case, we have got one one
+at five and no zeroes.
+So we send out a neighborhood, say, and gather 10% of the
+data points.
+And then estimate the conditional probabilities by
+the proportions, in this case of ones and zeros in the
+neighborhood.
+And those are indicated by these little bars here.
+These are meant to represent the probabilities or
+proportions at this point, 5.
+And again, there's a higher proportion of
+ones here than zeroes.
+I forgot to say that in the previous slide, that's the
+same quantity over here that's indicating the probabilities
+of the ones and the zeroes.
+This is the exact in the population.
+And here it is estimated with the nearest neighbor average.
+So here we've done the nearest neighbor
+classifying in one dimension.
+And we can draw a nice picture.
+But of course, this works in multiple dimensions as well,
+just like it did for regression.
+So suppose we, for example, have two x's, and
+they lie on the floor.
+And we have a target point, say this point over here, and
+we want to classify a new observation that
+falls at this point.
+Well, we can spread out a little, say, circular
+neighborhood, and gather a bunch of observations who fall
+in this neighborhood.
+And we can count how many in class one, how many in class
+two, and assign to the majority class.
+And of course, this can be generalized to multiple
+dimensions.
+In all the problems we had with nearest neighbors for
+regression, the curse of dimensionality when the number
+of dimensions get large also happens here.
+In order to gather enough points when the dimension's
+really high, we have to send out a bigger and bigger sphere
+to capture the points, and things start to break down,
+because it's not local anymore.
+So, some details.
+Typically, we'll measure the performance of the classifier
+using what we call them misclassification error rate.
+And here, it's written on the test data set.
+The error is just the average number of
+mistakes we make, OK?
+So it's the average number of times that the classification,
+so c hat at a point xi, is not equal to the class label yi
+averaged over a test set.
+It's just the number of mistakes.
+So that's when we count a mistake, mistaking a one for a
+zero and a zero for a one as equal.
+There are other ways of classifying error, where you
+can have a cost, which gives higher cost to some mistakes
+than others.
+But we won't go into that here.
+So that base classifier, the one that used the true
+probabilities to decide on the classification rule, is the
+one that makes the least mistakes in the population.
+And that makes sense if you look at our population
+example over here.
+By classifying to one over here, we are going to make
+mistakes on about 20% of the conditional population at this
+value of x.
+But we'll get it correct 80% of the time.
+And so that's why it's obvious we want to classify to the
+largest class.
+We will make the fewest mistakes.
+Later on in the course, we going to talk about support
+vector machines.
+And they build structured models for the
+classifier c of x.
+And we'll also build structured models for
+representing the probabilities themselves.
+And there, we'll discuss methods like logistic
+regression and generalized additive models.
+The high dimensional problem is worse for modeling the
+probabilities than it is for actually building the
+classifier.
+For the classifier, the classifer just has to be
+accurate with regard to which of the
+probabilities is largest.
+Whereas if we're really interested in the
+probabilities themselves, we going to be measuring them on
+a much finer scale.
+OK, we'll end up with a two dimensional
+example of nearest neighbors.
+So this represents the truth.
+We got an x1 and an x2.
+And we've got points from some population.
+And the purple dotted line is what's called the Bayes
+Decision Boundary.
+Since we know the truth here, we know what the true
+probabilities are everywhere in this domain.
+And I indicated that all the points in the domain by the
+little dots in the figure.
+And so if you classify according to the true
+probabilities, all the points, all the region colored orange
+would be classified as the one class.
+And all the region colored blue would be classified as
+the blue class.
+And the dotted line is called the decision boundary.
+And so that's a contour of the place where, in this case,
+there are two classes.
+It's a contour of where the probabilities are equal for
+the two classes.
+So that's an undecided region.
+It's called the decision boundary.
+OK, so we can do nearest neighbor, averaging in two
+dimensions.
+So of course what we do here is, at any given point when we
+want to classify--
+let's say we pick this point over here--
+we spread out a little neighborhood, in this case,
+until we find the 10 closest points to the target point.
+And we'll estimate the probability at this center
+point here by the proportion of blues versus oranges.
+And you do that at every point.
+And if you use those as the probabilities, you get this
+somewhat wiggly black curve as the
+estimated decision boundary.
+And you can see it's actually, apart from the somewhat ugly
+wiggliness, it gets reasonably close to the true decision
+boundary, which is, again, the purple dashed line, or curve.
+OK, in the last slide, we used k equals 10.
+We can use other values of k.
+k equals 1 is a popular choice.
+This is called the nearest neighbor classifier.
+And we take literally at each target point, we find the
+closest point amongst the training data and
+classify to its class.
+So for example, if we took a point over here, which is the
+closest training point?
+Well, this is it over here.
+It's a blue.
+So we'd classify this as blue.
+Right, when you're in a sea of blues, of course the nearest
+point is always another blue.
+And so you'd always classified as blue.
+What's interesting is as you get close to some of the
+orange points.
+And what this gives you-- you can see the boundary here is a
+piecewise linear boundary.
+Of course, the probabilities that we estimate is just one
+and zero, because there's only one point to average.
+So there's no real probabilities.
+But if you think about the decision boundary, it's a
+piecewise linear decision boundary.
+And it's gotten by looking at the bisector of the line
+separating each pair of points when they're
+of different colors.
+So you get this very ragged decision boundary.
+You also get little islands.
+So for example, there's a blue point and a
+sea of oranges here.
+So there's a little piecewise linear boundary around that
+blue point.
+Those are the points that are closest to that blue point,
+closer to the blue point than the oranges.
+Again, we see the true boundary here, or the best
+base decision boundary is purple.
+This nearest neighbor average approximates
+it in a noisy way.
+Now then, you can make k really large.
+Here, we've made k 100.
+And the neighborhood's really large.
+It's essentially, there's 200 points here.
+So it's taken half the points to be in any given
+neighborhood.
+So let's suppose our test point was over here.
+We'd be sending out quite a big circle, gathering 100
+points, getting the proportional of blues, the
+proportion of oranges, and then making the boundary.
+So as k gets bigger, this boundary starts smoothing out
+and getting less interesting in this case.
+It's almost like a linear boundary over here, and
+doesn't pick up the nuances of the decision boundary.
+Whereas with k equals 10, it seemed like a pretty good
+choice, and of approximates that this is the decision
+boundary pretty well.
+OK, so the choice of k is a tuning parameter.
+And that needs to be selected.
+And here we showed what happens as you vary k, first
+on the training data and then on the test data.
+So on the training data, k tends to just keep on
+decreasing.
+It's not actually monotone.
+Because we've actually indexed this as 1/k, because as 1/k
+gets big, let's see.
+K large means we get a higher bias, so 1/k small.
+So this is the low complexity region.
+This is the high complexity region.
+Now you notice that the training error for one nearest
+neighbors, which is right down at the end here,
+1/k is one is zero.
+Well, if you think about it, that's what it's got to be, if
+you think about what training error is.
+For the test error, it's actually
+started increasing again.
+This horizontal dotted line is the Bayes error, which you
+can't do better than the Bayes error in theory.
+Of course, this is a finite test data set.
+But it actually just touches on the Bayes error.
+It starts decreasing, and then at some point, it levels off
+and then starts increasing again.
+So if we had a validation set available, that's what we use
+to determine k.
+So that's nearest neighbor classification.
+Very powerful tool.
+It's said that about one third of classification problems,
+the best tool will be nearest neighbor classification.
+On the handwritten zip code problem, the classifying
+handwritten digits, nearest neighbor classifiers do about
+as well as in any other method tried.
+So it's a powerful technique to have in the tool bag, and
+it's one of the techniques that we'll use for
+classification.
+But in the rest of the course, we'll cover other
+techniques as well.
+In particular, with the support vector machines,
+various forms of logistic regression and linear
+discriminant analysis.

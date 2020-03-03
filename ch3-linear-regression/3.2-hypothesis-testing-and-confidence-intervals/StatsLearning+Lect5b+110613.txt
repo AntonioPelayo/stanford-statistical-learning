@@ -1,0 +1,184 @@
+Welcome back.
+We just finished talking about confidence intervals in the
+previous segment, and now we'll talk about hypothesis
+testing, which is a closely related idea.
+We want to ask a question about a specific value of a
+parameter, like is that coefficient 0?
+In statistics, that's known as hypothesis testing.
+So hypothesis testing is a test of a
+relationship between--
+it's a test of a certain value of a parameter.
+In particular, here the hypothesis test we'll make is
+that, is that parameter 0?
+Is the slope 0?
+So what's called the null hypothesis is that there's no
+relationship between X and Y. In other words,
+Beta 1 equals 0.
+That's the equivalent statement.
+The alternative hypothesis is that there is some
+relationship between X and Y. In other words,
+Beta 1 is not 0.
+And Beta 1 could be positive or negative.
+So mathematically, this corresponds to Beta 1 being 0.
+Is the null hypothesis Beta 1 not equal 0?
+So that's often the question you want to ask.
+That's usually the first question you want to ask about
+the predictors.
+So to test the null hypothesis, we form what's
+called a t-statistic.
+We take the estimated slope divided by the standard error.
+This will approximately have a t-distribution with n minus 2
+degrees of freedom assuming that the null
+hypothesis is true.
+Now, what is a t-distribution?
+You don't have to worry too much about that.
+It's basically you look this up in a table or, nowadays
+software will compute it for you.
+It's basically a normal random variable except for small
+numbers of samples. n is a little bit different.
+In any case, you ask the computer to compute the
+p-value based on this statistic.
+p-value is the probability of getting the value of t at
+least as large as you got in absolute value.
+So for the advertising data using, again, just TV, here
+are the results.
+Here are the slope and intercept of that line.
+So saw the least squares line.
+Standard errors.
+Here are the t-statistics.
+That's just the coefficient divided by the standard error.
+The one we care most about is for TV.
+The intercept isn't really very interesting.
+That's telling us what happens--
+what's the sales when the TV is 0?
+TV's budget is 0.
+But the one we care most about here is this guy.
+So this is measuring the effect of TV
+advertising on sales.
+And the t-statistic is huge.
+It turns out in order to have a p-value of below 0.05, which
+is quite significant, you need a t-statistic of about 2.
+We're at 17, so it's very, very significant.
+So the p-value is very, very small.
+So how do we interpret this?
+It says the chance of seeing this data, under the
+assumption that the null hypothesis--
+so there's no effect of TV advertising on sales--
+is less than 10 to the minus 4.
+So it's very unlikely to have seen this data.
+It's possible, but very unlikely under the assumption
+that TV advertising has no effect.
+Our conclusion, therefore, is that TV advertising has an
+effect on sales--
+as we would hope.
+OK?
+So we've seen how to fit a model with a single predictor
+and how to assess the slope of that predictor, both in terms
+of confidence intervals and hypothesis test.
+Well, I did want to add one thing that's important.
+So we've seen the hypothesis test.
+And before that we saw confidence intervals.
+There's actually a one-to-one correspondence.
+In other words, they're doing equivalent things.
+To be more precise, if hypothesis test fails-- in
+other words, if we reject the null hypothesis and conclude
+that Beta 1 is not 0, as we did for TV advertising,
+correspondingly the confidence interval constructed for that
+data for the parameter will not contain 0.
+Conversely, if the hypothesis test does not reject, so we
+cannot conclude that TV advertising has an effect.
+Its slope may be 0.
+The confidence interval for that parameter will contain 0.
+So really, the confidence interval is also doing
+hypothesis testing for you.
+But it's also telling you how big the effect is.
+So it's always good to compute confidence intervals as well
+as do hypothesis test.
+So for example, here we see the interval
+doesn't contain 0. .
+Furthermore, we see that a lower limit on the effect of
+TV advertising is 0.042, which we can interpret as-- these
+are in $1,000 units, that we're going to affect sales by
+1,000 times--
+so for every 1,000 change in TV advertising, we'll get a
+corresponding change in sales.
+So this tells us not only is the effect 0 or not, but how
+big is the effect likely to be?
+OK.
+So where are we now?
+Let's see.
+So we've talked about how to assess the slope of an
+individual predictor.
+How about the overall fit of the model, the
+accuracy of the model?
+Well, what we can do here is we'll take the
+residual sum of squares.
+Remember, this is the quantity that we minimize in the first
+place to get the best estimates of the intercept and
+slope, the least squares estimates.
+So we'll take what's called the mean squared residual and
+take the square root.
+This is the average squared deviation that we achieve
+using the least fitting line, where this is the residual sum
+of squares.
+And we complete what's called the R squared or the fraction
+of variance explained.
+And here it is.
+It's the total sum of squares minus the residual sum of
+squares over the total sum of squares.
+So what is this conceptually?
+Well, if we didn't fit a model at all, if we forget about TV
+advertising and just use the mean of sales as the
+prediction, that's the simplest
+prediction you can imagine.
+This would be our error.
+Here's our prediction.
+Here's the true sales.
+So this is the no model error.
+And now, the residual sum of squares of the
+fitted model is RSS.
+This is how much-- it's going to be lower than this guy.
+It's going to be lower because we could always achieve this
+guy just by choosing a slope of 0.
+So since we've done least squares, we've optimized over
+the parameters.
+We know that RSS will be less than TSS.
+But this quality measures, how much did we reduce the total
+sum of squares relative to itself?
+And here, written in this way or this way.
+So this is the fraction of variance explained.
+And it can be shown algebraically.
+This is actually equivalent to the squared correlation
+between X and Y. So this is simple correlation between the
+predictor of the outcome.
+It kind of makes sense, right?
+The higher the correlation, the more that we'll explain
+the variance.
+And there's actually an exact algebraic relationship that
+the squared correlation is equal to this fraction of
+variance explained.
+So what did we get for our data?
+The R squared is 0.61.
+Here it is.
+So in other words, using TV sales, we've--
+the budget.
+Excuse me, TV budget.
+We reduced the variance in sales by 61%.
+That's a very strong predictor.
+The F-statistic we'll talk about in a few minutes.
+It's also a measure of how well the
+overall model is doing.
+So this is quite impressive.
+In business and some kind of physical sciences, we see R
+squareds like this.
+In medicine, we don't tend to see R squareds.
+You might see an R squared of 5% and you might get excited.
+So always one has to remember the domain to sort of--
+to have a judge of how good an R squared is.
+But this is an impressive R squared, which you see
+sometimes in business and finance applications.
+So that completes our discussion of regression with
+a single predictor.
+In the next section, we'll move on to the harder problem
+where we have multiple predictors and we do a
+multiple regression.
