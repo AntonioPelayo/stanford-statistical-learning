@@ -1,0 +1,290 @@
+Welcome back.
+We're now going to talk about some important questions that
+arise when you use aggression in real problems.
+So is at least one of the predictors useful in
+predicting the response?
+That's the first order question.
+Do the predictors on the whole have anything to
+say about the outcome?
+If not, we probably want to stop there.
+But given that there is some effect overall, which of the
+predictors are important?
+Are they all important, or only some subset?
+How well does the model fit the data?
+And also, given a set of predictor values, what
+response value should we predict?
+So what's our prediction of sales given a certain level of
+advertising in the three modes?
+And how accurate is that prediction?
+So these are all things we can answer from the model.
+Well, at least 1, 2, and 4.
+3 we'll examine by looking at some alternative models.
+So the answer to the first question-- is at least one
+predictor useful?-- does a model overall have any
+predictive value.
+We look at the drop in training error.
+So this is the total sum of squares.
+Remember, if we just used the mean to predict, that's the no
+predictor model.
+This is the residual sum of squares achieved using all
+three predictors.
+And we can look at the drop, the present variance
+explained--
+which I actually have that here for that.
+We defined this earlier.
+Now it's 0.897.
+So it was about 0.6 something before.
+Now by adding the two more predictors, we've increase
+that to 0.897.
+So this says that we reduced the variance of sales around
+its mean by almost 90% by using these three predictors.
+That seems pretty impressive.
+To quantify that in a more statistical way, we can form
+the f ratio, which is defined as follows.
+It's the drop in training error divided by p--
+p is number of parameters we fit.
+Here, it's three, right?
+The three kinds of advertising budgets, divided by the mean
+squared residual.
+So n is the sample size, and we subtract off the number of
+parameters we fit, which is p plus 1 for the intercept.
+So statistical theory tells us that we can compute the
+statistic and under the null hypothesis, that there's no
+effective of any of predictors, this will have an
+f distribution with p and n minus p minus
+1 degrees of freedom.
+And again, there are tables of this.
+Or your computer program will compute this for you.
+This f statistic here is huge.
+And its p value I haven't recorded here, but it's less
+than 0.0001.
+So this says what we believe already, looking at this
+previous tables and the graphs, that there's a strong
+effect here of the predictors on the outcome.
+They have something to say about the outcome.
+OK, when we fit linear regression models, one of the
+things we have to do is decide on what are the important
+variables to include in the model.
+By the way, this is not Rob anymore.
+Rob asked me to do this section because it's a little
+hard for him.
+Kidding.
+So the most direct approach is called all subsets or best
+subsets regression.
+So basically, what you're going to do is you're going to
+compute the least squares fit for all the possible subsets
+of the variables and then choose between them based on
+some criterion that balances the train error
+with the model size.
+Now, this might seem like a reasonable thing to do if you
+have a small number of variables.
+But it gets really hard when the number of
+variables gets large.
+So if you've got p variables, there are 2 to the p subsets.
+And you know, that 2 to the p grows exponentially with the
+number of variables.
+So for example, when p is 40, there are
+over a billion models.
+So we're talking about subsets like the model might have
+variable 1, 3, and 5 in it.
+That's a subset of size 3.
+And then another model might have a subset of size four.
+And with 40 variables, there's over a billion such models.
+So that clearly becomes cumbersome, searching through
+such a big model space.
+And so what we need instead is an automated approach that
+searches through for us, and that finds a subset of them.
+And so we'll describe two commonly used approaches next.
+Forward selection is a very attractive approach, because
+it's both tractable and it gives a
+good sequence of models.
+So this is how it works.
+You start with a null model.
+And the null model has no predictors in it, but it'll
+just have the intercept in it.
+And the intercept is the mean of y with no other variables
+in the model.
+And now what you do is you add variables one at a time.
+So the first variable you add, you do it as follows.
+You fit p simple linear regression models, each with
+one of the variables in and the intercept.
+And you look at each of them.
+And you add to the null model the variable that results in
+the lowest residual sum of squares.
+So basically, you just search through all the
+single-variable models and pick the best one.
+Now having picked that, you fix that
+variable in the model.
+And now you search through the remaining p minus 1 variables
+again and find out which variable should be added to
+the variable you've already picked to best improve the
+residual sum of squares.
+And you continue in this fashion, adding one variable
+at a time, until some stopping rule is satisfied--
+for example, when all the remaining variables have a p
+value above some threshold.
+Now, this sounds like it might be computationally quite
+difficult as well, but it turns out it's not.
+There are some clever tricks you can use to do all these
+evaluations very efficiently.
+So in a similar fashion, and this is if p is not too large,
+you can start from the other end.
+So you start with a model with all the
+variables in the model.
+And now you're going to remove them one at a time.
+And this time, at each step you're going to remove the
+variable that does the least damage to the model.
+In other words, you want to remove the variable that's got
+the significance.
+And that you can actually find from looking at the t
+statistics for each of the variables.
+And remove the one with the least significant t statistic.
+But now you've got a model with p minus 1 variables, and
+you just repeat.
+And you keep going in that fashion again until you reach
+some threshold that you've defined, perhaps in
+terms of a p value.
+So these are two approaches.
+They might seem somewhat ad hoc.
+But they're very effective.
+And later, we'll discuss more systematic criteria for
+choosing an optimal member in the path of models produced by
+the either forward or stepwise model selection.
+Some of these criteria include something known as well
+Mallow's Cp, Akaike Information Criterion, AIC--
+that's the abbreviation--
+and then BIC, which is
+Bayesian Information Criterion.
+These all sound like very important methods.
+They're named often important people.
+And they're very popular.
+And then there's something called adjusted R squared.
+And one of our favorites is this cross-validation, which
+you'll be learning about.
+We'll talk more about model selection in later sessions.
+Now there are some other considerations in regression
+models that we haven't really touched on yet.
+And the one is qualitative predictors.
+So some variables are not quantitative, but qualitative.
+In other words, they don't take values on
+a continuous scale.
+But they take values in a discrete set.
+So we call them categorical
+predictors, or factor variables.
+We going to see a matrix of data in the next slide.
+It's a credit card data.
+In fact, I'll just take you there now.
+And so here's a bunch of variables on
+credit cards and ratings.
+And we see the current balance on the credit card, the age,
+number of cards, and so on.
+These are all quantitative variables.
+Now in addition to these variables, we have some
+qualitative variables.
+So one of them is gender.
+So that take on values male and female.
+Student, so the student status of the cardholder, whether
+they are a students or not.
+So these are qualitative values.
+Marital status, say, married, single, or divorced.
+There's no order really in those variables.
+They're just different categories.
+And likewise, ethnicity.
+Say Caucasian, African-American, or Asian.
+Again, in no way an ordered variable.
+So how do we deal with such qualitative predictors when
+we're fitting linear regression models?
+So let's consider an example on credit cards.
+Imagine investigating the difference in credit card
+balance between males and females,
+ignoring the other variables.
+So what we do is we do we create a new variable.
+Let's call it x.
+We call it x.
+And the i value is going to be 1, if the ith person is a
+female, and a 0 if the ith person is a male.
+So we've got a name for such a variable.
+We call it a dummy variable.
+It's a created variable just to represent
+this categorical feature.
+So for each value of i, we score an individual as 0 or 1,
+depending on if they're male or female.
+And so now if we put such a variable in a model, let's say
+on its own, we've got the linear regression model with a
+coefficient for this dummy variable, xi.
+And let's see what it produces.
+Well, since xi takes on only two possible values, 0 or 1,
+the model's either going to be beta 9 plus beta 1 plus error
+if the person is female.
+And if the person is male, it's just going to be beta 0
+plus error.
+So beta 1 is telling us the effect of being female versus
+the baseline, in this case, of being male.
+And so that's how we deal with the categorical variable with
+just two levels.
+So you will see the results of the regression model using
+just the single variable gender and the dummy variable
+0, 1, the 1 representing female.
+And so we see the result.
+And the coefficient is 19.73, but it's not significant.
+The p value is 0.66, which is not significant.
+So contrary to popular wisdom, females don't generally have a
+higher credit card balance than males.
+The number 19.73 is slightly higher, but it's not
+significant.
+So what do we do it if we have a variable with
+more than two levels?
+So ethnicity is such a variable.
+Well, we just make more dummy variables.
+So ethnicity has three levels.
+So we'll make two dummy variables in this case, and
+we'll call them x1 and x2.
+And so xi1 is the value for the ith individual for dummy
+variable one.
+We'll call it a 1 if the ith person is Asian, otherwise 0.
+And the second dummy variable will be 1 if the ith person is
+Caucasian, and 0 if not.
+And of course if they're both zero, the person, the
+individual, will be African-American.
+And so that's the general rule if you've got a categorical
+variable with three levels, you make two dummy variables.
+If it's got two levels, you make one dummy variable.
+And if it's got k levels, you'll make k minus 1 dummy
+variables to represent each of those categories.
+So what does the model look like in this case?
+Well, we'll have a model now with two coefficients, one for
+each of these dummy variables.
+And let's look at the different cases.
+So if the person's Asian, they'll get the beta 1.
+If the person's Caucasian, they'll get the beta 2.
+And if the person's African American, they don't have beta
+1 or beta 2, so the baseline, beta 0, represents such an
+individual.
+And so what we see now is that beta 1 represents the
+difference between the baseline beta 0, which is
+African American, and the difference between that
+individual and an Asian.
+So it's the additional effect for being an Asian, and beta 2
+is an additional effect for being Caucasian.
+And as I said, there will be always one fewer dummy
+variable than the number of levels.
+So in this case, we call the category African-American is
+known as the baseline level, because it doesn't have a
+parameter representing it except beta 0.
+So here's the linear model.
+We've picked African-American as a baseline.
+And so that actually determines which
+comparisons we make.
+So the coefficient minus 18.69 is comparing Asian to
+African-American.
+And that's not significant.
+And likewise, the Caucasian to African-American, which is
+also not significant.
+Now, it turns out the choice of the baseline does not take
+the fit of the model.
+The residual sum of squares would be the same no matter
+which category you chose as the baseline.
+But the contrasts would change, because picking the
+baseline determines which contrasts you make.
+And so the p values potentially would change as
+you change the baseline.
