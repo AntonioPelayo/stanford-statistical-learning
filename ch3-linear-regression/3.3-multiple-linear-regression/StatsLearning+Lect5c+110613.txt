@@ -1,0 +1,325 @@
+We're now going to start our discussion of multiple linear
+regression, which is regression with
+more than one predictor.
+I should say the term
+"regression" is kind of unusual.
+You might be wondering, why linear regression?
+It's a linear model.
+And this actually is an unusual term.
+It's actually historical.
+It comes from the idea of regression towards the mean,
+which is a concept which was discussed in the early 1900s.
+You might want to look that up yourself and later on in the
+course we'll describe what regression
+towards the mean is.
+But it's resulted in a sort of unusual name for a linear
+model called linear regression.
+But we have to live with this term because
+it's become time honored.
+So multiple linear regression now extends the simple model
+to we have more than one predictor.
+Like in our example, we have three predictors.
+So we want to fit them all together and use them all
+together to predict the outcome.
+So here's the model.
+We have an overall intercept term, and then we have a slope
+for each of the predictors in the model.
+Which again, the betas or the parameters, they're unknown.
+And the x's are observed.
+And we're trying to use the x's to predict y.
+So in the advertising example we particularly will have the
+three predictors TV, radio, and newspaper advertising.
+And we're going to try to predict sales.
+And we have the error term along points to deviate around
+the function.
+And now the function actually is a--
+it's called a hyperplane.
+Let's actually flip a head to slide 19 for a moment where I
+have a picture of this.
+So whereas before we had a line, now it's a hyperplane.
+So I've been able to draw it here just for two predictors.
+It's hard to draw it for three.
+But now the line is now replaced by this flat surface
+called a plane or hyperplane.
+So here's our data points.
+For each point we have its two predictor values, let's say TV
+and newspaper.
+And we have its sales on the vertical axis.
+And here's each data point is a red point.
+What multiple aggression does, it fits a hyperplane, a plane
+to these points to minimize the square distance between
+each point and the closest point on the plane.
+Very intuitive.
+The same way we did it for a line, now the
+line becomes a plane.
+So let's now go back to the.
+So the model, again.
+So it's an equation of hyperplane with its
+coefficients.
+Well, before we talk about the least squares estimates and
+some of the details, let's step back for a moment and
+think about how you might interpret the regression
+coefficients.
+Because now there's more than one of them.
+In a simple model we had only one to deal with.
+Now we have a multiple, say three coefficients.
+How do we interpret them together?
+Well, if the predictors had no correlation in the data, then
+we could talk about each coefficient separately.
+We can make statements like, a unit change in xj, for
+example, is associated with a beta j change-- that's its
+coefficient--
+in the outcome.
+With all the other variables fixed.
+But predictors are not usually uncorrelated in the data.
+For example, here we can expect--
+and we'll see it actually--
+that the various amounts spent on the three kinds of
+advertising are correlated.
+So these kind of interpretations are difficult
+in observational data where they're correlated.
+What problem does the correlation cause?
+Well, the variance of all coefficients tend to increase,
+sometimes dramatically.
+In particular, imagine we have two predictors which are
+almost identical.
+Then we can't really separate their coefficients, right?
+If I have a coefficient on one variable I could just as soon
+move that coefficient to the other variable.
+And the fit of the model is going to be
+pretty much the same.
+So the variance of the coefficients of those two
+predictors are going to be very large.
+And then interpretation becomes difficult when there's
+a correlation.
+Because one can't really say, suppose I were to change xj.
+And we can think about, suppose I was to increase the
+TV advertising by a certain amount.
+What would be the effect on sales?
+Well if that happened, we probably wouldn't be
+reasonable to assume that the other advertising
+budgets stay the same.
+For example, maybe the company has a fixed budget overall.
+So that if I increase TV advertising I'd have to
+decrease the other advertising.
+Or maybe TV advertising is increasing just because that
+company has more money in general and decides it wants
+to spend more on advertising of all kinds.
+So in both those cases we can't really talk about the
+change of one predictor where the other one's fixed.
+Because the predictors will tend to move
+together in real data.
+And what this means is claims of
+causality should be avoided.
+We can't really say that one predictor causes the outcome
+when there's predictors in the system that are correlated
+with that given predictor.
+So this becomes a complicated challenge to
+try to discuss causality.
+And we're going to avoid that.
+And there's a nice book which actually when I was a graduate
+student it was one of the books I learned from, Data
+Analysis and Regression by Mosteller and Tukey, two very
+famous statisticians.
+And I look at the book now and I don't like the book that
+much overall.
+But there's one wonderful chapter called the woes of
+regression coefficients that talks about the problems of
+interpreting regression coefficients in a multiple
+regression model.
+That's a very useful chapter to read.
+And I've made this point.
+So the first point here I've just made it, a regression
+coefficient what it measures is the change in y per unit
+change in xj with all other predictors held fixed.
+But this is not usually a reflection of reality.
+Because usually when you change one predictor the
+others change as well.
+I mentioned the example with advertising.
+So here's couple of examples which I'll just
+have you think about.
+And maybe we'll put it on a quiz.
+But here's an example, the first example, to have you
+think about this point.
+Suppose I measure the total amount of
+change in your pocket.
+That's y.
+I also measure two predictors, the number of coins and the
+number of pennies, nickels, and dimes.
+That's x2.
+Now by itself, the regression coefficient of y on the total
+number of pennies, nickels, and dimes will probably be
+positive, right?
+The more you have of these, the more likely the you have
+more change.
+But what about if I have x1 in the model?
+So for a given level of x1, think about whether the
+coefficient of x2 will be positive or negative.
+And talk about the answer to this later on.
+But that's a simple example where you can see now how the
+presence of one predictor affects the way that we think
+about and interpret the
+coefficient of another predictor.
+And of course, these two predictors are highly
+correlated by construction.
+Another example, which is actually from a chapter in
+this book, from American football.
+y is the number of tackles by a football player in a season.
+w and h are his height and weight.
+And they imagine that they take data from this situation,
+they fit a regression model, and they obtain beta zero.
+But the coefficient of weight is 0.50.
+Coefficient of height is minus 0.10, which seems to say that
+it's better to be short to make more tackles.
+So the question we're asking here is, how would you
+interpret this coefficient of height given the
+weights in the model?
+And again, think about this and we'll return
+to the answer later.
+And they also mention in that same book, there's two quotes
+essentially by George Box who was another famous
+statistician.
+Essentially all models are wrong but some are useful.
+This is interesting.
+Because it's true that, as we saw like on the very first
+slide, the regression model, a linear model, is
+never exactly right.
+But it's often very useful.
+So it's important to remember that the model that you assume
+is not to take it too seriously.
+Test out your model.
+Remember that it's going to be wrong.
+But also remember the fact that, despite the fact it's an
+approximation, it can be a very useful approximation in
+many situations.
+And then this point in their chapter, also paraphrasing
+George Box, which really sort of sums up what I talked about
+during [INAUDIBLE] coefficients, the only way to
+find what will happen when a complex system is disturbed is
+to disturb the system, not merely
+to observe it passively.
+In other words, if you want to make a causal statement about
+a predictor for an outcome, you actually have to be able
+to take the system and perturb that particular predictor
+keeping the other ones fixed.
+That will allow you to make a causal statement about a
+variable like xj and its effect on the outcome.
+It's not good enough simply to observe some observations from
+the system.
+We can't use that data to conclude causality.
+So if you want to know what happens when a complex system
+is perturbed, you have to perturb it.
+You can't simply observe it.
+So I think that's a very wise summary of the use of models
+and observational data.
+So how do we find the least squares estimates for the
+multiple regression model?
+Well, t's really very much the same, the same tack we took
+for the simple model.
+So first of all, our predictions will be given by
+this equation.
+This is the intercept.
+And now we have one slope parameter for each predictor.
+We put hats on there, as we always will when we infer that
+value from data, the estimates.
+And now what's called the multiple least squares
+estimates are the values that minimize the sum of square
+deviations of points around the plane.
+Let's go--
+remember, I showed this picture.
+Here's my data points, here's my approximating
+least squares plane.
+And I'm going to choose the orientation and height of this
+plane to minimize the total squared distance between the
+red points and the closest point on the hyperplane.
+Those are called the least squares estimates.
+They're called the multiple least squares estimates
+because there's multiple predictors.
+There's is a formula for these
+coefficients, for the estimates.
+It's kind of messy.
+And it's not something that anyone ever computes by hand.
+Although probably in the early 1960s people use to do these.
+Poor guys used to actually compute least squares
+estimates by hand.
+They were good at doing matrix computations.
+But today we have the luxury of fast computers.
+And in a program like R or any other statistical package, we
+can compute the least squares estimates for very big data
+sets very quickly.
+So we don't need to worry about the formula.
+We just need to know what we're doing, which is we're
+finding the values of the coefficients that minimize the
+sum of squares.
+So here's what we get for the advertising data.
+The top table are the coefficients,
+standard errors et cetera.
+So these are the least squares estimates.
+Again, there's a lot of terminology here.
+Coefficient or parameter, we'll use those
+interchangeably as people do.
+The intercept.
+Again, we're not typically interested in the intercept.
+Because that's just telling us whether setting the other
+three predictors to 0, whether the sales is the
+average sales value.
+So we don't really care about that.
+But we care about the slopes, which are these guys.
+These three values here.
+So we see, for example, the coefficient of TV is 0.46.
+Standard error, the t statistic is the ratio, 0.46
+divided by 0.0014.
+And the t statistic, remember I said a t statistic of bigger
+than about 2 is significant at p value of 0.5.
+So the p value of 32 is huge.
+And p value is less than 0.0001.
+Similarly for radio.
+Very big effect.
+Newspaper.
+Newspaper looks like it's not having much effect.
+Its t statistic is minus 0.18, which has got a p
+value which is large.
+And p values close to one--
+p values above 0.05 or 0.1 are not significant.
+They're not evidence against the null hypothesis, which is
+that the coefficient is 0.
+But let's be a little more careful how we interpret this.
+Remember, each of these statements is made conditional
+on the other two being in the model.
+So in particular, this coefficient says, given I have
+the amount of money spent on radio and newspaper, spending
+money on TV still produces a change in sales.
+So in the presence of the other two
+predictors, TV is important.
+Similarly for radio.
+The presence of TV and radio advertising--
+excuse me, TV and newspaper advertising, radio advertising
+can be effective.
+But newspaper is not, in the presence of these two.
+So in particular, on its own newspaper may be significant,
+its coefficient may be significant.
+But in the presence of the other two, in the multiple
+model, it's not showing significance.
+And we can look at the correlations actually here.
+Here are the simple correlations between the
+predictors.
+And we see there's some significant correlations.
+For example, TV and sales--
+well, sales is the outcome.
+But in particular, radio and newspaper have a
+correlation of 0.35.
+So what's likely happened here is that any effect of
+newspaper has been soaked up by radio because they're
+correlated at 0.35.
+So with radio in the model, newspaper's no longer needed.
+It doesn't tell us anything more.
+It doesn't improve the prediction given we've
+measured the radio advertising.
+And that's because of the correlation being 0.35.
+And the other hand, it looks like TV and radio were pretty
+uncoordinated.
+And their effects are somewhat complimentary.
+So that completes our discussion of this example, in
+the next segment we'll talk about some important questions
+that arise when you use regression
+for real data analysis.
