@@ -4,10 +4,15 @@
 *Rapp.history
 *.Rhistory
 *.ipynb_checkpoints
+*.aux
+*.fdb_latexmk
+*.fls
+*.log
+*.gz
 
 # Folders
 /references
 
 # Media files
 *.mp4
-*.pdf
+#*.pdf
