@@ -1,0 +1,251 @@
+So that's one extension of the linear model.
+A number of extensions are interactions and
+non-linearity.
+We'll talk about interactions first.
+So in our previous analysis with advertising data, we
+assumed that the effect on sales of increasing one
+advertising medium is independent of the amount
+spent on the other media.
+So for example, in the linear model, we've
+got TV, radio, newspaper.
+It says that the average effect on sales of a one unit
+increase in TV is always beta 1 regardless of the amount
+spent on radio.
+But suppose that spending money on radio advertising
+actually increases the effectiveness of TV
+advertising, so that the slope term for TV should increase as
+radio increases.
+So in this situation, suppose we're given a fixed budget of
+$100,000, spending half on radio and half on TV may
+increase sales more than allocating the entire amount
+in either TV or to radio.
+So in marketing, this is known as a synergy effect, and in
+statistics, we often refer to it as an interaction effect.
+So here's a nice, pretty picture of the regression
+surface, sales as a function of TV and radio.
+And we see that when the levels of either TV or radio
+are low, then the true sales are lower than predicted by
+the linear model.
+But when advertising is split between the two media, then
+model tends to underestimate sales.
+And you can see that by the way the points stick out of
+the surface at the two ends, or below the
+surface in the middle.
+So how do we deal with interactions or include them
+in the model?
+So what we do is we put in product terms.
+So here we have a model where we have a term for TV and the
+term for radio, and then we put in a term that is the
+product of radio and TV.
+So we literally multiply those two variables together, and
+call it a new variable, and put a
+coefficient on that variable.
+Now you can rewrite that model slightly, as we've done in the
+second line over here.
+And we've just collected terms slightly differently.
+And the way we've written it here is showing that by
+putting in this interaction, we can interpret it as the
+coefficient of TV, which had been originally beta 1, is now
+modified as a function of radio.
+So as the values of radio changes, the coefficient of TV
+changes by amount beta three times radio.
+So that's a nice way of interpreting what this
+interaction is doing.
+And if you look at a summary of the linear model below,
+indeed we see that the interaction is significant,
+which we might have guessed from the previous picture.
+So in this case, the interaction really is
+significant.
+So the results in this table suggest that
+interactions are important.
+The p-value for the interaction is extremely low,
+so there's strong evidence in favor of the alternative here,
+that beta three, which was the coefficient for
+interaction, is not 0.
+We can also look at the R squared for the model with
+interaction, and it's jumped up to 96.8% compared to 89.7%
+by just adding this one extra parameter to the model.
+And we get that by adding an interaction
+between TV and radio.
+Another way of interpreting this is that we have 69% of
+the variability in sales that remains off to fit in that
+it's a model has it been explained by the interaction
+to because we went from 89.7 to 96.8 and if we think of
+that in terms of the fraction of unexplained variance, that
+69% of unexplained variance.
+The coefficient estimates in the table suggest that an
+increase in TV advertising of $1,000 is associated with an
+increased sales of--
+and we plug in the numbers for beta 1 in beta 3.
+It's 19 plus 11 times radio units.
+Sorry 1.1 times radio units.
+Alternatively, an increase in radio advertising of $1,000
+will be associated with an increase in sales of--
+so now we've written it the other way around.
+We factored it the other way around, and now thinking of
+the coefficient of radio as changing as a function of TV,
+and it'll be 29 plus 1.1 times TV units.
+So you can make either of those interpretations when you
+put an interaction in the model.
+Sometimes it's the case that an interaction term has a very
+small p-value, but the associated main effects-- in
+this case, TV and radio-- do not.
+But when we put an interaction in, we tend to leave in the
+main effects, and we call this the hierarchy principle.
+And so there it's stated if we put in an interaction, we put
+in the main effects, even if the p-values associated with
+the coefficients are not significant.
+So why do we do this?
+It's just that interactions are hard to interpret in a
+model without main effects--
+their mean: actually changes, and so it's just generally not
+a good practice.
+Another way of saying this is that the interaction term also
+contains main effects, even if you [? foot ?] the model with
+no main effect terms.
+So it just becomes more cumbersome to interpret.
+Now what if we want to put in the interactions between a
+qualitative and a quantitative variable?
+Turns out that actually easier to interpret, and
+we'll see that now.
+So let's look at the credit card data set again, and let's
+suppose we're going to predict balance, as before, and we're
+going to use income, which is a quantitative variable, and
+student status, which is qualitative.
+And so we'll have a dummy variable for student, which
+will be 1 if the person's a student, otherwise a 0.
+So without an interaction, the model looks like this.
+And we see we've got an intercept, we've got a
+coefficient for income, and then we're going to have beta
+2 is the person is a student, and 0 if the
+person's not a student.
+And another way to write that is a coefficient on income,
+and we just lump together the intercept and the dummy
+variable for student.
+And by grouping them like that, we can think of this as
+having a common slope in income, but a different
+intercept depending on whether the person is
+a student or not.
+And if a person as a student, the intercept is beta 0 plus
+beta 2, and if the person's not a student,
+it's just beta 0.
+So that's without an interaction.
+With interactions in the model, it takes the following
+form, but before we study this, let's just look at a
+picture of these two situations, because that'll
+make things clear.
+So in the left panel, we've got no interaction, and we see
+very clearly that there is a common slope for whether
+you're a student or not, but just the intercept changes.
+But if you put an interaction between the slop of income and
+student status, you're going to get both a different
+industry and the different slope.
+And so that makes it really simple
+explanation in this case.
+And if we look at the actual model, it looks like this.
+So we can write it in several different ways.
+And so this second term over here is showing us what
+happens with the interaction.
+And so, if you're a student, you get both a different
+intercept--
+that's beta 2--
+and you get a different slope on income-- which is beta 3.
+And if you're not a student, there's 0, which means you get
+the baseline intercept and slope.
+And you can rearrange those terms in the following fashion
+and it's telling you the same thing.
+So the interpretation of interactions with categorical
+variables and the associated dummy variables is more simple
+than even in the quantitative case.
+The other modification of the linear model is what if we
+want to include nonlinear effects?
+So here we've got the plot of two of the variables in the
+auto data set.
+So we've got miles per gallon against horsepower, and we've
+included three fitted models here.
+We've got the linear regression model, which is the
+orange curve over here.
+And you can see it's not quite capturing the
+structure in the data.
+And so to improve on that, what we've actually done is
+fit two polynomial models.
+We've fit a quadratic model, which is the blue curve, and
+you can see that better captures the curvature in the data than
+the linear model.
+And then we've also fitted a degree five polynomial, and
+that one looks rather wiggly.
+So we have an ability to fit models of different
+complexity, in this case, using polynomials.
+And these are very easy to do.
+So just like we created an artificial dummy variable for
+categorical variables, we can make extra variables to
+accommodate polynomials.
+So we make a variable horsepower squared, which we
+just include in our data set, and now we fit a linear model
+with the coefficient for horsepower, and a coefficient
+for horsepower squared.
+And of course that's a polynomial expression, and
+we'll notice that that improves the fit.
+We do the summary, and we see that the coefficient of both
+horsepower and horsepower squared are strongly
+significant.
+And so you can do this, you can add a cubic term as well,
+and in the previous example, we went all the way up to a
+polynomial of degree five.
+So that's a very easy way of allowing for nonlinearities in
+a variable, and still use linear regression.
+We still call it a linear model, because it's actually
+linear in the coefficients.
+But as a function of the
+variables, it's become nonlinear.
+But the same technology can be used to fit such models.
+So that expands the scope of linear regression enormously.
+OK so we've reached the end of the session.
+If you're reading along in the chapter, you'll see there's
+some topics we didn't cover.
+We didn't cover outliers.
+There's non-constant variance of the error terms.
+High leverage points, which means if you've got points of
+observations in x that really stick out far from the rest of
+the crowd, what effect they have on the model.
+And colinearity, if you have variables that are very
+correlated with each other, what happens if you include
+them in the model.
+So we're not going to cover those here, but they're
+covered in some detail in the book, and if you look at
+section 3.33, you'll find coverage on that.
+OK, so that finishes our coverage of linear models.
+There are a lot of generalizations of linear
+model, and as I've hinted at [INAUDIBLE], it's actually
+quite a powerful framework.
+So we used similar technology for classification problems,
+and that will be discussed in next.
+So we'll be doing logistic regression and support vector
+machines, which also have linear models underneath the
+hood, but expand the scope greatly of linear models.
+And then we'll cover non-linearity.
+So we'll talk about techniques like kernel smoothing, and
+splines, and generalized additive models, some of which
+are also just extensions of linear models, and some of
+which are richer form of modelling that are for
+non-linearities in a more flexible way.
+We covered some simple interactions in linear models
+here, but we'll talk about much more general techniques
+for dealing with interactions in a much more systematic way.
+And so there we'll cover tree-based methods, and then
+some of the state-of-the-art techniques, such as bagging,
+random forests, and boosting, and these also captured
+non-linearities.
+And these really bring our bag of tools up to what we call
+state-of-the-art.
+And then another important class of methods we will
+discuss use what's known as regularized fitting.
+And so these include ridge regression and lasso.
+And these have become very popular lately, especially
+when we have data sets where we have very large numbers of
+variables--
+so-called wide data sets, and even linear models are too
+rich for them, and so we need to use methods to control the
+variability.
+And so that's all still to come, and so we have lots of
+nice things to look forward to.
