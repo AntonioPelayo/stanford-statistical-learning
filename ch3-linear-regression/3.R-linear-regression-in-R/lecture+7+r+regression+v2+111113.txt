@@ -1,0 +1,413 @@
+OK, we're going to have an R session now in RStudio.
+We've learned about some techniques for fitting linear
+regression models.
+And now we're going to see how we do it in R.
+So you'll see I've got a session open in RStudio with
+some commands that I've already typed in.
+And I'm just going to go through these with you.
+And we'll see some of the features in R for fitting
+regression models.
+OK, here we are.
+We've got a script window over here.
+And we'll send commands down to the console.
+So first, we'll do library(MASS) which has some
+data sets that we're going to access.
+And then we'll go library(ISLR), which is our
+own library with data sets used in the book.
+So first of all, we'll do simple linear regression.
+So one of the data sets is the Boston data.
+And it's got a bunch of variables.
+And if you say names of Boston, you see all the names
+of the variables.
+Well, they're abbreviated names.
+And so if you want more detail, you're going to ask
+for help on Boston.
+So we do that by putting a question mark before Boston.
+Boston is a data frame.
+And in the right panel now, we see the help
+file for the Boston.
+So we see it's housing values in suburbs of Boston.
+It's got 506 rows and 14 columns.
+And it now tells you details about each of the variables.
+So crim, for example, is per capita crime rate by town.
+zn is proportion of residential land zoned for
+lots over 25,000 square feet, and so on, if
+you go down the list.
+And these are all features about these regions in Boston.
+And they are summary features that describe the
+socio-economic conditions in those regions.
+lstat, lower status of the population, percentage, it's a
+percentage of the population in that region
+that's of lower status.
+And medv is median value of owner
+occupied homes in $100,000.
+So you can do help on data frames.
+So the first thing we do is we put a linear model--
+oh, I beg your pardon.
+The first thing we do is plot some variables.
+So we'll plot medv and lstat, the two variables we just
+mentioned, and comma Boston, which tells the plot function
+to find those variables in the data frame Boston.
+And by using a twiddle between medv and lstat, you're
+actually telling it that really the response is medv,
+that's the median housing value.
+It's going to put that on the vertical axis.
+And so there's the plot on the right.
+And sure enough, as the lower status in the region
+percentage increases, the median
+housing value decreases.
+We'll fit a linear model now to those data.
+And you'll see the formula is the same as
+we used in the plot.
+And we call that fit one.
+And there it's fit.
+And then we'll print it out.
+And it gives us an intercept and a coefficient.
+And sure enough, the coefficient is negative.
+As you can see, there's a negative relationship.
+So printing out a linear model fit gives you
+a very brief summary.
+And for a more detailed summary, you can
+say summary of fit.
+And when we do that, we get a lot more.
+So we get residuals.
+Some of it has got cut off here.
+If you just look up, you'll see you get the call that
+created the fit.
+And then you get the coefficients, their standard
+errors, t-values, and p-values.
+And both of these are very significant.
+We're typically not interested too much in the intercept.
+It's the coefficient of lstat that we're interested in here.
+And it's negative, and very significantly so.
+And then there's some other submarine material underneath,
+which we'll maybe touch on a bit later.
+So notice in the formula here, we had the response on the
+left-hand side.
+Twiddle means is modeled as.
+And then lstat is the single predictor in this case.
+And then we give the name of the data frame where these
+variables can be found.
+So that's the standard format for fitting linear models.
+And there are other options, too.
+But for the moment, we won't need them.
+Now, we can add that linear model fit to the plot.
+And there's a function called abline in R, which is able to
+pick up a linear model and just do that.
+And you'll see in the right-hand plot, it was
+augmented with the line that corresponds to the fit.
+Now, we've done various things with the fit.
+We've plotted it with this abline.
+We've looked at it with summary and with print by just
+printing its name.
+You can see what other components are on it.
+Actually, it has got quite a few components.
+These are largely to do with the details
+of fitting the model.
+And we won't trouble ourselves too much with them.
+But basically, you can see the coefficients on the fit.
+And that was picked up by the summary.
+And then a whole lot of other things that are used rather
+internally, so we won't really concern ourselves with them.
+confint finds your confidence interval for the fit.
+And in this case, it gives a confidence interval for the
+coefficients.
+And by default, it gives the lower 25% and
+upper 97.5% a balance.
+So this is a 95% confidence interval for each of those
+coefficients.
+The predict function is another one of these methods
+where we can use to query a linear model fit.
+In this case, we're going to predict with three new values
+for lstat, or three particular values, five, 10, and 15.
+And we're going to not only ask for predictions, we're
+going to ask for a confidence interval.
+So those are additional arguments to predict.
+And when we do that, we get the fit at those three values,
+and then the lower confidence interval, and the upper
+confidence band.
+So you can give as many values here as you like and get those
+lower and upper values.
+So that's simple linear regression.
+Let's move on to multiple linear regression.
+And now we fit a linear model, fit2, which is going to be a
+linear model with lstat and age.
+And we separate those with a plus in the right-hand side of
+the formula.
+And we can fit that and do a summary.
+Well, it's much like we had before, except now we've got
+two coefficients, two standard plus intercepts, so three
+altogether, with their standard errors,
+t-value, and p-values.
+And age is also significant, quite strongly so, but not as
+significant lstat.
+One of the things down below is the r squared, which we
+talked about as well, for the model.
+Remember, r squared, it's the higher the better.
+It's a percentage of variance explained.
+And it also gives you a summary of the model.
+The f statistic is the f statistic that we'll obtain if
+we dropped out both of the predictors in this model.
+Fit3, we're going to fit a linear model
+with response medv.
+And it goes twiddle dot.
+And what that signifies is that we're supposed to use all
+the other variables in the Boston data frame except medv,
+which is the response, and all the others will be predictors.
+And sure enough, when we do a summary of that model, you see
+there's a lot of coefficients.
+And they each get their estimate, their standard
+error, the t-value, and the p-value.
+Most of them are significant.
+Some are not.
+Age, now, is no longer significant.
+So age, when it was in the model just with lstat, was
+significant.
+But now it's in the model with all these other predictors.
+And it's no longer significant.
+What that means is there's basically a lot of other
+predictors that are very correlated with age.
+And in the presence of them, age is no longer required.
+Let's do a plot.
+You can plot linear models.
+I made a two by two layout, because I know that four plots
+get produced when you do a plot.
+These are a little small here.
+But we can see what's going on.
+These give you various views of the linear model.
+The first one is the residuals against the fitted values.
+The vector fitted values is just a single vector.
+So we can plot the residuals against that.
+And the reason we do that is we are looking for
+non-linearities.
+And we kind of know there's a non-linearity in this one.
+We saw that in the very first plot.
+And by the curve in the residuals here, we can see
+that the model is not quite capturing everything
+that's going on.
+There seems to be some non-linearity.
+And these other plots, which are somewhat beyond the scope
+of what we're doing here today, that give you aspects
+of the linear model fit.
+This one here, this lower left one, is the square root of the
+absolute standardized residuals.
+One plots this to see, perhaps, if the variance is
+changing with the mean or the fit.
+In this case, it looks like there may be some
+relationship there.
+But that could be a result of a non-linearity that we seem
+to have missed in the model.
+Update is a nice command.
+You fit a model, fit3, and you can update it.
+And in this case, we're going to update.
+The formula we give is twiddle dot minus age.
+Twiddle means--
+nothing on the left means we're going to
+use the same response.
+Dot means whatever the model was in fit3.
+That's replaced in dot.
+And minus age means we want to remove age.
+And minus indus, we want to remove indus as well.
+So this will fit the model with those two variables
+removed, all the others in.
+And sure enough, if we do the fit, we see that those two
+variables are out.
+And now everything that's left in the model appears to be
+significant.
+OK, moving on, non-linearities and interactions.
+The first thing we'll do is make a fit where we put an
+interaction between lstat and age.
+And that we do with a star, sort of like multiply.
+But in this formula language, it means an interaction.
+And we've just got those two variables in the model.
+And so when we do a summary of the fit, we see that we get a
+main effect for lstat, a main effect for age, and then the
+interaction, which here is represented as a colon.
+So that star in the formula means that we're going to have
+main effects for each and the interaction.
+And the pure interaction is indicated by a colon.
+And while the main effect for age is not significant here,
+the interaction is somewhat significant.
+The next thing we do here is we fit lstat.
+And we saw that there was a non-linear looking scatter
+plot between medv and lstat.
+And so here we explicitly put in a quadratic term.
+And there's two things going on here.
+The one is we've--
+the quadratic we indicate by lstat power two.
+But power has a meaning in this formula language.
+And so if you want it to mean actually just raise lstat to
+the power of two, we protect it with
+this identity function.
+So the formula language doesn't dig inside this
+identity function.
+So it literally puts in the square of lstat.
+And the other thing that's going on here is we've put two
+commands in one line, which you can do in R. But you have
+to separate them with a semi-colon.
+So you can have as many commands in one line as you
+like, but separate them with semi-colons.
+And so both of those commands got executed now.
+And sure enough, no surprise, both coefficients are strongly
+significant, the linear and the quadratic.
+So now we're going to plot this.
+What I do now is attach Boston.
+We've seen this before.
+That means that the named variables in Boston are
+available in our data space.
+It just makes it easier for making nice looking plots.
+We go back to a single pane plot layout.
+So par (mf row=c(1,1).
+That means a one by one layout.
+And now we'll plot our two variables.
+There they are.
+We've seen that plot before.
+And now we'll include the quadratic fit.
+Now, we can't use abline anymore, because that only
+works when you've got a straight line fit.
+Now, we need to somehow get the fitted values from our
+quadratic fit and include them in the plot.
+And so we do that with a points command.
+And the first argument is lstat itself.
+The second argument are the fitted values from fit6.
+That was our quadratic fit.
+So the fitted values are for each value of lstat, it's the
+fitted value from the model.
+So that's exactly what we want.
+And that will be plotted as a series of points.
+And we tell it the color should be red.
+And the pch, which is the plotting
+character, is to be 20.
+Let's see what it does for us first.
+Well, it puts the quadratic fit in the plot.
+It looks like the plotting character 20 is a
+little round ball.
+We'll have a little look in a moment and see a bit more
+about that.
+Before we do that, there's an easier way of fitting
+polynomials.
+And that's to use a poly function in R. So here we're
+going to fit medv as a polynomial of
+degree four in lstat.
+And we'll add that to the plot with color blue.
+And you can see that the fourth degree polynomial is
+getting a little bit too wiggly.
+It's starting to over-fit the data a little bit, especially,
+you can see in the right tail over here, it's maybe going
+after these rather isolated points here.
+So before we end, let's have a look at what plotting
+characters are available.
+So here's a simple way of seeing them all; plot one to
+20 and plotting characters one to 20.
+We can see the whole lot.
+And there you see them.
+And so you have available a whole bunch of plotting
+characters, actually more than these.
+And number 20 was, sure enough, this one over here.
+And cx=2 means that we want to enlarge those plotting
+characters by 2.
+We want to double the size.
+Qualitative predictors, so car seats is another
+one of the data sets.
+So the command fix is a way of throwing up an editor in R. So
+you can actually look at the data that you're about to use.
+So it will throw up a data frame and allow you to use it.
+So here's the car seats data frame thrown up on the screen.
+It may be a little bit small for you to use.
+I just wanted to show you that.
+I'll quit out of that, get back to our RStudio session.
+So that's one way of seeing the data.
+There's the names of car seats.
+And so this was a study on children's car seats.
+You can also do a summary of a data frame.
+And for each variable, it tells you something about the
+values in the data frame for that variable.
+And you can see, for quantitative variables, it
+gives you summaries like the mean, the median, and upper-
+and lower-quantiles But for categorical or quantitative
+variables, it actually gives you a table of
+the distinct values.
+So ShelveLoc is a qualitative variable in this case.
+So we'll fit a model for the car seats' data.
+And the first call is sales twiddle dot.
+It means everything in the frame but sales.
+Plus we're going to add in interactions between income,
+and advertising, and age, and price.
+And we do that.
+And sure enough, there we get the model.
+And there's, again, a bunch of significant variables.
+And there's those two interactions we put in.
+And income and advertising appears to be strongly
+significant.
+But price and age is not.
+ShelveLoc was a qualitative variable.
+If you look at contrasts function, it shows you how R
+will code that variable when it's put in a linear model.
+And in this case, it's a three-level factor.
+And so it puts in two dummy variables.
+And the values are, if ShelveLoc is
+bad, zero for both.
+If it's good, the first one is one.
+And the second one is zero.
+If it's medium, see they're named actually good and
+medium, zero and one.
+And so bad is not neither good nor medium.
+So that's zero on both.
+So that you can actually find out how R codes
+quantitative variables.
+So the final thing we'll do here is see some examples of
+writing R functions.
+So let's write a little R function to fit a regression
+model and make a plot.
+So we start off by saying regplot is equal to function
+of xy, open curly brace.
+So that open curly brace indicates that we're going to
+start giving the code in our function.
+And the x and y says our function is going to take
+arguments x and y.
+And so the first thing we do is we're going to fit a linear
+model between y and x.
+Then we're going to plot xy.
+And then we're going to abline the fit with color equals red.
+And then close curly brace, that's
+the end of our function.
+OK, so that's a very simple little
+function, which we've written.
+And so now, let's try it out.
+We'll attach car seats.
+And we'll do a regplot of price and sales.
+So it takes two arguments, we've given
+it price and sales.
+And you see the plot on the right, red plot silently went
+off and did that and produced the plot and put in the line.
+Well, let's make our function a little bit more useful.
+And you can see I'm defining with essentially the same
+commands, but I've added a dot dot dot in the argument.
+And this is a very useful construct in R
+when writing functions.
+Dot dot dot means these are unnamed arguments.
+But you're allowed to add extra arguments.
+And they'll get passed on exactly as they supplied
+wherever they are used inside the function.
+And here I have passed them on to the plot function.
+And what that does is it allows us to add extra
+arguments to the plot function via our regplot.
+And so now when we make the call, we call regplot price
+and sales, and we give it x lab and y lab.
+So that tells it how to annotate the labels, the axes
+of the plot.
+And we add some color and other information.
+So regplot just called the axes x and y.
+Meanwhile, our variables were price and sales.
+Now, when we make the plot, you see the plot points were
+colored in blue.
+And the axes were labelled.
+So that's a little introduction to some of the
+linear model software in R. The scope is really large.
+And there's many other things you can do.
+But as always, with software, you've got to start at the
+beginning and get your hands dirty.
+And so we've done that a little bit here.
+And I encourage you to play with this yourself and explore
+the functions, use the help files, and see
+how far you can get.

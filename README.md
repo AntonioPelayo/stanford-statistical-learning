@@ -9,15 +9,17 @@ in the book.
 Started February 23, 2020 
 - [x] 1 Introduction - March 1, 2020
 - [x] 2 Statistical Learning - March 2, 2020
-- [ ] 3 Linear Regression - Projected March 6, 2020 
-  - [x] 3.1 Simple Linear Regression - March 1, 2020 
-  - [x] 3.2 Hypothesis Testing and Confidence Intervals - March 2, 2020
-  - [x] 3.3 Multiple Linear Regression - March 3, 2020
-  - [x] 3.4 Some Important Questions - March 4, 2020 
-  - [x] 3.5 Extensions of the Linear Model - March 9, 2020
-  - [ ] 3.R Linear Regression in R
-  - [ ] Exercises
-- [ ] 4 Classification  
+- [x] 3 Linear Regression - March 11, 2020 
+- [ ] 4 Classification
+  - [ ] 4.1 Introduction to Classification Problems 
+  - [ ] 4.2 Logistic Regression 
+  - [ ] 4.3 Multivariate Logistic Regression
+  - [ ] 4.4 Logistic Regression - Case-Control Sampling and Multiclass
+  - [ ] 4.5 Discriminant Analysis
+  - [ ] 4.6 Gaussian Discriminant Analysis - One Variable
+  - [ ] 4.7 Gaussian Discriminant Analysis - Many Variables
+  - [ ] 4.8 Quadratic Discriminant Analysis and Naive Bayes
+  - [ ] 4.R Classification in R
 - [ ] 5 Resampling Methods 
 - [ ] 6 Linear Model Selection and Regularization
 - [ ] Moving Beyond Linearity 
@@ -26,5 +28,5 @@ Started February 23, 2020
 - [ ] 10 Unsupervised Learning
 
 ### Progress
-21% of total
+23% of total
 ![](online-course-progress.png)
