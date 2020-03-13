@@ -1,0 +1,213 @@
+Welcome back.
+So in the last section of the course, we talked about the
+situation where the response was quantitative, a
+regression.
+In this section, we're going to talk about classification
+where the response variable has got two or more values.
+And this is actually a very commonly occurring problem--
+actually, probably more commonly occurring than
+regression.
+In machine learning, especially, there's a big
+concentration on classification where, for
+example, we're trying to predict whether an email is a
+good email or spam, or in a medical area, trying to
+predict whether a patient is going to survivor or die with
+a given disease.
+So it's a very commonly occurring
+problem, and very important.
+So we're going to spend some time today on this, actually
+in the next set of lectures, on classification.
+And Trevor and I are both here.
+Trevor's going to give most of the talk.
+And I'm going to pipe in and correct him when he makes
+mistakes and make fun of his accent and things like that.
+That means we won't hear much from you, no?
+We'll see.
+Anyway, let's go to the slides.
+The first thing we do is just show you what categorical
+variables look like.
+I'm sure you know-- so for example, eye color.
+That takes on three values-- brown, blue, and green.
+Those are discrete values.
+There's no ordering.
+They're just three different values.
+Email we've talked about already.
+There's spam and ham.
+I like that word, ham.
+I like ham myself.
+I wish I had thought of it.
+Anyway, ham is good email.
+So spam filters need to classify into spam or ham.
+So what is a classifier?
+Well, you've got a feature vector X, just like we had in
+regression.
+And now, you have one of these qualitative response variables
+like those above.
+And here's the mathy description of a classifier.
+The response takes values in a set C, which is a set of
+discrete values.
+And the classification task is to build a function that takes
+X as input and delivers one of the elements of the set C. And
+so this is how we write it in math language--
+C of X gives you values in the set C.
+So for example, in the spam/ham problem, C of X would
+either come back as spam or ham.
+Now, although classification problems are always couched in
+this form, we're often more interested in estimating the
+probabilities that X belongs to each category C. So for
+example, it's more valuable for an insurance company to
+have an estimate of the probability that an insurance
+claim is fraudulent than a classification
+fraudulent or not.
+You can imagine, in the one situation, you might have a
+probability of 0.9 the claim is fraudulent.
+And in another case, it might be 0.98.
+Now in both cases, those might both be above the threshold of
+raising the flag that this is a fraudulent insurance claim.
+But if you're going to look into the claim, and you're
+going to spend some hours investigating, you'll probably
+go for the 0.98 first before the 0.9.
+So estimating the probabilities is also key.
+OK, so here's some data.
+Two variables--
+this is the credit card default data set that we're
+going to use in this section.
+And the part on the left here is a scatter plot of balance
+against income.
+So those are two of the variables.
+And as we can with classification problems, we
+can code the response variable into the plot as a color.
+And so here, we have the blue points and the brown points.
+And the brown points are going to be those that defaulted.
+And the blue points are those that did not.
+Now, this is a fictitious data set.
+Typically, you don't expect to see that many defaulters.
+But we'll talk about balance in classification tasks a
+little bit later as well.
+So in this plot, it looks like balance is
+the important variable.
+Notice that there's a big separation between the blues
+and the browns, the defaulters and those that didn't, OK?
+Whereas with income, there doesn't seem to be much
+separation at all, OK?
+In the right, we actually show box plots
+of these two variables.
+And so we see, for example, for default, there's--
+oh, I beg your pardon.
+Default is at the bottom-- no or yes, no, yes in both cases.
+We've got balance, and we've got income.
+And here, we also clearly see that there's a big difference
+in the distributions--
+balance default or not, whereas for income, there
+hardly seems to be any difference.
+I've never seen a box plot before.
+What is that?
+Oh, you tell me, Rob.
+OK, well, a box plot, what's indicated there--
+Trevor, you can point--
+the black line is the median.
+There's a black line.
+That's a median.
+So that's the median for the S, the median income for
+people who have defaulted.
+And then, the top of the box are the quartiles.
+That's the 75th quartile, 75th percentile, quartile.
+And the 25th is the bottom of the box.
+So really, it's a good summary of the distribution of income
+for those in category yes.
+What about these things at the end, Rob?
+OK, I think they're called hinges.
+They are called hinges.
+And those are the ranges, are they, or approximately the
+ranges of the data?
+Yeah, I think a hinge is defined to be a fraction of
+the interquartile range.
+And so it gives you an idea of the spread of the data.
+And if data points fall outside the hinges, they're
+considered to be outliers.
+By the way, it's a very useful data display.
+Almost one of the first things you should do when you get
+some data to analyze is do some scatter plots and create
+some box plots.
+Who invented the box plot, Rob?
+John Tukey.
+John Tukey, one of the most famous statisticians--
+he's no longer with us, but he's left a big legacy behind.
+OK, well, one question we can ask is, can we use linear
+regression to solve classification problems?
+It seems like we may be able to.
+So supposed for the default classification task that we
+code the response 0 if no default, 1 if
+yes default, right?
+It's somewhat arbitrary, but 0 and 1 seem sufficient.
+And then, we could simply perform a linear regression of
+Y on X with X being the two predictors in this case, and
+classify as yes if Y hat is bigger than 0.5, 50%, right?
+0.5 is halfway between 0 and 1.
+It seems like a reasonable idea.
+It turns out that you actually can do this.
+For a binary outcome, linear regression does a pretty good
+job and is equivalent to linear discriminant analysis.
+And that's something we're going to discuss later.
+So for a two class classification problem like
+this, it doesn't do a bad job at all.
+And there's even some theoretical justification.
+In the population, remember, in the population, we think of
+regression as estimating the conditional mean of Y given X.
+Well, in our coding here of 0 and 1, the conditional mean of
+the 0, 1 variable given X is simply the probability that Y
+is 1 given X just by simple probability theory.
+So for that reason, you might think that regression is
+perfect for this task.
+What we're going to see, however, is that linear
+regression might actually produce probabilities that
+could be less than 0, or even bigger than 1.
+And for this reason, we're going to introduce you to
+logistic regression, which is more appropriate.
+And here's a little picture that illustrates it.
+Here, we've got out balance variable.
+Now, we've plotted against balance.
+We've plotted the 0's at the bottom as little dashes here,
+the browns.
+And the little brown spikes are all clumped together at
+the bottom.
+And the 1's are plotted at the top here.
+And we see the separation.
+The brown 0's are towards the left of balance.
+And the 1's are towards the right.
+And the blue line is a linear regression line.
+And lo and behold, it goes below 0.
+So that's not a very good estimate of a probability.
+It also seems not to go high enough on the right-hand side
+where it seems clear that there's a preponderance of
+yeses on the right-hand side.
+In the right-hand plot, we've got the foot of logistic
+regression.
+And it seems to do a pretty good job in this case.
+It never gets outside of 0 and 1, and it seems to go up high
+where it's meant to go up high.
+So it seems things aren't looking terrific for linear
+regression in terms of estimating probabilities.
+So now, what happens if we have a
+three category variable?
+So here's a variable that measures the patient's
+condition at an emergency room and takes on three levels.
+So it's 1 if it's a stroke, 2 if it's a drug overdose, and 3
+if it's an epileptic seizure.
+So if we code those as, say, 1, 2, and 3, which would be an
+arbitrary but natural choice, this coding might suggest an
+ordering when in fact there's not necessarily an ordering
+here at all.
+And it might in fact imply that the difference between
+stroke and drug overdose, which is one unit, is the same
+as the difference between drug overdose
+and epileptic seizure.
+So when you have more than two categories, assigning numbers
+to the categories just arbitrarily seems a little
+dangerous, and especially if you're going to use it in
+linear regression.
+And it turns out linear regression is
+not appropriate here.
+And for problems like this, we're going to prefer
+multiclass logistic regression or discriminant analysis.
+And both of those we will discuss.
