@@ -1,0 +1,187 @@
+OK, logistic regression.
+So now we're going to get a little bit more mathy.
+Let's, for shorthand, write p of X for the probability that
+y is 1 given X. And we're going to consider our simple
+model for predicting default, yes or no, using balance--
+one of the variables.
+So single variable.
+So here's the form of logistic regression.
+So that e is the scientific constant, the exponential
+value, and we raise e to the power of a linear model.
+We've got a beta 0, which is the intercept, and beta 1 is
+the coefficient of x.
+And you see that appears in the numerator and in the
+denominator, but there's 1 plus in the denominator.
+So it's a somewhat complicated expression, but you can see
+straight away that the values have to lie between 0 and 1.
+Because in the numerator, e to anything is positive.
+And the denominator is bigger than the numerator, so it's
+always got to be bigger than 0.
+And you can show that's it's got to be less than 1.
+When beta 0 plus beta x gets very large, this approaches 1.
+So this is a special construct, a transformation of
+a linear model to guarantee that what we get out is a
+probability.
+So that's called the logistic regression model.
+And actually, the name "logistic" comes from the
+transformation of this model.
+So this is a monotone transformation.
+We take log of p of X over 1 minus p of X and out pops our
+linear model.
+And that transformation is called the log odds or the
+logit transformation of the probability.
+And this is the model that we're going to
+talk about right now.
+To summarize, we got a linear model still.
+But it's modeling the probabilities on
+a non-linear scale.
+And so back to our picture again.
+The picture on the right was produced by a logistic
+regression model and that's why the probabilities lie
+between 0 and 1.
+So we've written down the model, how do we estimate the
+model from data?
+Well, the popular way is to use maximum likelihood.
+Maximum likelihood was introduced by who, Rob?
+Me, actually.
+Oh, you?
+Yes, just last week.
+Did you reinvent it?
+I didn't realize--
+actually, yeah.
+Because the correct answer is Fisher back in the 1920s,
+Ronald Fisher.
+Fisher.
+Ronald Fisher, a very famous statistician, invented a lot
+of the tools that we use in modern applied statistics, and
+maximum likelihood is one of them.
+Well, the way maximum likelihood works is you've got
+a data series of observed 0's and 1's and you've got a model
+for the probabilities.
+And that model involves parameters.
+In this case, beta 0 and beta.
+So for any values of the parameters, we can write down
+the probability of the observed data.
+And since each observation is meant to be independent of
+each other one, the probability of observed data
+is the probability of the observed
+string of 0's and 1's.
+So wherever we observed a 1, we write down the probability
+of a 1, which is p of x.
+So if xi, i f observation i was a 1, the probability is p
+of xi, and we write that down.
+And since they're all independent, we just multiply
+these probabilities.
+And these are the probabilities of a 0, which is
+1 minus the probability of a 1.
+So this is the joint probability of the observed
+sequence of 0's and 1's.
+And of course, it involves the parameters.
+And so the idea of maximum likelihood is pick the
+parameters to make that
+probability as large as possible.
+Because after all, you did observe the
+sequence of 0's and 1's.
+And so that's the idea.
+Simple to say, not always simple to execute.
+But likely, we have programs that can do this.
+And for example, in R, we've got the glm function, which in
+a snap of a finger will fit this model for you and
+estimate the parameters.
+And in this case, this is what it produced.
+The coefficient estimates were minus 10 for the intercept and
+0.0055 for the slope for balance.
+That's beta and beta 0.
+So there are the coefficient estimates.
+It also gives you standard errors for each of the
+coefficient estimates.
+It computes a Z-statistic and it also gives you P-values.
+I think I just realized something.
+So you had a picture a couple slides ago of a curve?
+Yes.
+And is that how you found--
+I was wondering how you found the parameters for that curve.
+Is that how you found--
+That's exactly right, Rob.
+So this curve over here is the curve corresponding to those
+estimates that we just produced in the table.
+And you might be surprised because the slope is very
+small here.
+Yet, it seemed to produce such a big change in the
+probabilities.
+That may be a typo?
+Or, is it?
+I certainly hope not.
+But let's look a bit closer.
+Look at the units of balance.
+They're in dollars.
+So we got $2,000, $2,500.
+And so the values of the coefficients, which are going
+to multiply that balance variable, they sort of take
+into account the units that are used.
+So this is 0.005 per dollar, but it would be 5
+per thousand dollars.
+So slopes, you have to take the units into account.
+And so the Z-statistic, which is a kind of standardized
+slope, does that.
+And then if we look at the P-value, we see that the
+chance that actually this balance slope
+is 0 is very small.
+Less than 0.001.
+So both intercept and slope strongly
+significant in this case.
+How do I interpret that P-value for the intercept?
+Do I care about that?
+We usually don't care so much about the
+P-value for the intercept.
+The intercept's largely to do with the preponderance of 0's
+and 1's in the data set.
+And so that's of less importance.
+That's just inherent in the data set.
+It's the slope that's really important.
+What do we do with this model?
+We can predict probabilities.
+And so let's suppose we take a person with
+a balance of $1,000.
+Well, we can estimate their probability.
+So we just plug in the $1,000 into this formula over here.
+And notice I've put hats on beta 0 and beta 1 to indicate
+that they're now being estimated from the data.
+Put a hat on the probability.
+And yeah, we've plugged in the numbers and we use our
+calculator or computer and we get 0.006.
+So somebody with a balance of $1,000 has a probability or
+0.006 of defaulting.
+In other words, pretty small.
+What if they've got a credit card balance of $2,000?
+That means they owe $2,000 rather than $1,000.
+Well, if we go through the same procedure, now the
+probability has jumped up to 0.586.
+So it's got much higher.
+And you can imagine if we put in $3,000,
+we'd get even higher.
+Let's do this again using some of the other variables.
+We haven't seen student yet, but one of our
+predictors is student.
+And it's a binary variable in this case.
+It's a yes or no variable.
+Is the credit card owner a student or not?
+And so we code that as a 0, 1 variable and we fit a simple
+logistic regression model.
+And it gets a coefficient of 0.4049.
+And that's also significant.
+OK, let's do it again using the variable
+student as a predictor.
+This is a binary variable.
+Is the credit card holder a student or not?
+And we find we get a coefficient of 0.4049 in this
+case, which is also significant.
+So this is another variable in our database.
+And just like before, we can evaluate the probability of
+default is yes.
+Given that the card holder is a student, it
+comes out to 0.04.
+And if they're not a student, it comes out to be a bit
+lower, 0.029, close to 0.03.
+And we're going to examine the interactions between student
+and balance and the other variables in a little while.

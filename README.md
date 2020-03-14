@@ -12,7 +12,7 @@ Started February 23, 2020
 - [x] 3 Linear Regression - March 11, 2020 
 - [ ] 4 Classification
   - [x] 4.1 Introduction to Classification Problems - March 13, 2020
-  - [ ] 4.2 Logistic Regression 
+  - [x] 4.2 Logistic Regression - March 14, 2020
   - [ ] 4.3 Multivariate Logistic Regression
   - [ ] 4.4 Logistic Regression - Case-Control Sampling and Multiclass
   - [ ] 4.5 Discriminant Analysis
@@ -28,5 +28,4 @@ Started February 23, 2020
 - [ ] 10 Unsupervised Learning
 
 ### Progress
-25% of total
-![](online-course-progress.png)
+26% of total online course
