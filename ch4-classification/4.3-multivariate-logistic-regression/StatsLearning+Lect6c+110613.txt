@@ -1,0 +1,197 @@
+So that's a good segue into what do we do when we have
+more than one variable.
+The two models we've considered so far just perform
+logistic regression with single variables.
+But of course, if we've got a collection of variables, we
+want to take them all into account.
+And so, in that case, we're going to build a multi-variant
+logistic regression model.
+So the transformation of the probability is the same as we
+had before, except now we've got a general linear model
+with an intercept and a coefficient
+for each of the variables.
+And if you invert that transformation, that, again,
+gives you a form for the probability that's guaranteed
+to be between zero and one.
+Well, we can fit that using glm and r
+just like we did before.
+And we'll through in our variable balance as well, and
+income, and the student variable.
+And now, we get three coefficients, three standard
+errors, three z statistics, and three p values.
+And the first thing we see here is that as they were in
+the single variable case, balance and student are
+significant.
+Income is not significant.
+So it seems like two of the variables are important.
+But here's something rather striking.
+We know this at the coefficient for student is
+negative while it was positive before.
+So before, when we just measured student on its own,
+it had a positive coefficient.
+But when we fit it in a multivariate model, the
+coefficient is negative.
+Do you think this is an error, Rob?
+I don't think so.
+So how could that happen?
+Well, remember the last time we talked about in regression
+models how difficult it is to interpret coefficients in a
+multiple regression model, because the correlations
+between the variables can affect the signs.
+So there's going to be--
+we're going to see now the role of
+correlations in the variables.
+So here's a picture.
+There we see credit card balance.
+And we see the default rate the vertical axis.
+And the student center of, let's see--
+so students status, brown is yes and blue is no.
+So students tend to have higher balances than
+non-students.
+So their marginal default rate is higher than for
+non-students.
+Because we just saw that.
+Balance plays a role.
+But what we see in this plot on the left is that for each
+level of balance, students default less than
+non-students.
+So when you just look at student on its own, it's
+confounded with balance.
+And the strong effect of balance makes it looks like
+students are worse defaulters.
+But this plot explains it all.
+For each level of credit card balance, if we look separately
+for students and non-students, students tend to have a lower
+default rate.
+And so that we can tease out by multiple logistic
+regression, which takes these correlations into account.
+Let's move on to another example with more variables.
+We talked about this example in the introduction.
+This is a South African heart disease data set.
+Remember, South Africans eat a lot of meat.
+Rob, did I ever tell you the story about the
+South Africans and--
+More than once.
+More than once.
+I think Rob doesn't want to hear the story again.
+Any way, they do eat a lot of meat.
+So they did a study in South Africa.
+It was a retrospective study.
+They went and found 160 cases of white males who'd had
+myocardial infarction, which is a fancy
+name for a heart attack.
+And amongst the many people who hadn't had a heart attack,
+they took a sample of 302 controls.
+It's called a case control sample.
+And for these people, they were all white males in the
+age range 15 to 64.
+And they were from this Western Cape
+region of South Africa.
+This was done in the early 1980s.
+So in this region, the overall prevalence was very high for
+heart disease, 5.1%, which is very high risk.
+So in the study we have measurements on seven
+predictors or, in this case, known as risk factors.
+And they show in the scatter plot matrix, which I'll show
+you right here.
+Remember, the scatter plot matrix is a very nice way of
+plotting every variable against every other variable.
+And now, because it's a classification problem, we can
+code into the plot the heart disease status.
+And so the brown or red points here are those cases that had
+heart disease.
+And the blue points are the controls.
+And look at the top plot, for example, if you were high in
+tobacco usage and your systolic blood pressure is
+high, you tend to be a brown point.
+To those are the people who tended to have heart attacks.
+So each of these plots shows a pairwise plot of two of the
+risk factors and codes in the heart disease status.
+You forgot one risk factor.
+What was that?
+Talking with a funny accent.
+Talking with a funny accent.
+We've all got that.
+Very good, Rob.
+I'm doing all the hard work here.
+And he's just sitting here thinking of jokes.
+The coffee's good, too.
+There's one funny variable here, family history.
+Well, it's a categorical variable.
+It turns out to be an important risk factor, apart
+from being South African or not.
+If you have a family history of heart
+disease, the risk is high.
+And you can see that it's a zero-one
+variable in this case.
+And you probably can see there's more browns in the
+right-hand category than the left-hand category.
+So in this case, we're not really trying to predict the
+probability of getting heart disease.
+What we're really trying to do is to understand the role of
+the risk factors in the risk of heart disease.
+And actually, this study was an intervention study aimed at
+educating the public on healthier diets.
+But that's a whole other story.
+Did it work?
+Um, I think it might have worked a little bit.
+But this crowd is really hard to get them
+away from their meat.
+Do you know that they call a barbecue in South Africa?
+No.
+Braaivleis.
+OK.
+Every South African loves their braaivleis and their
+bull tongue.
+So here's the result of GLM for the heart disease data.
+And here I actually show you some of the
+code used to fit it.
+We'll get into the code session later.
+But it's just interesting to see that it's
+pretty easy to do.
+Here's a call to glm.
+We tell it the response is CHD, which is the name of the
+response variable.
+And tilde means to be modeled as.
+And dot means all the other variables in the data frame
+which, in this case, is heart.
+So that's a data frame that's got all the
+variables in the study.
+And the response here is CHD.
+And we tell it the family's binomial, which just tells it
+to fit the logistic regression model.
+And then we fit that model.
+Save it in the object called heartfit.
+And then we do a summary of heartfit.
+And we get printed out this summary, which is the same
+summary that we've seen before.
+And so now we get coefficients for each of the variables.
+In this column, we get standard errors, c
+values, and p values.
+And here the story is a little bit mixed.
+We're not too interested in the intercept.
+Tobacco usage is significant.
+Low density lipoproteins, that's a cholesterol measure,
+that's significant.
+Remember, there's a good and bad cholesterol.
+This is the bad cholesterol.
+Family history, very significant.
+And age is significant.
+We know the risk of heart disease goes up with age.
+Now, interest in the obesity and alcohol usage are not
+significant here, which seems a little surprising, no?
+Mm hmm.
+But this is a case, again, of having correlated variables.
+If we look in the previous plot, you see that there is a
+lot of correlation between variables.
+So age and tobacco usage are correlated.
+Alcohol usage and LDL seem to be negatively correlated.
+LDL is the good cholesterol.
+So there's lots of correlations.
+And so those are going to play a role.
+And so, for example, we've got LDL is
+significant in the model.
+And once LDL is in the model, perhaps alcohol usage is not
+needed anymore.
+Because it's been taken care of.
+These variables act as surrogates for each other.
