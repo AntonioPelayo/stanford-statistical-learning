@@ -1,0 +1,159 @@
+OK.
+Now we slipped one thing by you.
+We said in South Africa the risk for heart disease is
+about 5% in this age category.
+But in our sample, we've got 160 cases and 302 controls, so
+in the sample we're showing a risk of 0.35.
+It seems like the model is going to be off.
+It's going to estimate probabilities too high.
+Well, case-control sampling is one of the favorite tools in
+epidemiology.
+Especially when you have a rare disease, you take all the
+cases you can find, and then you can just
+sample from the controls.
+The reason is that for the logistic regression model it
+turns out that you can estimate the regression
+parameters of interest-- these of the coefficients of the x's
+in this case--
+accurately.
+That's if the model's correct.
+But the constant term will be incorrect.
+Then you can just go ahead and correct the constant too by a
+simple transformation.
+And in fact, for those that are interested, I just give
+you the transformation.
+So pi [INAUDIBLE] here is the apparent risk of heart
+disease, in this case in our population, which is 0.35.
+And after all, this is just the logit transformation of
+the prior probability or the prior apparent probability.
+And here's the logit transformation of the true
+risk, which is pi, in this case, 0.05.
+And so we take the logit transformation of those two,
+and we correct the intercept.
+This is the currently estimated intercept.
+We correct it by adding in the log odds of the true
+probability, subtract the apparent one.
+That correct the intercept.
+Maybe it's worth saying a little bit about case-control
+sampling, why the sampling's done this way.
+One thing we could have done instead, or the investors
+could have done was to take maybe 1,000 people and to
+follow them for 20 years and to record their risk factors
+and then see who gets heart disease.
+We think about 5% will get heart disease.
+That's a valid thing to do, but the problem is it takes 20
+years and maybe more than a few thousand
+people to get enough--
+Actually, with 1,000 people, we'd get,
+what 50 cases, right?
+Right.
+So that's not very practical.
+We need a large sample, and we need many years to do it.
+Right.
+Case-control sampling says, well, let's not do things
+prospectively like that.
+Let's rather find people who we already know have heart
+disease or don't have heart disease and then sample them.
+Now in the proportion in this case, we'll take 160 cases and
+302 controls and then record their risk factors.
+We start with cases and controls, and
+we get lots of cases.
+And we do this without waiting 20 years.
+We can do it right now.
+And then we record the risk factors.
+That's a good point, [INAUDIBLE].
+Yeah.
+And that's very popular in epidemiology.
+There are other issues involved with case-control
+sampling, retrospective sampling.
+Yeah.
+We won't take that up now.
+But that's the reason it's so popular.
+On the same issue, in many modern data sets, we'll have
+very imbalanced situations.
+For example, if you're modelling the click-through
+rate on an ad on a web page, the probability of someone
+clicking is less than 1%, maybe 0.005 or even smaller,
+0.001, which means if you just take a random sample of
+subjects who've been exposed to ads, you're going to get
+very, very few 1's and a huge amount of 0's.
+OK?
+And these data sets get really large.
+So the question is, do we need to use all of that 0, 1 data
+to fit the models?
+Well, from what we've told you, no.
+You can take a sample of the controls.
+And this picture over here just gives an indication of
+the trade-off.
+The main point is that ultimately the variance of
+your parameter estimates has to do with the number of cases
+that you got, which is the smaller class.
+And so what this plot shows is it's showing the variance of
+the coefficients as a function of the case-control ratio, in
+fact the control case ratio.
+What it says is when you've got about 5 or 6 to 1, the
+variance kind of levels off here.
+And so there's diminishing returns in
+getting even more controls.
+So if you've got a very sparse situation, sample about 5 or 6
+controls for every case, and now you can work with a much
+more manageable data set.
+So it's very handy, especially in modern
+extremely large data sets.
+Just a comment about what this case-control sampling is.
+The most obvious way to study the risk factors for heart
+disease would be to take a large group of people, maybe
+1,000 or 100,000 people, follow them for maybe 20
+years, record their risk factors, and see who gets
+heart disease and who doesn't after 20 years.
+If you're still around.
+If we're still around.
+Right.
+Now that actually is a good way to do things, except it's
+very expensive and it takes a long time.
+You have to get a lot of people, and you have to wait
+for many years.
+Case-control sampling is a lot more attractive.
+Because what you do is rather than taking people and
+following them forward in time, you sample people who
+you know have heart disease.
+You also get a comparison sample of people who do not
+have heart disease, the controls.
+And then you record their risk factors.
+So it's much cheaper, and it's much quicker to do.
+And that's why case-control sampling is a very commonly
+used technique in epidemiology.
+OK.
+What if we have more than two classes?
+Can we still do logistic regression?
+Well, we can.
+It easy generalizes to more than two classes.
+There's various ways of doing this.
+And one version-- which actually is how we do it in
+the glmnet package in R, which you'll will be
+learning more about--
+is we have this exponential form that we saw before but
+modified for multiple classes.
+So notice in the numerator we've got an e
+to the linear model.
+And this is for the probability that Y is k given
+X, a small k.
+And we've got, say, capital K classes, where capital K is
+bigger than 2.
+In the denominator, we've just got the sum of those
+exponentials for all the classes.
+In this case, each class gets its own linear model.
+And then we just weigh them against each other with this
+exponential function, sometimes
+called the softmax function.
+OK?
+The mathier students would recognize that some
+cancellation is possible in this ratio.
+And that's true.
+What that means is actually you only need K minus 1 linear
+functions, as you do in a 2-class logistic regression.
+That's somewhat of a detail.
+It turns out for our glmnet application this is a more
+symmetric representation, and it's actually more useful.
+This multiclass logistic regression is also referred to
+as multinominal regression.

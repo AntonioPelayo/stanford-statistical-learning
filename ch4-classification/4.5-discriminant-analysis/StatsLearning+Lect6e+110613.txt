@@ -1,0 +1,136 @@
+We're not going to go into more detail on multinomial
+regression now.
+What we're going to do is tell you about a different
+classification method, which is called discriminant
+analysis, which is also very useful.
+And it approaches a problem from a really quite different
+point of view.
+In discriminant analysis, the idea is to model the
+distribution of x in each of the classes separately.
+And then use what's known as Bayes theorem to flip things
+around to get the probability of y given x.
+In this case, for linear discriminant analysis, we're
+going to use Gaussian distributions for each class.
+And that's going to lead to linear or quadratic
+discriminant analysis.
+So those are the two popular forms.
+But as you'll see, this approach is quite general.
+And other distributions can be used as well.
+But we'll focus on normal distributions.
+So what is Bayes' theorem for classification?
+It sounds pretty scary, but not too bad.
+So, of course, Thomas Bayes was a famous mathematician.
+And his name now, today, represents a burgeoning
+subfield of statistical and probabilistic modeling.
+But here we're going to focus on a very simple result which
+is known Bayes theorem.
+And it says that the probability of y equals k
+given x equals x.
+So the idea is you've got two variables.
+In this case, we've got y and x.
+And we're looking at aspects of their joint distribution.
+So this is what we're after, the probability of y
+equals k given x.
+And Bayes theorem says you can flip things around.
+You can write that as a probability that x is x given
+y equals k--
+that's the first piece on the top there--
+multiplied by the marginal probability or prior
+probability that y is k and then divided by the marginal
+probability that x equals x.
+So this is just a formula for probability theory.
+But it turns it's really useful and is a basis for
+discriminant analysis.
+And so we write things slightly differently in the
+case of discriminant analysis.
+So this probability y equals k is written as pi k.
+So if there's three classes, there's going to be three
+values for pi, just the probability
+for each of the classes.
+But here we've got class little k, so that's pi k.
+Probability that x is x given y equals k, well, if x is a
+quantitative variable, what we write for that is the density.
+So that's a probability density function
+for x in class k.
+And then the marginal probability f of x is just
+this expression over here.
+So this is summing over all the classes.
+And so that's how we use Bayes theorem to get to the
+probabilities of interest, which is y equals k given x.
+Now, at this point it's still quite general.
+We can plug in any probability densities.
+But now what we're going to do is go ahead and plug in the
+Gaussian density for f sub-k of x.
+Before we do that, let me just show you a little picture to
+make things clear.
+In the left-hand plot, what have we got here?
+We've got a plot against x, single variable x.
+And in the vertical axis, what we've got is actually pi sub-k
+multiplied by f sub-k of x.
+For both classes, k equals 1 and k equals 2.
+Now, in this case, remember in the previous slide, the
+probability was essentially proportional to pi sub-k times
+f sub-k of x.
+And in this case, the pi's are the same for both.
+So it's really to do with which density is the highest.
+And you can see that the decision boundary, or the
+vertical dash line, is at zero.
+And that's the point at which the green density is higher
+than the purple density.
+And so anything to the left of zero we classify as green.
+And anything to the right we'd classify as purple.
+And it sort of makes sense that that's what we do there.
+The right-hand plot has different priors.
+So here the probability of 2 is 0.7 and of 1 is 0.3.
+And now, again, we're plotting pi sub-k times f sub-k
+of x against x.
+And that big prior has bumped up the purple.
+And what it has done is move the decision boundary slightly
+to the left.
+And that makes sense, too.
+Again, that's where they intersect.
+That makes sense as well.
+Because we've got more purples here.
+Actually, I'll say they are pinks.
+It looks purple to me.
+There's more of them.
+So everything else being equal, we're going to make
+less mistakes if we classify it to purples and to greens.
+So that's how these priors and the densities play a role in
+classification.
+So why discriminant analysis?
+It seems like logistic regression was
+a pretty good tool.
+Well, it is.
+But it turns out there's room for
+discriminant analysis as well.
+And so it's three points we make here.
+When the classes are well separated, it turns out that
+the parameter estimates for logistic regression are
+surprisingly unstable.
+In fact, if you've go a feature that separates the
+classes perfectly, the
+coefficients go off to infinity.
+So it really doesn't do well there.
+Logistic aggression was developed in largely the
+biological and medical fields where you never found such
+strong predictors.
+Now, you can do things to make logistic
+regression better behave.
+But it turns out linear discriminant analysis doesn't
+suffer from this problem and is better behaved in those
+situations.
+Also, if any small, the sample size is small, and the
+distribution of the predictor's x is approximately
+normal in each of the classes, it turns out that discriminant
+model is again more stable than logistic regression.
+And finally, if we've got more than two classes, we'll see
+logistic regression gives us nice low dimensions
+views of the data.
+And the other point, remember, in the very first section, we
+showed that the Bayes rule, if you have the right population
+model, Bayes rule is the best you can possibly do.
+So if our normal assumption is right here, then this
+discriminant analysis in the Bayes rule is the best you can
+possibly do.
+Good point, Rob.

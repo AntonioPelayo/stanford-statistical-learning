@@ -14,8 +14,8 @@ Started February 23, 2020
   - [x] 4.1 Introduction to Classification Problems - March 13, 2020
   - [x] 4.2 Logistic Regression - March 14, 2020
   - [x] 4.3 Multivariate Logistic Regression - March 14, 2020
-  - [ ] 4.4 Logistic Regression - Case-Control Sampling and Multiclass
-  - [ ] 4.5 Discriminant Analysis
+  - [x] 4.4 Logistic Regression - Case-Control Sampling and Multiclass
+  - [x] 4.5 Discriminant Analysis
   - [ ] 4.6 Gaussian Discriminant Analysis - One Variable
   - [ ] 4.7 Gaussian Discriminant Analysis - Many Variables
   - [ ] 4.8 Quadratic Discriminant Analysis and Naive Bayes
