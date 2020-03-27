@@ -1,0 +1,184 @@
+OK, here we have a session in R, in R Studio in fact, and
+we're going to see how we fit the logistic regression models
+using the GLM functions in R. So what we first begin to do
+is load the ISLR package, which has all the datasets
+we're going to use.
+Here we use the command require, which
+is similar to library.
+I tend to use require.
+It's sort of more evocative, what we're doing.
+And so we just click through in R Studio, and the Smarket
+dataset's there, and we can query it.
+So names is useful for seeing what's on the data frame, and
+summary is also useful.
+Summary gives you a simple summary of each of the
+variables on the Smarket data frame.
+And we see that there's a number of lags, and there's
+volume, and there's today's price, and there's direction,
+which we're going to use as a response, and that is whether
+the market went up or down since the previous day.
+And we can also do help on these data objects and get
+some details of each of the variables.
+And so there you see the description.
+So we're going to use the direction as a response and
+see if we can predict it as a binary response using logistic
+regression.
+Let's make a plot of our data.
+So there's the pairs function.
+And we do it, it's a little bit crowded in this plot.
+We told it to plot the variables in Smarket.
+And we told it to use as the color indicator, actually our
+binary response.
+And that's a useful way, when you've got a two-class
+variable for seeing in the plots which are members of
+each class.
+And here we see them.
+Doesn't seem to be too much correlation going on here.
+Of course, the class variable is derived from the variable
+today, and so up or down seems to make a division.
+And other than that, we don't see much going on.
+Of course, with stock market data, you don't expect to see
+much going on.
+Because if things were very easy to predict, people would
+be making lots of money from it, and they wouldn't be
+giving lectures on using R.
+So here we have a call to GLM, glm.fit.
+We tell it direction is the response, and the predictors,
+we're going to use the lag variables, so that yesterday's
+price, previous day's price, and so on, up to lag5.
+And we'll also use volume, and we tell it to use family
+equals binomial.
+And so that tells GLM to put fit a logistic regression
+model instead of one of the many other models that can be
+fit to the GLM.
+So we execute that fit.
+And oops.
+I skipped a line here.
+So there we go.
+And there, it's done.
+That's two lines there.
+And then we do a summary, and the summary tells you some
+things about the fit.
+And in this case, it's giving you p values on each of the
+coefficients.
+It estimated coefficients, their standard errors, the
+z-score, and the p value.
+And it seems like none of the coefficients
+are significant here.
+Again, not a big surprise for these kinds of data.
+It doesn't necessarily mean it won't be able to make any kind
+of reasonable predictions.
+It just means that possibly these variables are very
+correlated.
+Actually, the plot doesn't suggest that.
+Anyway, none are significant.
+And it gives the null deviance, which is the
+deviance just for the mean.
+So that's the log likelihood if you just use the mean
+model, and then the deviance for the model with all the
+predictors in, that's the residual deviance.
+And there was a very modest change in deviance.
+It looks like four units on how many degrees of freedom.
+We got six degrees of freedom difference in degrees of
+freedom there.
+OK, so we can make predictions from the fitted model.
+And so we assign to glm.probs the predict of glm.fit, and we
+tell it type equals response.
+So this will make predictions on the training data that we
+use to fit the model.
+And it gives you a vector of fitted probabilities.
+We can look at the first five, and we see that they're very
+close to 50%, which is, again, not too surprising.
+We don't expect to get strong predictions in this case.
+So this is a prediction of whether the market's going to
+be up or down based on the lags and the other predictors.
+We can turn those probabilities into
+classifications by thresholding at 0.5.
+And so we do that by using the if/else command.
+So if/else takes effect, in this case, glm.probs, in fact,
+a vector of logicals.
+So glm.probs bigger than 0.5.
+So that'll be a vector of trues and falses.
+And then if/else says that, element by element, if it's
+true, you're going to call it up.
+Otherwise, you're going to call it down.
+And so that does that for us.
+And now we're going to look at our performance.
+And it's convenient to actually attach the data frame
+market so that the variables are available by
+name, which we do.
+And now we can make a table of glm.pred, which is our ups and
+downs from our prediction, against the true direction.
+So we do that.
+And we get a table, and we see there's lots of elements on
+the off diagonals.
+On the diagonals is where we do correct classification, and
+on the off diagonals is where we make mistakes.
+And we see there's quite a lot of those.
+And we can actually get our mean classification
+performance.
+So that's cases where glm.pred is equal to the direction.
+And we just take the mean of those, so it'll give you a
+proportion, in this case, 0.52.
+So on the training data, we do slightly better than chance.
+Well, we may have overfit on the training data.
+So what we're going to do now is divide our data up into a
+training and test set.
+So what we'll do is we'll make a vector of logicals.
+And what it is is train is equal to year less than 2005.
+For all those observations for which year is less than 2005,
+we'll get a true.
+Otherwise, we'll get a false.
+And now we refit our glm.fit, except we say
+subset equals train.
+And so it will use any those observations for
+which train is true.
+So now that means we fit just to the data in
+years less than 2005.
+And now, when we come to predict, we're going to
+predict on the remaining data, which is
+years 2005 or greater.
+And so we use the predict function again.
+And for the new data, we give it Smarket, but
+index by not trained.
+So that's going to be--
+not trained is going to be true if year is 2005 or more.
+And we tell it type equals response, so we actually want
+to predict the probabilities in this case.
+And again, we make this if/else, make
+this up/down variable.
+And let's make a subset, a new variable, direction.2005,
+again, for the test data, which is the response
+variable, direction, which is just for our test data.
+In other words, not trained.
+So we call it direction.2005.
+And now we make a table.
+So now this is on test data.
+A smaller subset of the data is test.
+And we compute our mean again, and it's 0.48.
+So now we actually get slightly less than 50%.
+So we're doing worse than the null rate, which is 50%.
+So what are we going to do?
+Well, we might be overfitting.
+And that's why we're doing worse on the test data.
+So now we're going to fit a smaller model.
+So we're going to just use lag1 and lag2 and leave out
+all the other variables.
+And so here we do that.
+The rest of it calls the same.
+And then we run through our commands again, we compute our
+table, and here we get a correct classification of just
+about 56%, which is not too bad at all.
+And so using the smaller model, it appears to have done
+better here.
+And if we do a summary of that guy, let's see if anything
+became significant by using the smaller model, given that
+it gave us better predictions.
+And of course, that's what happens when you try and do
+commands on the--
+type on the fly, at least for me, you
+make spelling mistakes.
+Well, nothing became significant, but at least the
+prediction of performance appeared to have increased.
+So that's fitting logistic regression models in R using
+the GLM function and family equals binomial.

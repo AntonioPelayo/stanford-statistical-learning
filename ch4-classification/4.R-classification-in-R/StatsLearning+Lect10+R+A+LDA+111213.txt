@@ -1,0 +1,155 @@
+OK, well, welcome back.
+We're going to have a conversation now.
+And once again, we'll use RStudio, which is a very
+convenient platform for running R, and for
+demonstrating R. So we'll go to our screen now, and we'll
+do an RStudio session on linear discriminant analysis
+first of all, and then followed by nearest neighbor
+classification.
+So here we are right now, RStudio session window.
+And the first thing we do is we require ISLR.
+That's our package with some of our data sets.
+So I'll hit the Control button and return,
+and it loads a package.
+And then we require the math package, which is available in
+Ripley's package of useful functions, including the
+function for doing linear discriminant analysis.
+You'll see in the right-hand panel, I've got a help file
+for linear discriminant analysis.
+So as always in R, if you don't know or if you're not
+too familiar with the new procedure, you do Help, and
+make sure you understand the syntax and all the
+options, and so on.
+So the first thing we do, we're going to use the stock
+market data here, and the response is going to be the
+direction that the market took on a particular day.
+And we're going to use the returns on the previous two
+days to try and predict the direction on
+this particular day.
+OK, and so there, we use a command, [? LDA.fct. ?]
+And it takes a formula, so the response is direction.
+There are the two predictors.
+It's telling you the data comes from s
+market, stock market.
+And we're going to use the subset, which is years less
+than 2005, because later on, we're going to make
+predictions for year 2005.
+So you can put that directly in the formula, subset equals
+year less than 2005.
+And this variable, year, of course is referenced in s
+market, as well as these variables over here.
+OK, so off we go, and we fit it.
+And it fits it so very quickly, and we print it by
+just typing its name.
+And there's a little summary printed below here.
+And you see, typically you get the formula that was used to
+create it, and then it gives a summary of the linear
+discriminant analysis.
+So the prior probabilities are just the proportions of ups
+and downs in the data set.
+It's roughly 50%, which says something
+about the market, right?
+It's kind of a random walk.
+Half the time it goes up, half the time it goes down.
+It summarizes the group means for the two groups, for the
+downs and the ups.
+It looks like there may be a slight difference
+in these two groups.
+The means seem to be separated a little bit.
+And then it gives the LDA coefficients.
+So if you remember the LDA function fits a linear
+function for separating the two groups.
+And so, it's got two coefficients.
+OK, well there's some methods that work for the LDA.
+For example, you can plot a [? LDA.fct ?],
+which we'll do here.
+And it gives a very convenient plot.
+It plots a linear discriminant function separately, the
+values of the linear discriminant function,
+separately for the up group and the down group.
+And when we look at this, it looks to the eye like there's
+really not much difference.
+Those two histograms look pretty much on top of each
+other, which of course, is not a big surprise, because if we
+could very easily like this predict the movement of the
+stock market, we'd be making lots of money, and we wouldn't
+be sitting here giving R demonstrations.
+So now we're going to see how well our rule predicts on the
+year 2005, OK?
+So now, I'm doing this in a slightly different way to what
+was described in the book.
+We first will make a subset of the data frame, s market, and
+we'll call it s market dot 2005.
+And we use a command in R-- a useful command--
+called subset.
+And so the first argument is the data frame that you're
+going to subset, which is s market.
+And then following that are some logical expressions that
+can use variables in that data frame to define the subset.
+And so, here it is year equals equals 2005, OK?
+And that will create a data frame with just the 2005
+observations.
+And so now we can use that as the test data, or the place
+where we want to make our predictions.
+So we'd call the predict method for an LDA fit, and we
+give it our fit, and we give it this new data frame, s
+market dot 2005.
+And it'll produce some predictions for us.
+And let's just print the first five of these, and oops-- it
+didn't like that.
+So I was assuming it was in a matrix format, and it's not.
+So what format is it?
+So we don't throw up our hands and run away when we get an
+error, we just investigate.
+So let's look at the class of [? LDA.prd. ?]
+Well, it's a list.
+Now I happen to know what kind of list it is.
+And when you have a list of variables, and each of the
+variables have the same number of observations, a convenient
+way of looking at such a list is through data frame.
+And so we can do data frame of [? LDA.prd, ?]
+and then look at the first five rows.
+And this is what we get.
+And you'll see what this gives us.
+It gives a row name, it gives the classification--
+the first five are all up.
+And one of the components of the list was a matrix of
+posterior probabilities, which actually have
+a two-column matrix.
+But data frame is smart enough to understand that these can
+fit into the data frame.
+And so it makes two columns, one for up and one for down--
+the posterior probabilities.
+And then there's the actual values of the LDA score, OK?
+And so now, now we realize that the output of print has
+these different components.
+The thing we're really interested in here is the
+classification, so that's class.
+So we're going to do a table of [? LDAprd$class. ?]
+That's a true class label for the 2005--
+versus the prediction--
+sorry, that is the prediction--
+versus the true value, right?
+So this is the predicted class, and this is the true
+value over here in the data frame.
+We'll do a table of that, and we get the little confusion
+matrix, which tells us which downs were classified as down,
+which downs are classified as up, and so on.
+And it's the off-diagonal elements of those that are the
+mistakes, and the diagonal elements which are the correct
+classifications.
+And so, one simple command tells us our current
+classification rate, which is we've got a conditional here,
+which is the predicted class is equal to the true class.
+So that'll be true if they're equal, and it'll be false if
+they're not.
+And since trues and falses can be coerces to be zeros and
+ones, we can just take the mean of that, and it'll give
+us our current classification rate, which in this case is
+about 0.56.
+So it's not huge, but again, in this kind of industry, any
+little edge like that, that actually helps.
+And so, that's a little session using linear
+discriminant analysis, and there's many other approaches.
+There's some more examples in the book, and you should have
+a look there.

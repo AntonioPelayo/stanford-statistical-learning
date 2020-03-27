@@ -1,0 +1,92 @@
+OK.
+Another R session also on classification.
+This time, we're going to look at k-nearest neighbor
+classification, which it's one of those tools that's a very
+simple classification rule, but it's effective
+a lot of the time.
+Some experts have written that k-nearest neighbors do the
+best about one third of the time.
+And it's so simple that, in the game of doing
+classification, you always want to have k-nearest
+neighbors in your toolbox.
+OK.
+So we've got a little session here that we'll run.
+And if we go into our RStudio session, you see we've got it
+set up here for k-nearest neighbors.
+And for that we'll use the Class Library.
+So we go to Library Class, and that sets us up for doing
+k-nearest neighbors classification.
+And let's ask for help on k-nearest neighbors, and we
+see the Help file, which, again, is always a useful
+thing to do.
+And it tells us it's got a slightly different format to
+the previous session, where we used LDA.
+It doesn't take a formula.
+It asks for the training x variables, the test x
+variables, and the class label for the training.
+And then it asks for what value of k you want, and then
+the sum of the arguments.
+OK?
+So we'll use this again on our stock market example.
+So in this case, since we're going to have to list all
+these variables by name in the call, we'll just
+attach stock market.
+And recall when you attach a data frame, it makes available
+the variables on the data frame by name in your frame.
+So if I go down into the session window and say LS--
+well, that didn't do it actually.
+I can say objects 2 because stock market is in position 2.
+There we go.
+So they're available in location 2 on the search list.
+And there's all the variables in s market available by name.
+OK.
+So what we'll do is we'll make a matrix of lag1 and lag2.
+We can use the same two variables we used in the
+previous session.
+So we'll say x lag is C bind that makes a matrix of two
+columns, in this case, of lag1 and lag2.
+OK?
+And let's just make sure that actually did what we want.
+I mean, I know it did, but let's look at the first five
+rows of that matrix.
+And there they are, so it did what we wanted.
+And then we'll make a indicator variable Train which
+is year less than 2005.
+So that's just going to be a binary variable of trues and
+falses depending on whether the variable year
+was less than 2005.
+OK, now we're ready to call k and n, so we give our matrix x
+lag, and right in line there we index it by Train which is
+just using the training observations.
+And then, for the test observations, we give
+it x lag not Train.
+So those not train will be, therefore, those that are
+equal to 2005--
+for year equal to 2005.
+So Train and Not Train.
+That exclamation mark means not.
+And the response is direction, again, indexed by Train.
+And k equals 1 says we want one nearest neighbor
+classification.
+And, again, just to remind you, that means what the
+algorithm does is, it says to classify a new observation,
+you go into the training set in the x space, the feature
+space, and you look for the training observation that's
+closest to your test point in Euclidean distance and you
+classify to its class.
+And so this will do it.
+And we can look at the--
+we put the results in knn.pred, and we can do a
+table of knn.pred and the true response, which is Direction
+at Not Train.
+And we get a little confusion matrix again, and we can look
+at the classification performance there.
+And it's exactly 0.5.
+So it was useless.
+One nearest neighbor did no better than flipping a coin.
+So, what to do next?
+Well, one could proceed further and try nearest
+neighbors with multiple values of k.
+We haven't done that in this session, but we leave it up to
+you and you can look in the end of the chapter and you
+will see that there's examples of this.
