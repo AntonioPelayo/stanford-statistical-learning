@@ -1,0 +1,334 @@
+OK, so that was with a single variable, and usually when you
+do classification, we've got more than one variable.
+So now we're going to go to multi-variant Gaussians.
+So here's a picture of the Gaussian density when we've
+got two variables.
+So it's one of these fancy-looking three
+dimensional plots.
+It's beautiful.
+Beautiful, isn't it?
+The height's color coded, could you make a plot like
+this, [INAUDIBLE]?
+I could try, and then you'd criticize it.
+You do criticize it.
+The beautiful thing is that R made this plot with very
+little work from us.
+So there's two variables, x1 and x2, and you can see the
+Gaussian density in two dimensions
+looks like a bell function.
+And this is-- left hand case is the case when two variables
+are uncorrelated, so it's just really like a bell.
+And the right hand case is when there's correlation, so
+now it's like a stretched bell.
+See there's positive correlation between x1 and x2.
+So those are pictures of the densities.
+The formula for the density doesn't look nearly as pretty,
+and here it is over here.
+And it's somewhat complex.
+We should go over this in great detail.
+Excruciating detail, please.
+I have a feeling that's a hint not to go
+into it in great detail.
+Anyway, this is just a generalization of the formula
+we had for a single variable.
+This is called a covariance matrix, and if you stare at
+this formula, and you stare at the previous formula, you will
+see that they're somewhat similar.
+Especially if you know a bit of vector algebra.
+If you go through the simplifications, if you know
+your linear algebra, you can to do and do the cancellation
+similar to what we did before, you can the discriminant
+function which is given over here.
+And it looks complex, but important thing to note is
+that it's, again, linear in x.
+Here's x alone multiplied by a coefficient vector, and these
+are all just constants.
+So this, again, is a linear function.
+If the math's beyond you, don't let it bother you.
+This is a linear function, and we'll make that more clear a
+little bit later on, as well, that
+this is a linear function.
+In fact, we make it clear right here.
+It might look complex, but this can just be written in
+this form over here.
+It's a linear function.
+So the ck0--
+so this is a function for class k--
+ck0 is built up of all these pieces over here.
+And then each of the coefficients of x1, x2, up to
+xp come from this part over here.
+Remember, x is a vector in this case.
+And so you can expand this expression and get
+this term over here.
+And I think I forgot to mention it before.
+What the idea of the discriminant function is, you
+compute one of these for each of the classes, and then you
+classify it to the class for which it's largest.
+You pick the discriminant function that's largest.
+Well, we can draw other nice pictures for discriminant
+analysis similar to the one-dimensional picture we
+drew before.
+So here, we've got two variables and three classes.
+And instead of showing those density plots, what we do is
+show contours, in this case, of the density.
+So here's the blue class.
+And we show the contour of a particular level of
+probability for the blue class, for the green class,
+and for the orange class.
+And lo and behold--
+and the decision boundary is the dotted line here.
+And it's really very pretty.
+It shows you where you classify to blue versus
+orange, and it's exactly where it cuts--
+the line goes exactly through the points where the contours
+are cut, both for the orange to blue, for the blue to
+green, and for the green to orange.
+And you can see they all meet in the middle over here, right
+in the center over here.
+And so if you knew the true densities, it
+would tell you exactly--
+and in this case, the Gaussian--
+you get the exact decision boundaries.
+Again, these are called the Bayes decision boundaries.
+These are the true decision boundaries.
+Now, of course, we don't.
+But we go ahead and estimate the parameters for the
+Gaussians in each of the class using formulas similar to what
+we had before, but appropriate for this multivariate case.
+So in this case, we've got to get the mean for x1 and x2 for
+the blue class--
+it's about there-- for the green class, with data points
+about there, for the orange class, say there.
+And then we plug them into the formula.
+Instead of getting the dotted lines, we get the solid lines.
+And in this case, it's remarkably close.
+Now, these data were actually generated from a Gaussian
+distribution, so it's not too surprising that we got close.
+But with relatively few points, we get decision
+boundaries that look pretty close to the real ones.
+You cannot learn about discriminant analysis without
+seeing Fisher's iris data.
+It's maybe one of the most famous datasets around.
+It studies three species of iris.
+These species are setosa, versicolor, and virginica, and
+they're color-coded in a scatter plot matrix again,
+with three colors in this case.
+And the four variables that are going to be used to try
+and automatically classify these three classes, sepal
+length, sepal width, petal length, and petal width.
+So these are aspects of the flower.
+And there's 50 samples in each class.
+Now, if you look at these scatter plots, you can see
+that there's some really good separation.
+For example, in this plot of petal length and petal width,
+the blue class really stands out as being different from
+the other two classes.
+They seem to be more confused in some of the plots, and in
+some, there's slightly more separation.
+But the idea here is to use all of these variables
+together to come up with a
+discriminant rule and classify.
+And so this was a motivating example that Fisher used in
+his first description of linear discriminant analysis.
+And in fact, it's often known as Fisher's linear
+discriminant analysis.
+Importantly, what comes with discriminant
+analysis is a nice plot.
+In this previous picture, there's four variables, so we
+showed a scatter plot matrix of each
+variable against the rest.
+But it turns out that there's a single plot that captures
+the classification information for all of them.
+And here it is.
+And I've got discriminant variable one and discriminant
+variable two as the horizontal and vertical axes.
+And it turns out these are linear combinations of the
+original variables.
+But they're special linear combinations.
+And when you plot the variables against these two,
+you see really good separation.
+And these arise from actually performing the linear
+discriminant analysis.
+Because you've got three classes, what Fisher's linear
+discriminant analysis is really doing--
+or Gaussian LDA is really doing--
+is it's measuring which centroid is the closest.
+But it's measured in a distance that takes into
+account the covariance of the variables.
+But ignoring the covariance for a moment, the three
+centroids actually line in a plane, a subspace of the
+four-dimensional space.
+And it's really distance.
+So if you have three points, they span a
+two-dimensional subspace.
+And that's essentially what we plot in here, is the
+two-dimensional subspace.
+So seeing which class is closest really amounts to
+distance in that subspace.
+And that leads to these nicely dimensional plots.
+And so we have three classes here.
+We can make a two-dimensional plot, and it captures exactly
+what's important in terms of the classification.
+And when we have more than three classes, we can still
+find two-dimensional plots.
+But in that case, it doesn't capture all the information,
+the two-dimensional plot.
+But you can find the base two-dimensional plot for
+visualizing the discriminant rule.
+And that's another important reason why linear discriminant
+analysis is very popular for multi-class classification.
+Keep in mind, this case, we only four features, four
+variables, right?
+Discriminant analysis was a very attractive method.
+But imagine we had 4,000 features.
+Then in [INAUDIBLE], what we just did was
+the covariance matrix.
+We had to plug in an estimate of the covariance matrix.
+If you have 4,000 features, that covariance matrix would
+be of size 4,000 by 4,000.
+Yes, that's a great point, Rob.
+And we just can't carry out discriminant analysis without
+other modifications if the number of
+variables are very large.
+And we can talk about some ways of doing that.
+And later on in the class, we'll talk
+about it in more ways.
+We've talked about discriminant functions, which
+is telling you how you classify.
+But it turns out that you can turn these into probabilities
+very easily.
+And here's the expression over here.
+And so remember we got the dks by doing a lot of
+simplification.
+Well, it turns out that those simplifications and
+cancellations hold exactly for computing the probabilities.
+So in other words, those expressions we had earlier for
+computing the probabilities--
+let's go back to it-- for example, here's an expression
+here that's used for computing the probabilities.
+Where is it?
+This is the expression for the single variable case, with all
+these constants in there.
+All the cancellation happens, and we get to this nice simple
+expression over here, which just involves the
+discriminant functions.
+So see, you can see if you can actually show that as well.
+It's not that hard to show.
+And so not only does discriminant analysis give us
+a classified.
+It also gives us the probabilities.
+When K is 2, we'll classify to class two if these
+probabilities are bigger than 0.5, else to class one, just
+like in logistic regression.
+Here's the credit data.
+And we produce, in this case, misclassification table.
+So this table, along the horizontal, it's
+got the true status.
+So it's a true default status, which is no or yes.
+You can see we have 10,000 samples in the credit data.
+And in the vertical, we've got the predicted
+status, no or yes.
+So of course, we'd like everything
+to lie on the diagonal.
+It turns out we got a lot of the no's right and not that
+many of the yes's right.
+So on the diagonal is what you got correct.
+On the off diagonals is what you got incorrect.
+Nevertheless, overall we make 2.75%
+misclassification errors here.
+So this is called a confusion matrix.
+It tells how well you did.
+Now, there's some caveats.
+This is training error.
+We fit the rule to these data, and now we see how well it
+performs on these data.
+So we may be over-fitting.
+Well, we've got 10,000 training samples here, and
+we've only fit a handful of parameters.
+So it's very unlikely in this case that we're over-fitting.
+For small training sets, that would be an issue, and you
+would need to have a separate test set.
+Another thing to note is that although 2.75% seems a really
+goodness misclassification, right?
+If we just use a very naive classification rule and say
+always classify to the largest class-- in other words,
+classify according to the prior--
+we'd only make 3.33% errors because there's a predominance
+of no's in this dataset.
+The total number of no's is 333 out of 10,000.
+So this we call the null rate.
+And so you always bear in mind the null rate when getting
+excited about a misclassification error rate.
+The other thing to look at, though, is you can break the
+errors into different kinds.
+So of the true no's, we make 0.02% errors.
+So we hardly ever misclassify a no.
+But of the yes's, we make a whopping 75.7% errors.
+So the errors are very lopsided in this case.
+And that's maybe not such a good idea.
+So we break down these errors into finer categories.
+So we call the false positive rate the fraction of negative
+examples that are classified as positive.
+So they're false positives.
+In that case, that was the 0.02% in this case.
+And the false negative rate, that's a fraction of positive
+examples that are classified as negative,
+75.7% in this case.
+Now we produce the classification table by
+intuitively correct classifying default as yes if
+the probability of default was bigger than 0.5.
+But it gave us this very lopsided false positive and
+false negative rate.
+In some cases, especially for these kinds of screen-in
+examples, you may want to change the false positive and
+false negative rates and skew them to one side or the other.
+And you can do this by changing this threshold.
+Instead of classifying--
+in this case, to default if it's bigger than 0.5, you can
+change the threshold and maybe make the threshold in this
+case smaller so that you can catch more of the high risk
+cases for default.
+And so here we've done it as a function of the threshold.
+And we've just looked at negative thresholds, or
+decreasing thresholds.
+And so in this plot, we've got in black the
+overall error rate.
+In orange, we've got the false positive rate, and in blue,
+we've got the false negative rate.
+And so as we decrease the threshold, the false positive
+rate increases because now we're going to classify more
+and more negatives as positive.
+But it increases very slowly, you'll see, for a long part of
+the threshold going down, the decrease in threshold, the
+false positive rate doesn't increase very fast.
+Of course, the false negative rate increases as we do that.
+And so even at 0.1, the false positive rate hasn't increased
+a huge amount.
+And the false negative hasn't increased a huge amount.
+But we've changed the balance of classification.
+And so you can change the threshold.
+Well, you can capture that change in threshold in what's
+known as an ROC curve.
+So what this shows is the two error rates, in this case,
+false positive rate and true positive rate, as we change
+the threshold.
+And we'd like the false positive rate to be low and
+the true positive rate to be high.
+And so this ROC curve traces out as
+we change the threshold.
+And the 45 degree line is the kind of no information line.
+And what you'd like is you'd like this curve to be right up
+as far as possible into the top left hand corner, so if
+you had a true positive rate of one and a false positive
+rate of zero.
+If you flipped a coin, you'd be on the straight line.
+You'd be on the straight line.
+And so this is a single curve that sort of captures the
+behavior of the classification rule for all possible
+thresholds.
+And you can compare different classifiers by comparing the
+ROC curves.
+And to summarize it even more, we sometimes use the area
+under the curve, or AUC, which captures the extent to which
+you're up in the northwest corner.
+And higher AUC is good.

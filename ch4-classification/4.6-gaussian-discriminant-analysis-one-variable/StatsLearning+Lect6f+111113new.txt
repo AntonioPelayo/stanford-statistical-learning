@@ -1,0 +1,160 @@
+So let's look again in the simple case when we've got one
+variable, one x.
+Again, we're going to get a bit more math-y now.
+This is the form, the mathematical form, of the
+Gaussian density function for class k when you've
+got a single x.
+So there's some constants over here.
+The important part that depends on x is in this
+exponential form over here.
+And we see there is a mu sub-k, which is the mean for
+the observations in class k, or the population
+meaning class k.
+And sigma sub-k is the variance for that
+variable in class k.
+Now, in the first instance, we can assume that the variance,
+sigma sub-k, is actually just sigma, the same
+in each of the classes.
+Now, that's a convenience.
+It turns out this is an important convenience.
+And it's going to determine whether the discriminant
+function that we get, the discriminant analysis, gives
+us linear functions or quadratic functions.
+So, if we could plug into Bayes' formula, the formula we
+had two slides back, we get a rather complicated expression.
+So we've just plugged in a form of the
+density in the numerator.
+And there's the sum of the classes in the denominator.
+And it looks pretty nasty.
+Well, luckily there's some simplifications and
+cancellations.
+Now, we get this, because to classify an observation to a
+class, we don't need to initially evaluate the
+probabilities.
+We just need to see which is the largest.
+So if we take logs--
+whenever you see exponentials the first thing you want to do
+is take the logs.
+And if you discard terms that do not depend on k, that
+amounts to doing a lot of cancellation of terms that
+don't count.
+This is equivalent to assigning to the class with
+the largest discriminant score.
+And so that complicated expression boils down to a
+much simpler expression of here.
+And notice it involves x, a single variable in this case.
+And then it involves the mean and variance for the
+distribution.
+And it involves the prior.
+And importantly, in this case, this is a
+linear function of x.
+So there's a single coefficient for x.
+There's a constant.
+And then there's a constant term, which consists of these
+two pieces over here.
+And so we get one of those functions
+for each of the classes.
+If there are two classes, you can simplify even further.
+And let's suppose now that the probability of class one is
+equal to the probability of class two, which is 0.05.
+Then you can see, in this case, that the decision
+boundary is exactly at mu1 plus mu2 over 2.
+So it's back to this picture.
+In the previous slide, in this case, the priors were equal.
+These are actually two Gaussian distributions.
+And the decision boundary here is at zero.
+In this case, the two means were exactly the equal amount
+on the opposite side of zero.
+So the average is at zero.
+So intuitively, that's the right value for the decision
+boundary, which is the point at which we classify to one
+class, the boundary at which we switch from classifying to
+one class versus the other.
+It's not that hard to show.
+So see if you can show that.
+You basically use this expression for each of the two
+classes and look to see when the one is
+bigger than the other.
+It's not that hard to do.
+I'm confused.
+There was a square term in the previous expression.
+And it's gone.
+Oh, Rob, are you causing trouble here again?
+I was hoping to avoid that nasty bit.
+Rob's right.
+If you expand out this squared term here, there's going to be
+an x squared.
+But, you know, there's an x squared in the numerator.
+And there's x squareds in each of the terms in the
+denominator.
+And there's no coefficients in front of that x squared that's
+specific to a class.
+So that's one of the things that cancel out in this ratio.
+You knew that, didn't you, Rob?
+Rob knew that.
+All right, this is with populations.
+What happens if we have data?
+We can't draw nice density functions like
+we've done over here.
+But we just estimate them.
+So here's a picture where we've actually got data.
+So we've drawn histograms instead of density functions.
+Now, what we do is we actually need to estimate, for the
+Gaussian rule, the means, and the two populations, and the
+common standard deviation.
+Well, in this case, the true means are minus 1.5 and 1.5,
+which means the average mean is zero.
+And the probabilities were 0.05.
+But we don't know these.
+So we're going to estimate them from the observed data
+and then plug them into the rule.
+So this is how we estimate them.
+The priors, we need to estimate them.
+So that's just the number in each class divided by their
+total number.
+That's obvious.
+The means in each class, we just compute the sample mean
+in each of the classes.
+This is a tricky little notation here.
+This is one over nk, that's the number in class k.
+And this is the sum over i such that yi is equal to k.
+So yi is recording the class label.
+So this will just sum those xi's that are in class k.
+And clearly that's the right thing to do to
+get the sample mean.
+The sigma squared is a little trickier.
+We're assuming that the variance is the same in each
+of the classes.
+And so this is a formula, it's called a
+pooled variance estimate.
+So we subtract from each xi the mean for its class.
+So this is what we do if we were computing the
+variance in class k.
+But we sum all those square differences.
+And we sum them over all the classes and then divide
+it by n minus k.
+So if that doesn't make too much sense, another way of
+writing that is in this form over here, which says we
+estimate the sample variance separately
+in each of the classes.
+And then we average them using this formula over here.
+So this is just like a weight on each of those variances.
+And that weight is to do with how many observations were in
+that class relative to the total number of observations.
+And then the minus 1 and the minus k, that's a detail.
+And it's to do with how many parameters we've estimated for
+each of these estimates.
+It's one parameter.
+It's a mean.
+[SNORING]
+Rob's falling asleep.
+Sorry.
+Too much detail, Rob?
+Exactly.
+Way too much detail, OK.
+So there we have it.
+Those are the formulas.
+You plug those back in, you'll now get
+estimated decision boundary.
+And instead of being exactly zero, it's, in this case,
+slightly to the left of zero, but pretty close.

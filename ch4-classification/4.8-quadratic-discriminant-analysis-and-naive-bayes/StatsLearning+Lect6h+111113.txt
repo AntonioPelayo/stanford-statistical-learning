@@ -1,0 +1,192 @@
+OK.
+That's discriminant analysis when we
+use Gaussian densities.
+But now the form that we wrote down is quite general.
+And you can use other estimates of densities and
+plug them into this rule and get classification rules.
+Up till now we've been using Gaussian densities with the
+same variance for the X's in each class.
+What if the variances are different in each class?
+Well, you can plug those forms in.
+And then remember we had that magic cancellation because of
+the equal variances?
+Well, when the variances are different in each class, the
+quadratic terms don't cancel.
+And so now your discriminant functions are going to be
+quadratic functions of X. OK?
+That's one form.
+It's called quadratic discriminant analysis.
+Another thing you can do--
+and especially this is useful when you have a large number
+of features, like the 4,000 or so that Rob mentioned, when
+you really wouldn't want to estimate these large
+covariance matrices--
+you can assume that in each class the density factors into
+a product of densities.
+That amounts to saying that the variables are
+conditionally independent in each of the classes.
+And if you do that and plug it into this formula over here,
+you get something known as the naive Bayes classifier.
+For linear discriminant analysis, this means that the
+covariances, sigma sub k are diagonal.
+And instead of estimating the covariance matrix, if you've
+got P variables it's got P squared parameters.
+But if you assume that it's diagonal, then you need to
+estimate P parameters again.
+And although the assumption seems very crude--
+the assumption is wrong--
+this naive Bayes classifier is actually very useful in
+high-dimensional problems.
+And it's one actually we'll return to later
+in different forms.
+Right.
+In fact, we'd probably think it's always wrong, wouldn't
+[? we, Rob? ?]
+Right.
+Yeah.
+And so what happens is we end up with quiet flattened and
+maybe biased estimates for the probabilities.
+But in terms of classification, you just need
+to know which probability's the largest to classify it.
+So you can tolerate quite a lot of bias and still get good
+classification performance.
+And what you get in return is much reduced variance from
+having to estimate far fewer parameters.
+Then there's much more other general forms where we don't
+assume Gaussian at all.
+We can estimate the densities using our favorite density
+estimation technique and then go and plug them back into
+this formula, and that'll give you a classification rule.
+That's a very general approach that can be used.
+And in fact, many of the classifiers that we know we
+can understand from this point of view.
+So here we have it.
+Quadratic discriminant analysis uses a different
+covariance matrix for each class.
+And so there's no cancellation of the sigmas.
+The discriminant functions now have this distance term that
+involves sigma sub k, which is for the kth class.
+There's a term to do with the prior probability, and there's
+a determinant term that comes from the covariance matrix.
+And you can see it gives you a curved discriminant boundary.
+And the quadratic terms matter here,
+because they're different.
+In the left plot here, we see a case when the true boundary
+really should be linear.
+That's the dotted curve.
+And in this case, of course linear discriminant analysis
+does a good job.
+Quadratic discriminant analysis curves somewhat and
+gives a slight bent boundary.
+But it won't really affect most classification
+performance much.
+In the right hand plot, on the other hand, the true data came
+from a situation where the covariance were different.
+The Bayes decision boundary is curved, and the quadratic
+discriminant analysis pretty much got it, whereas linear
+discriminant analysis gives you quite a different boundary
+in that case.
+Quadratic discriminant analysis is attractive if the
+number of variables is small.
+When the number of variables or features is large, you've
+got to estimate these big covariance matrices, and
+things can break down.
+And even for LDA it can break down.
+Here's where naive Bayes becomes attractive.
+It makes a much stronger assumption.
+It assumes that the covariance in each of the classes,
+although different, are diagonal.
+And so that's much fewer parameters.
+Now when you look at the discriminant functions,
+because diagonal and Gaussian means that the densities are
+independent and so we have this product here, when we
+take logs we get a relatively simple expression, which is in
+each class there's a contribution of the feature
+from the mean for the class scaled by the variance,
+there's the determinant term, and there's the prior term.
+This is the discriminant function for the kth class for
+naive Bayes.
+And you compute one of these for each of the classes, then
+you classify it.
+You can use mixed features for naive Bayes.
+And in that case, what we mean by that is some qualitative
+and some quantitative futures.
+For the quantitative ones, we'd use the Gaussian.
+And for the qualitative ones, we replace the Gaussian
+densities by just histograms or probability mass functions,
+in this case, over the discrete categories.
+Naive Bayes is very handy from this point of view.
+And even though it has strong assumptions, it often produces
+good classification results.
+Because also, once again in classification, we're mainly
+concerned about which class has the highest probability
+and not whether we got the probabilities exactly right.
+OK.
+We've seen two forms of classification, logistic
+regression and linear discriminant analysis.
+And we saw its generalizations.
+How do they differ?
+It seems there may be similarities between the two.
+Now it turns out you can show for linear discriminant
+analysis that if you take its--
+We had expression for the probabilities
+for each of the classes.
+So if you have two classes, we can show that if you take the
+log odds, just like we did in logistic regression, which is
+the log of the probability for class one versus the
+probability for class two, it's a linear function of X
+for two classes.
+It's got exactly the same form as logistic regression.
+They both give you linear logistic models.
+So the difference is in how the parameters are estimated.
+Logistic regression uses the conditional likelihood based
+on probability of Y given X. Remember, it was using the
+probabilities of a 1 or a 0 given X
+in each of the classes.
+And in machine learning, this is known as discriminative
+learning using the conditional distribution of Y given X.
+Discriminant analysis, it turns out it's estimating
+these parameters over here using the full likelihood.
+Because it's using the distribution of X's and Y's,
+whereas logistic regression was only using the
+distribution of Y's.
+And in that case, it's known as generative learning.
+Remember, we modelled the means and variances of X in
+each of the classes, and we modeled the prior probability.
+So that can be seen as modelling the joint
+distribution of X and Y. That's one way of seeing
+what's different between the two.
+But despite these differences, in practice the results are
+often very similar.
+And you can use one method with the other, and you're
+going to get very similar results.
+As a footnote, logistic regression can also fit
+quadratic boundaries.
+We used quadratic discriminant analysis to get quadratic
+boundaries.
+But we can fit quadratic boundaries by explicitly
+including quadratic terms in the model.
+Just like we did in linear regression, in logistic
+regression we can put in X squareds and XI's times XJ's
+and terms like that and just explicitly
+get a quadratic boundary.
+OK.
+That's the end of this section.
+That's an introduction to classification using these two
+very popular methods.
+And later on in the class, you're going to see that we're
+going to come back to some of these methods and look at more
+general versions of them and build richer
+classification rules.
+And importantly, we'll discuss another very popular method
+called the support vector machine, which is another
+approach to classification.
+And by way of coming attractions, the next section
+is going to be on
+cross-validation and bootstrap.
+In that section, we'll get to meet Brad Efron, who's our
+colleague and also was my PhD supervisor many years ago.
+And he was the person who invented the bootstraps.
+So he'll tell us a bit about the bootstrap and how he
+proposed it in his 1980 paper.
+Oh, fantastic.
