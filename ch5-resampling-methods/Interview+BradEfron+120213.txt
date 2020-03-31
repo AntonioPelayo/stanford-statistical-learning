@@ -1,0 +1,253 @@
+OK.
+Welcome back.
+We're here with Brad Efron, our
+colleague here at Stanford.
+Trevor and I were students here from 1980 to 1984
+roughly, and Brad was our professor.
+He was actually my principal supervisor.
+And Brad's been here since, since when?
+I started as a student in 1960.
+1960.
+And then professor here since '68?
+Is that right?
+Well I was assistant professor at '65 or '64, and then worked
+my way up the ladder to my present high position.
+Now in the course, we talked about the bootstrap, which is
+very important method in statistics.
+And Brad invented the bootstrap about a year before
+we got here, right?
+1979.
+So you want to tell us a bit about how the idea came?
+Right.
+Well it's a story about having good colleagues.
+Rupert Miller, my adviser, was leader in trying to understand
+the jackknife, which is two keys--
+adopt adaptation of Quenouille's brilliant idea.
+And Rupert had written a paper called "A Trustworthy
+Jackknife." They were trying to understand when the
+jackknife worked.
+And I went into David Cox's department for a year at the
+same time as Rupert in 1972, '73.
+And Rupert gave another good talk on it.
+And afterwards David Cox came up to me and said in his
+inimitable way, that might be a good thing to work on.
+He didn't say quite that way.
+He said it in a more elegant, English, restrained way.
+But it stuck in my mind.
+And at that point I was working on curvature
+and stuff like that.
+And I got back and I had written one line down on a
+piece of paper, which was, what is the jackknife an
+approximation to?
+And that got me going on it.
+How long did it take to write the paper?
+Hmm?
+How long did it take to write--
+Oh, a few months.
+And I must say it.
+At the time, it did not seem like an
+especially special paper.
+I mean what did the journal say?
+Well, first of all I gave it as the Rietz Lecture.
+It was in Seattle.
+And I got some nice comments and also some criticisms.
+Wolfowitz was there.
+And he stood up and said, what theorems support this?
+I said something wise like, well I didn't want to ruin a
+perfect effort.
+But when the paper came back, Rupert was the editor of the
+Annals of Statistics.
+And the paper came back.
+It was sort of rejected.
+And the associate editor--
+it turned out to be John Hartigan--
+sort of raised the same objections.
+Hartigan had work on half sampling,
+which is quite similar.
+And Tukey didn't like the bootstrap.
+And so there was some opposition.
+Tukey's objections were aesthetic.
+He said he thought that it was clumsy compared to the
+jackknife, which it is.
+It's a computer-based method.
+And it doesn't have to be computer-based in theory, but
+in fact, there's no way to do it except with the computer.
+And I had to really work.
+I put a big, long appendix on the paper that then Rupert--
+grudgingly, I must say--
+accepted.
+And I'm sure if I didn't have him next door to me as my
+former advisor I don't think I could have had it published,
+which made me realize subsequently--
+and I've been editors of things--
+is that papers that arouse a lot of opposition should be
+looked at carefully by editors.
+Most of them are junk.
+That's the reason they get it, but some of them the
+opposition is because there's actually a new idea.
+And then luckily for us, while we were graduate students,
+your little monograph came out, which was "The Jackknife,
+The Bootstrap, and Other Resampling Plans."
+You can see from the title that I was still thinking
+about the jackknife.
+I think the idea was far ahead of its time.
+I remember I was a graduate student.
+Someone in physics asked you to give a talk on the
+bootstrap in physics.
+And you were busy, so you asked me to go to give a talk.
+So I gave just a general talk about the bootstrap to the
+physicists.
+This was about 1983 or something.
+And the physicists, they basically
+accepted it right away.
+Oh yeah, of course.
+You're just doing simulation, right?
+For them, the bootstrap was very natural.
+Whereas, in our field, statistics, which really grew
+out of mathematics took a much longer time for the field to
+embrace the idea of using simulation to actually make
+inferences.
+Where in fields with the need of computation earlier like
+physics, it was a much more natural idea.
+I've found that too.
+And then for the next several years--
+and you know this because you worked with me on this-- we
+worked on trying to make the bootstrap work better than
+just be a plug-in first order method.
+And for me, this was very important because I wanted to
+show that it connected to statistical inference in a
+deeper way than just plus or minus something.
+Was it the first name you thought of?
+The bootstrap?
+Were there other possibilities?
+The end of the bootstrap paper has a joke on it, which shows
+that I wasn't taking it very seriously.
+I was kidding Tukey.
+Tukey had said about the jackknife that it was a rough
+and ready tool good for any purpose.
+And I said at the end that I thought of calling it the
+shotgun, which could blow the head off of any problem if you
+could stand the mess.
+And I don't think Tukey appreciated that either.
+Tukey asked me a couple times if we could
+write a paper together.
+And I vastly admired Tukey, and I would never write a
+paper with him.
+He is way too difficult.
+Now 30 years have passed.
+The field has changed.
+Is the bootstrap still important?
+And are there problems to solve in the bootstrap that
+are more on computation?
+OK.
+Good question.
+Or am I a has-been?
+Can I rephrase it that way?
+So I worked about 10 years on the bootstrap and then quit
+because I didn't have any more ideas.
+And then about 10 years ago, I started working on more
+empirical-based stuff, which goes back to my early 1960's
+work with Carl Morris.
+And at this time this was in the context that you and I
+worked together on on microarrays.
+And gradually the bootstrap has reappeared in my work
+because it's a convenient way to do certain kinds of
+Bayesian calculations.
+And moreover, not just to do them, but to understand why
+Bayesian calculations are really more closely related to
+frequentist work then is obvious.
+It was just Dennis Lindley's 90th birthday and various
+people, including myself, were asked to write little
+things about it.
+And Percy showed me what he wrote about how he took a lot
+of guff from the Bayesians for having helped me.
+We wrote together for Scientific
+American on the bootstrap.
+And Lindley said that the bootstrap was just the most
+egregious of frequentist nonsense.
+And yet I think that it's quite closely
+related to base theory.
+And as a matter of fact, I'm trying to write a book now,
+which hasn't started out really wonderfully, called
+Computer Age Statistical Inference, available soon.
+And in which I will try and make the connections more
+between Bayesian and frequentist inference.
+And the bootstrap is an important part of that.
+So you don't plan to retire soon?
+Plan, it's a strong word at age 75.
+You must have seen big changes in data
+analysis over the years.
+Yes.
+And I've seen, over my career, which is mainly a lot of the
+applied work was at the medical school with you too--
+and you too, come to think of it-- is the changes are
+phenomenal from looking at 1964.
+A data set that fit on one page that was pretty much
+solved using versions of the t-test was pretty much it.
+And then I could get Jerry Halpern to help me with the
+computer and do things one batch at a time.
+And now--
+and I'm no great shakes at the computer-- but I can go 100
+times faster than I used to.
+And I can do--
+the new tools that are available, like Cox
+proportional hazard or generalized linear models or
+GLNs or whatever, which your book is really quite eloquent
+on are just wonderful.
+Those are all in the, what I would call, most of that's in
+the preinference stage, in the algorithmic stage.
+And it's much harder and the field has been much slower at
+doing the inference part of that and saying, for example,
+is there a lower limit on how well you can predict upper
+limit and how well you can predict.
+We don't have something like the Cramer-Rao lower bound.
+By the way Brad is a pretty big shake on the computer.
+He writes his own R code.
+He's got his own library of R functions.
+And whenever we work on a problem together, Brad always
+wants to program it up himself and see how it works.
+So he's a real hands-on person.
+Well I think it's also true that science has really
+changed our field.
+You told me at one point that in the past you just sort of
+sit at your desk and try to think of things to work on.
+But then you start to work in the medical school and doing
+more applied problems and the problems that arose there sort
+of informed you what to work on so that you couldn't
+believe that in the past that you actually sit there and
+just sort of make up problems.
+Now most of your work-- is that right--
+comes from--
+I've gone a little bit back to the make up problems mainly
+because I haven't honestly kept up with the microbiology
+statistics work.
+It's just gotten too much for me.
+Yeah, I can do an R code and stuff like that
+with your help usually.
+And I can do this and that.
+But I'm not--
+I just so envy people who are real naturals at the computer.
+And naturals in a sense of being able to work flexibly
+with the theory and not get overwhelmed by the details,
+which are to me just overwhelming.
+Well, I taught Trevor most of his programming skills,
+[? unfortunately ?].
+Yeah.
+Trevor is just remarkably good at that stuff.
+Oh, thank you, Brad.
+You?
+Uh ehhhh.
+We have some inside jokes here.
+You wrote a large part of the software I use.
+You didn't.
+Well, Brad, it's been wonderful working with you.
+The bootstrap is used everywhere in applied
+statistics.
+I think anybody who learns applied statistics ends up
+using the bootstrap one way or another.
+And so you've got a wonderful legacy.
+Legacy?
+OK.
+Thank you.
+Sure.
+Thank you guys.

@@ -13,7 +13,13 @@
 
 # Folders
 /references
-/ch5-resampling-methods
+5.1-cross-validation
+5.2-k-fold-cross-validation
+5.3-cross-validation-the-wrong-and-right-way
+5.4-the-bootstrap
+5.5-more-on-the-bootstrap
+5.R-resampling-in-R
+
 /ch6-linear-model-selection-and-regularization
 /ch7-moving-beyond-linearity
 /ch8-tree-based-methods
