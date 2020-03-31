@@ -1,0 +1,338 @@
+OK.
+We've learned about methods for regression and for
+classification involving predictors and for making
+predictions from our data.
+How do we test these out?
+Well, ideally, we'd like to get a new sample from the
+population and see how well our predictions do.
+Well, we don't always have new data.
+So what do we do?
+And we can't use our training data just straight off,
+because it's going to be a little bit optimistic.
+So we're going to tell you about cross-validation.
+Rob's going to tell you about cross-validation, which is a
+very clever device for using the same training data to tell
+you how well your prediction method works.
+The other thing--
+You're going to give my entire lecture?
+Oh, I'll try not to, Rob.
+Just in case you miss out some of the salient points.
+The other thing we're going to look at is standard errors of
+estimators.
+Sometimes our estimators are quite complex and we'd like to
+know the standard error, which means what happens if we got
+new samples from the population over and over
+again, and we'd recomputed our estimate?
+And the standard error is the standard deviation of those
+estimates under resampling.
+Well, of course, we can't resample from the population.
+We only have one sample.
+Again, Rob's going to tell you about the bootstrap, which is
+a very clever device for using the one, single training
+sample you have to estimate things like standard
+deviations.
+Rob?
+OK.
+Well, thanks for that great introduction.
+Good overview.
+So we're going to talk about cross-validation and the
+bootstrap as Trevor mentioned.
+And these are resampling methods.
+So the word resampling, our original data is a sample.
+We're going to resample.
+We're actually going to sample from a data set in order to
+learn about the quantity of interest.
+And the cross-validation and the bootstrap are both ways of
+resampling from the data.
+And the purpose of it is to get information, additional
+information, about the fitted model.
+For example, the main thing we use cross-validation for is to
+get an idea of the test set error of our model.
+We're going to review that concept of training error.
+And we'll see, as we've talked about before, the training
+error is too optimistic.
+The more we fit to the data, the lower the training error.
+But the test error can get higher if we over fit.
+It often will.
+So cross-validation is a very important tool that we're
+going to talk about in this section.
+And we'll use, throughout the course, to get a good idea of
+the test set error of a model.
+Bootstrap, on the other hand, is most useful to get an idea
+of the variability or standard deviation of an
+estimate and its bias.
+So we'll talk about first cross-validation validation,
+and then bootstrap.
+But let's, before we get into those, let's review the idea
+of the concept of training error versus test error.
+Remember, test error is the error that we
+incur on new data.
+So we fit our model to the training set.
+We take our model, and then we apply it to new data that the
+model hasn't seen.
+The test error is actually how well we'll do on future data
+the model hasn't seen.
+Training error is much easier to compute.
+We can do it in the same data set.
+What is it?
+It's the error we get applying the model to the same data
+from which we trained.
+And as you can imagine, train error is often
+lower than test error.
+The model has already seen the training set.
+So it's going to fit the training set with lower error
+than it was going to occur on the test set.
+And the more we over fit, the harder we fit the data, the
+lower the training error looks.
+On the other hand, the test error can
+be quite a bit higher.
+So training error is not a good surrogate for test error.
+And this picture is a good one to look at to summarize the
+concepts here.
+So what do we have here?
+Well, first of all, along the horizontal axis is the model
+complexity, from low to high.
+For example, in a linear model, the model complexity is
+the number of features, or the number of coefficients that we
+fit in the model.
+So low means a few number of features or coefficients or
+predictors.
+High means a large number.
+Think about fitting a polynomial with the higher and
+higher degree.
+You can see how model complexity
+increases with degree.
+So if we move to the right, we'd have a higher complexity,
+a higher order of polynomial.
+The predictor error is on the vertical axis.
+And we have two curves here--
+the training error in blue, and test error in red.
+So what do we see?
+Let's first look at the blue curve.
+On the left, the model complexity is low.
+For example, we're fitting a small number of parameters,
+maybe just a single constant.
+The training error is high.
+Now, as we increase the model complexity, we fit more and
+more features in the model or higher complexity or higher
+order polynomial, the training error goes down.
+And actually in this picture, it continues to go down a
+consistent way.
+In most cases, for most models, the more complex the
+model, the training error will go down as it
+does in this case.
+On the other hand, the test error is the red curve.
+It does not consistently go down.
+It starts off high like the training error.
+It comes down for a while, but then it
+starts to come up again.
+It has a minimum, looks like around the middle here.
+But after this point, the more complex the model, the higher
+the test error.
+What's happened there?
+Well, that is an example of over fitting, right?
+On the left, we've added complexity, some features that
+actually are important for predicting the response.
+So they reduce the test error.
+But at that point, we seem to have fit all
+the important features.
+And now we're putting in things which are just noise.
+The trainer error goes down as it has to, but the test error
+is starting to go up.
+That's over fitting.
+So we don't want to over fit, because we'll increase the
+test error.
+The training error has not told us anything about over
+fitting, because it's using the same
+data to measure error.
+The more parameters, the better it looks.
+So it does not give us a good idea of the test error.
+The test error curve, on the other hand, is minimized
+around this level, at this complexity.
+And beyond that is over fitting.
+The ingredients of prediction error are
+actually bias and variance.
+So the bias is how far off on the average the
+model is from the truth.
+The variance is how much that the estimate
+varies around its average.
+When we don't fit very hard, the bias is high.
+The variance is low, because there are few
+parameters being fit.
+As we increase the amount of complexity moving to the
+right, the bias goes down because the model can adapt to
+more and more subtleties in the data.
+But the variance goes up, because we have more and more
+parameters to estimate from the same amount of data.
+So bias and variance together give us prediction error.
+And there's a trade off.
+They sum together to get protection error.
+And the trade off is minimized, in this case,
+around a model complexity in the middle here.
+So bias and variance together give us test error.
+We want to find the model complex given the smallest
+test error, and training error does not give us a good idea
+of test error.
+They refer to it as the bias-variance trade off.
+OK, so we can't use training error to estimate test error,
+as the previous picture shows us.
+So what do we do?
+Well, the best solution, if we have a large test
+set, we can use that.
+So we typically take our model that we've applied to fit on
+the training set applied to test set.
+But very often, we don't have a large test set.
+We if we can't do that, what we do?
+Well, there are some ways too get an idea of test error
+using an adjustment to training error.
+Basically, training error can be too small, as we've see in
+the previous picture.
+So these methods adjust the training error by increasing
+it by a factor that involves the amount of fitting that
+we've done to the data and the variance.
+And these methods could the Cp statistic,
+the AIC and the BIC.
+We'll talk about these later on in the
+course, not in this section.
+Here instead, we're going to talk about cross-validation,
+validation and cross-validation.
+And these involve removing part of the data, the holding
+it out, fitting the model to the remaining part, and then
+applying the fitted model to the data that we've held out.
+And this is called validation, or
+cross-validation, as we'll see.
+So let's first of all talk about the validation approach.
+So here, the simple idea is basically we're going to
+divide the data into two parts at random, approximately of
+equal size.
+We'll call the first part a training set and the second
+part the validation or hold-out set.
+So the idea is simple.
+We take the model.
+We fit it on the training half.
+And then we apply the fitted model to the other half, the
+validation or hold-out set.
+And we record the error that we get on hold-out set.
+And that error, the validation set error, provides us a good
+idea of the test error.
+Well, at least some idea of the test error.
+And the error we'll measure by mean squared error in the case
+of quantitative response, or misclassification error rate
+in the case of a qualitative or a discrete response
+classification.
+So just to make that clear, let's look at the next slide.
+We have our data set here.
+I've divided it in two at random.
+The blue part on the left is the training set.
+And the orange part or pink part on the right is the
+validation or hold-out set.
+These observations, for example, 7, 22, 13 and more of
+them were at random chosen to be in the training set.
+Observation 91 was at random chosen to be in
+the hold-out set.
+We fit the model to the blue part.
+And then we apply it and predict the observations in
+the pink part.
+And that's validation.
+Or we might call that twofold validation, where we--
+well, maybe I shouldn't call it twofold, because as we'll
+see, we don't cross over.
+This is simply a one-stage process.
+We divide it in half, train on one half and predict on the
+other half.
+It seems a little wasteful if you've got a very
+small data set, Rob.
+Yeah.
+That as wasteful.
+And as we'll see, cross-validation will remove
+that waste and be more efficient.
+But let's first see how this works in the auto data.
+Recall, we're comparing the linear model to high-order
+polynomials in regression.
+And we have 392 observations divided up into two parts at
+random, 196 in one part and 196 in the other part.
+The first part being the training set, and the other
+part being the validation set.
+If we do this once, do a single split, and we record
+the mean squared error, we get this red curve as a function
+of the degree of the polynomial.
+So a linear fits on the left, and quadrant is here, et
+cetera, as we increase the polynomial order.
+And we see the minimum seems to occur maybe around 2.
+Well, it's rising a bit and coming down a bit after that.
+It's pretty flat after about 2.
+So it looks like a linear model.
+Or actually, a quadratic model, excuse me, is
+probably the best.
+And after that, we're not getting much
+gain, if any at all.
+But look what happens when we repeat this process with more
+and more splits at random into two parts.
+We get a lot of variability.
+The minimum does tend to occur around 2 generally.
+But look at the error.
+It's varying from about 16 up to 24, depending on the split.
+So this is a consequence part of the fact that we divided up
+into two parts.
+And when you divide data in two, you get a lot of
+variability depending on the split.
+The training set, for example, is half as big as it was
+originally.
+It's interesting, Rob, that even though you get that
+variability, it seems to often have this pattern where the
+shape of the curves are much the same.
+But the height, the level, hops around.
+So that's a good point.
+And it actually reminds me to say there's two things you
+want to use validation for, cross-validation.
+Both to pick the best size of the model-- and in this case,
+the degree of polynomial.
+And also to give us an idea of how good the error is, because
+of the idea of the actual test error at the end of the
+fitting process.
+So a twofold, this breaking up into two parts, is successful
+at the first thing as Trevor just mentioned.
+The minimum's around 2 pretty consistently.
+So that seems to be OK.
+But the actual level of the curve is varying a lot.
+So it wouldn't be so good at telling an idea of the error,
+because we get a very wide range here in error.
+So I've said a little bit of this first point already, that
+this method is highly variable because we're
+splitting into two parts.
+And there's lots of ways of splitting into two parts.
+And because we're splitting in two, we're losing a lot of the
+power of the training set.
+We're throwing away half the data each time in training.
+And another consequence of that that, remember, one of
+our original questions was, well, what's the best size
+model to pick?
+Second of all, how well does that model do in
+terms of test error?
+Our training sets here are half as big as our original
+training set.
+And if we go back to this previous slide, we split the
+data in half.
+We actually want the test error for a
+training set of size n.
+We're getting an idea of test error for a
+training set of size n/2.
+And that's likely to be quite a bit higher than the error
+for a training set of size n.
+Why, Rob?
+Why?
+That was my question.
+Well, that's because in general, the more data one,
+the lower the error.
+If I offer you a choice of, would you rather have 100
+observations or 200 observations, you'd generate
+like 200 observations to train on.
+Because the more data, the more information you have, and
+in general, the lower your error is.
+So if your training sets only half as big as your original
+training set, as it is in this situation, the error that it
+yields is probably be higher n the actual
+error you want to get.
+So as we can see, there are some drawbacks of validation.
+In the next section, we'll talk more cross-validation,
+which will help to remove some of these drawbacks.

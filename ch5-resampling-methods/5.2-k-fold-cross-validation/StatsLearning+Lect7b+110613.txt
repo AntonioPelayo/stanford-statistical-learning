@@ -1,0 +1,320 @@
+Welcome back.
+In the last section, we talked about validation, and we saw
+some drawbacks with that method.
+Now we're going to talk about K-fold cross-validation, which
+will solve some of these problems.
+This is actually a very important technique that we're
+going to use throughout the course in various sections,
+and also something we use in our work all the time.
+So it's really important to understand K-fold
+cross-validation.
+It's used for a lot of methods.
+It's an extremely flexible and powerful technique for
+estimating prediction error and to get an idea of model
+complexity.
+So what's the idea of K-fold cross-validation?
+Well, it's really in the name.
+It's validation, as we've seen, but done sort
+of like K part play.
+It's done K times, with each part, again, playing the role
+of the validation set.
+And you have the K minus 1 parts playing the role of the
+training set.
+Which I say here.
+But let me go to the picture here, and I'll sort of point
+to the pictures as I say it.
+So here, you're doing 5-fold cross-validation.
+As we'll talk about in more detail, the best choices for
+K, the number of folds, is usually about 5 or 10.
+And we'll talk about that in a few minutes, about why those
+are good choices.
+But let's fix here K equals 5.
+So I've taken the data set.
+I've divided at random the samples into five parts.
+Again, a size about the same.
+The first box looks a bit bigger, huh?
+OK, well, that's my lack of drawing ability.
+But anyway, it's supposed to be the same.
+I was trying to squish the word validation in.
+So the boxes are supposed to be about the same size and
+number of observations.
+But in this case, the first part's the validation set.
+The other four are the training parts.
+So what we're going, what cross-validation does, it
+forms these five parts.
+We're going to train the model on the four training parts put
+together as one big block, take the third model, and then
+predict on the validation part, and record the error.
+And then, that's phase one.
+Phase two, the validation set will be part two.
+This block.
+All the other four parts will be the training set.
+We fit them all to the training set, and then apply
+it to this validation part.
+And the third stage, this is the
+validation piece, et cetera.
+So we have five stages.
+In each stage, one part gets to play the
+role validation set.
+The other four parts are the training set.
+We take all the prediction errors from all five parts, we
+add them together, and that gives us what's called the
+cross-validation error.
+Now, in algebra, I'll just basically give you the details
+of what I said in words.
+So let the K parts of the data be C1 through CK.
+So these are the observations that are in
+each of the five parts.
+K was 5 in our example.
+And we'll try to make the number of observations about
+the same in every part, versus if N's not a multiple of K or
+5, we can't do that exactly, but we'll do it approximately.
+So we'll let n sub K be the number of
+observations in the K-th part.
+So here's the cross validation error rate.
+Basically, this is the mean square error we get by
+applying the fit to the K minus 1 parts that don't
+involve part number K. That gives us our fit yi hat for
+observation i.
+4/5 of the data in this case.
+Right.
+And then we add up the error.
+This is the mean square error that we obtain now on the
+validation part using that model.
+So this is for the K-th part.
+And now we do this for all five parts in turn.
+The five acts of the play.
+And then we get the cross-validation error rate.
+And a special case of this is leave-one out
+cross-validation, where the number of folds is the same
+number of observations.
+So that means in this picture, that actually would be one box
+per observation.
+And in leave-one out cross-validation, each
+observation by itself gets to play the role of the
+validation set.
+The other n minus 1 are the training set.
+Now, actually, leave-one out cross-validation is a nice
+special case of that.
+It represents a nice special case in the sense that this
+cross-validation can be done without actually having to
+refit the model at all.
+So leave-one out cross-validation, at least for
+a least squares model, or a polynomial model, the
+leave-one out cross-validation has the following form.
+So the yi hat is now just to fit on the full data set.
+Each i is the diagonal of the hat matrix.
+So have a look in the book for details.
+But the hat matrix is the projection matrix that
+projects y onto the column space of x to
+give you the fit.
+This is something that can get computed easily when you fit
+your mean squares model.
+So [INAUDIBLE].
+We haven't emphasized it, but it's available.
+It's one of the things that's available when you fit your
+least squares model.
+So the overall point of this is that to do a leave-one out
+cross-validation for these particular models, you don't
+actually have to leave anything out.
+You can do the fit on the overall data set, and then
+extract the information you need to get the
+cross-validation sum of squares.
+And it's interesting.
+Because the hi tells you how much influence an observation
+has on its own fact.
+It's a number between 0 and 1.
+And so as an observation, it's very
+influential on its own fit.
+You can see it punishes the residual, because it divides
+by a number that's small, and it inflates the residual.
+So, it sort of does the right thing there.
+OK.
+Although leave-one out cross-validation does have
+this nice computation formula.
+For most of the methods we talk about in this book and
+most statistical learning methods, it's better to choose
+K to be 5 or 10, rather than have a leave-one out
+cross-validation.
+And why is that?
+Well, one problem with the leave-one out cross-validation
+is that each of the training sets look very much like the
+other ones.
+Right?
+They only differ by one observation.
+So when you take the average--
+cross-validation is you take the average of
+errors over the n folds.
+And in leave-one out cross-validation, the n folds
+look very similar to each other, because the training
+sets are almost the same.
+They only differ by one observation.
+So as a result, that average has a high variance, because
+the ingredients are highly correlated.
+So that's the main reason why it's thought, and we also
+agree, that a better choice for K in
+cross-validation is 5 or 10.
+On the other hand, the leave-one out cross-validation
+is actually trying to estimate the error rate for the
+training sample of almost the same size as what you have.
+So it's got low bias.
+But as Rob said, high variance.
+So actually, picking K is also a bias variance trade-off for
+prediction error.
+And as Rob said, K equals 5 or 10 tend to be a good choice.
+So the next slide I've got a comparison of a leave-one out
+cross-validation and 10-fold CV for the auto data.
+Remember, before we started 2-fold validation, we started
+with just validation into two parts, we've got a lot of
+variability between when we change the sample, the half
+sample, that we took.
+Now let's see what happens with leave-one out
+cross-validation.
+We get a curve that's, again, got the minimum around the
+same place, as we saw before.
+And it's pretty flat after that.
+A 10-fold cross-validation, now again, it's also showing
+the minimum around 2, but there's not the--
+what we're seeing here is the 10-fold cross-validation as we
+take different partitions into 10 parts of the data.
+And we see there's not much variability.
+They're pretty consistent.
+In contrast to when you divide it into two parts, we got much
+more variability.
+And those get averaged as well, those
+curves on the right.
+Right.
+Exactly.
+So they're averaged together, which we saw here.
+They're averaged together to give us the overall estimate
+of cross-validation.
+Which the overall cross-validation curve will
+look very much like this, with its minimum around 2.
+OK.
+This is figure 5.6 from the textbook.
+And this is the simulated example, which is from figure
+2.9 of the book.
+Just recall that this is smoothing splines in three
+different situations.
+In this case, the true error curve is the blue curve.
+And again, there's three different
+functions that we're examining.
+It says mean square error simulated data.
+The true error curve.
+How did we get that, Rob?
+Well, it's simulated diagram.
+So we just--
+Oh.
+So we can get a very big test set and
+estimate the error exactly.
+Leave-one out cross-validation is the black broken line, and
+the orange curve is 10-fold cross-validation.
+So what do we see?
+Well here, we see that the test error curve is a little
+higher than the 10-fold and leave-one out
+cross-validation.
+The minimum's fairly close, but the minimum of
+cross-validation is around 8, whereas the true curve minimum
+is around 6.
+In this case, the two cross-validation methods are
+doing a better job of approximating
+the test error curve.
+Well, the minimum's fairly close.
+Not exactly on the mark.
+Black curve is minimized around 6.
+And the true error curve is minimize around--
+it's maybe 3.
+Although those error curves are fairly flat.
+So there's obviously a high variance in where the
+minimum should be.
+Right.
+And it doesn't really matter, really.
+That's right.
+It's not going to matter much if you choose a model with a
+flexibility of 2, or maybe even 10 here, because the
+error is pretty flat in that region.
+And then in the third example, the two cross-validation
+curves do quite a good job of approximating the test error
+curve, and the minimum's around 10 in each case.
+So actually, I said this already,
+but I'll say it again.
+One issue with cross-validation is that since
+the training set is not as big as the original training set,
+the essence of prediction will be biased up a little bit,
+because you have less data that you're working with.
+And I also said, and I'll say again, that leave-one out
+cross-validation has smaller bias in this sense, because
+the training set is almost the same in size as
+the original set.
+But on the other hand, it's got higher variance, because
+the train sets that it's using are almost the same as the
+original set.
+They only differ by one observation.
+So K equals 5 or 10-fold is a good compromise for this
+bias-variance trade-off.
+OK.
+So we talked cross-validation for a quantitative response,
+and we used mean square error.
+The classification problems, that is exactly the same.
+The only thing that changes is the measure of error.
+Of course, no longer square error, but a
+misclassification error.
+Otherwise, cross-validation process is exactly the same.
+Divide the data up into K parts.
+We train on K minus 1 parts.
+We record the error on the K-th part, and we add things
+up together to get the overall cross-validation error.
+It looks like a weighted average formula, right?
+With nk over n?
+Do you want to explain that?
+Each of the folds might not be exactly the same size.
+So, we actually compute a weight which is the relative
+size of the fold, and then use a weighted average.
+Right.
+And if we are lucky that the n divides by k exactly, then
+that weight will just be 1/k.
+Right.
+1/k.
+One other thing to add is that since this cross-validation
+error is just an average, the standard error of that average
+also gives us a standard error of the
+cross-validation estimate.
+So we take the error rates from each of the folds.
+Their average is the cross-validation error rate.
+The standard error is the standard deviation of the
+cross-validation estimate.
+So here's the formula for that.
+So this is a useful quantity.
+When we would draw a CV curve, we should always put a
+standard air band around the curve [INAUDIBLE]
+the variability.
+So in these previous pictures, we should've had a standard
+error band around the curves to give us an idea of how
+variable they are.
+I say here is a useful estimate, but not quite valid.
+Why is that?
+Dr. [INAUDIBLE]?
+Well, I wonder why.
+Well, the thing is, we're computing the standard error
+if these were independent observations.
+But they're not strictly independent.
+Error sub k overlaps with, Error sub j because they share
+some training samples.
+So there's some correlation between them.
+But we use this anyway.
+We use it, and it's actually quite a good estimate.
+And people have shown this mathematically.
+An important point being that is that the cross-validation
+separates the training part of the data from
+the validation part.
+When we talk about bootstrap method in the next part of
+this section, we'll see that that's not the case, and
+that's going to cause a problem.
+So cross-validation explicitly separates the training set
+from the validation set in order to get a good idea of
+test error.
+OK.
+So this again, I'll reemphasize that
+cross-validation is a very important technique to
+understand, both for quantitative responses and
+classification.

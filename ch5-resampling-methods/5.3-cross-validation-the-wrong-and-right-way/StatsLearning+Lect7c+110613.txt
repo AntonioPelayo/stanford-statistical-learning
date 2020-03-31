@@ -1,0 +1,241 @@
+OK, so we just talked about cross-validation, which is an
+important technique for both regression classification for
+getting an idea of test error and for assessing how complex
+a model to fit.
+For example, how many features to include in a model or the
+order of the polynomial.
+And it's a very important technique.
+And sometimes with important techniques like this, it's a
+good idea to see how one might do it wrong.
+And this is actually an area that we've seen people--
+a way in which people use cross-validation
+in the wrong fashion.
+Which can have actually very serious consequences.
+Especially these days, when you get very wide data sets.
+And this next example is going to show you such a case.
+So we'll go into detail of how one could do it wrong, and how
+people use it wrong.
+And we'll try to avoid that error, and help you to avoid
+that error.
+So let's think of a simple thought experiment.
+We've got 5,000 predictors, for example, and 50 samples.
+This is, again, a more and more commonly occurring case,
+we have more predictors than samples.
+And we have two classes we're trying to predict.
+OK?
+And suppose we did the following.
+We built a simple classifier in the following way.
+First of all we filtered the predictors, find the 100
+predictors having the largest correlation on their own with
+the class labels.
+So we're going to cherry pick here.
+We pick the top 100 predictors.
+Keep them--
+and again, they're chosen on the basis of their correlation
+with the class labels on their own.
+And we throw away the remaining 4,900 predictors.
+And then we use 100 predictors, we use them in a
+classifier such as a [INAUDIBLE] model using only
+these 100 predictors.
+And we omit the other 4,900.
+So that's not unreasonable with building a classifier.
+For example, maybe we don't have to deal with 5,000
+predictors.
+We just want a small number of them.
+The question we address here is, how do we get an idea of
+the test set error of this classifier?
+Cross-validation.
+OK, thank you.
+But how?
+What's tempting is to say, well, let's just forget the
+fact that we filtered the predictors in step one.
+That we chose the 100 best among the 5,000.
+Let's just pretend like we started in step two.
+That we started with the 100 predictors, and
+that was our data.
+Can we apply cross-validation in step two,
+forgetting about step one?
+Well, no.
+This is a serious error.
+Why is it an error?
+Well, the problem is that the procedure of the classifier
+has already seen the labels of the training data in step one.
+In choosing the best 100 predictors, it's looked at all
+the labels of all the samples.
+So the predictors have already used the full set of
+observations in the fitting when we chose those
+predictors.
+So that's a form of training.
+And we can't ignore it in the validation process.
+The point is, we're not allowed to just start in step
+two and ignore the fact that we applied step one.
+Why is that?
+Well, this is something you should try yourself.
+You can simulate data with class labels having no
+correlation with the outcome.
+So [INAUDIBLE]
+class, the true test error is 50%.
+But cross-validation, if we ignore step one will give you
+an error rate of 0.
+So it's a serious, serious bias.
+Cross-validation is telling you your classifier is
+perfect, when in fact your classifier is the same as
+flipping a coin.
+Think about why this happens.
+It will make the point more clearly if we increase the
+5,000 to maybe 5 million predictors.
+Suppose we have 5 million predictors and 50 samples.
+And again, there's no correlation in the population
+between the predictors and the class labels.
+We go ahead and we pick the best 100 among those 5 million
+predictors.
+We're going to find some very good-looking predictors.
+Despite the fact in the population no predictor has
+correlation with the outcome.
+In the data, if we look at the best among 5 million, we're
+going to find some very good predictors that look in the
+data like they have a lot of power for classifying.
+If we then pretend like those were the predictors we started
+with, those 100 cherry picked out of 5 million, they're
+going to look very good to cross-validation.
+So we fooled cross-validation by leaving out the first
+filtering step and giving it a very cherry-picked set of
+predictors in the second step.
+This seems like it was done on purpose here, but actually in
+some genomic studies researchers are faced with
+tens of thousands of genes, maybe.
+And it's just hard to handle them.
+So they do some kind of screening in the beginning
+just to reduce the number of variables down to
+a manageable set.
+And then forget about it afterwards, but that leads to
+this kind of bias.
+As I said earlier, I think it's good to understand this
+by actually trying this yourself.
+In [INAUDIBLE] you've learned some [INAUDIBLE] now, you can
+simulate a situation just like this where the true
+test error is 50%.
+And simulate a large number of predictors.
+And apply cross-validation in step two.
+And you'll see the error is actually very low.
+You can see the error is low.
+And as Trevor mentioned, this is not something we made up.
+This is actually an error which commonly occurs in
+genomics in published papers and high profile journals.
+So we told you the wrong way to do things, applying
+cross-validation in step two.
+The right way is to apply
+cross-validation to both steps.
+The next few pictures will make this clear.
+Here I've got the wrong way I just described.
+So I've got my samples here and my predictors here.
+And now in this first approach, we first select the
+best set of predictors based on the correlation with the
+outcome, that's over here.
+And we keep these predictors and throw the rest away.
+And now in step two, we're going to apply
+cross-validation.
+What does that mean?
+We divide the data up into, say, five parts.
+We apply our classifier to four parts.
+And we predict the response in the [INAUDIBLE] part.
+So again, this is wrong because the filtering step
+which selected these predictors has used the
+response [INAUDIBLE] for all the samples.
+So this is the wrong way to do things.
+The right way is as follows.
+We first define our folds, five folds cross-validation.
+Before we do any fitting, we remove one of the folds.
+All the data for that fold, the predictors and the
+response variable.
+And now we can do whatever we want on the other four parts.
+We can filter and fit however we want.
+When we've finished our fitting, we then take the
+model and we predict the response for the [INAUDIBLE]
+part.
+Key point being, though, that we form the folds before we
+filter or fit to the data.
+So that we're applying cross-validation to the entire
+process, not just the second step.
+So that's the right way to do it.
+So in each of the 4/5ths folds, we might screen off a
+different set of predictors each time.
+And we probably will.
+And so that variability is going to get taken into
+account here.
+So this wrong way of doing cross-validation is not
+something that we've made up.
+It's actually something which I mentioned occurs in a lot of
+published papers.
+I've actually experienced it a number of times myself.
+A few years ago I was at a Ph.D. oral in engineering here
+at Stanford.
+And a lot of people engineering are doing
+statistics as part of their work.
+This particular student was trying to predict heart
+disease from SNPs.
+SNPs are single-base changes in the genome.
+So basically had a classification problem with I
+think about 100,000 predictors and to a class response.
+We get done something very much like this.
+He had so many predictors he wanted to filter them.
+So he applied a filtering of some sort to the data set to
+reduce the 100,000 predictors I think down to 1,000.
+And then he fit some sort of a model to the 1,000 predictors.
+And he got an error rate of about 35%, I think.
+Which doesn't sound that impressive, but for this
+particular area it was actually
+quite a low error rate.
+And during the oral, he presented this.
+And I said, actually, I think there's a problem with this.
+And I pointed out the point you've just seen.
+That he actually had filtered the data--
+oh, sorry, I didn't say--
+[INAUDIBLE] detail.
+He had applied cross-validation
+in the second step.
+So he had filtered the data down to 1,000 predictors.
+He applied cross-validation.
+And the cross-validation error rate was about 35%.
+And he was quite happy, and this was part of this
+presentation.
+And I mentioned, well, that doesn't look right to me.
+Because you have done cross-validation wrong in the
+way I just described.
+He didn't agree, and his supervisor didn't even agree.
+I will not name the person.
+Wasn't me.
+Wasn't you.
+The supervisor said, well, maybe you're right.
+But you're really being picky, you're splitting hairs here.
+It's not going to make much difference.
+And I said, well, I think it might make a difference.
+You really have to go back and do it.
+So a few months later, the student knocked
+on my door, my office.
+Did he pass?
+He did pass, because he had other things in the thesis
+which were reasonable.
+But a few months later, he knocked on my door, came to my
+office, said I redid the experiment.
+And the error rate is now 50%.
+He was quite surprised, and a bit upset.
+But basically, it was I told you so.
+That with a large number of predictors, if you filter them
+you've got to include that in your cross-validation.
+And if you don't, you can incur a serious error in your
+cross-validation estimate.
+So that was again, it happens, and Trevor and I talk about
+this a lot.
+And other people have written papers about this error.
+But people continue to make this error in
+cross-validation.
+So that's a big heads up.
+And of course, another heads up is not [INAUDIBLE].
+OK, so that completes our discussion of
+cross-validation.
+We spent quite a bit of time on that topic, because it's a
+very important technique for all the methods we'll see in
+this course.
+In the next session we'll talk about a closely related idea,
+but a different one, called the bootstrap.

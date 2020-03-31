@@ -12,9 +12,9 @@ Started February 23
 - [x] 3 Linear Regression - March 11 
 - [x] 4 Classification - March 30
 - [ ] 5 Resampling Methods 
-    - [ ] 5.1 Cross Validation
-    - [ ] 5.2 k-fold Cross Validation
-    - [ ] 5.3 Cross Validation, the Wrong and Right Way
+    - [x] 5.1 Cross Validation - March 31
+    - [x] 5.2 k-fold Cross Validation - March 31
+    - [x] 5.3 Cross Validation, the Wrong and Right Way - March 31
     - [ ] 5.4 The Bootstrap
     - [ ] 5.5 More on the Bootstrap
     - [ ] 5.R Resampling in R
