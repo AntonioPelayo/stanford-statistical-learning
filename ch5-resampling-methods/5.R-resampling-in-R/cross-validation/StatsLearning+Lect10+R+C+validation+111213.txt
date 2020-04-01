@@ -1,0 +1,227 @@
+OK.
+Well, we can have another on session.
+This time, we can look at validation methods,
+cross-validation and we'll start off with leave-one-out
+cross-validation.
+So we'll go to our studio session and see what we can do
+with validation.
+So here we are, we first of all require ISLR, it is
+outdated for our session.
+And this time, we require the boot package, and so requires,
+just like using library, it will also return a true and
+false if the package doesn't exist.
+So let's look at the function cv.glm.
+So that's a general
+cross-validation package for glms.
+And it'll give you some help on that.
+And so again, it's always useful before you use a
+package or use a function to look at the help file and make
+sure you're using it correctly.
+So we're gonna use the auto data.
+And in particular, we look at two variables, miles per
+gallon and horsepower.
+So we'll make a plot of those data.
+And plot takes a formula.
+So you can use a formula in plot.
+And tell it where to evaluate the formula in
+the data set auto.
+So we make that plot.
+And we see, as we might expect, miles per gallon drops
+down quite substantially as horsepower increases.
+And now we can use this data set to investigate
+cross-validation.
+So the first thing we'll do is leave-one-out
+cross-validation.
+OK?
+And so we'll fit a linear model.
+And we'll use glm to fit this, even though we just fit in a
+linear model.
+So glm can fit nonlinear models as well, in particular
+logistic regression models.
+But it will also fit linear models.
+And so if you don't give the family to glm by default, it
+just fits a linear model.
+OK?
+And then we'll run cv.glm on that linear model.
+Now, just to remind you what leave-one-out cross-validation
+does, it puts the model repeatedly n times, if there's
+n observations.
+Each time, it leaves out one observation, produces a fit on
+all the other data, and then makes a prediction at the x
+value for that observation that you lift out.
+OK?
+And so cv.glm actually does that by brute force, actually
+refits the model all those times.
+It's a little slow.
+You may have noticed it took a while before the
+results came up.
+And eventually it came up and produced two numbers.
+We see them on the screen here.
+Well, it produced quite a lot, actually.
+But we just looked at the delta, which is the
+cross-validated prediction error.
+And even there it gives two numbers, and if you look on
+the help file, you'll see why.
+The first number is the raw leave-one-out, or lieu
+cross-validation result.
+And the second one is a bias-corrected version of it.
+And the bias correction has to do with the fact that the data
+set that we train it on is slightly smaller than the one
+that we actually would like to get the error for, which is
+the full data set of size n.
+Turns out that has more of an effect for k-fold
+cross-validation.
+Now the thing is, for leave-one-out cross-validation
+and for linear models, this function doesn't exploit the
+nice simple formula we saw in the chapter.
+So let me just remind you what that nice simple formula is.
+And it goes like follows.
+We want to do this classification error for each
+observation yi minus our right y hat i minus i.
+So this is what we'd like to compute.
+And we call that the leave-one-out
+sum of squared errors.
+And this notation, y hat minus i, what it means is
+just what we said.
+For each observation, the i-th observation you leave it out.
+You compute the fit using all of the other data.
+And then you make a prediction at that point.
+So that's what this notation refers to.
+And we have this really nice formula that says that this is
+equal to 1/n summation.
+I'll make this explicit here, i going from 1 to n.
+It's the ordinary residuals, which I'll just write as yi
+hat squared.
+OK.
+So these would be the ordinary residuals if you didn't leave
+the observations out.
+So that just comes from the least squares fit.
+But now we have to divide them by 1 minus Hii squared.
+And so this is like a magic formula.
+The Hii that we have there is the diagonal element of the
+hat matrix.
+The hat matrix is the operator matrix that produces the least
+squares fit.
+This is also known as the self influence.
+It's a measure of how much observation i contributes to
+it's own fit.
+And you notice, what happens if these values Hii vary
+between 0 and 1.
+And if Hii is close to 1-- in other words observation i
+really contributes a lot to its own fit--
+1 minus Hii is small.
+And that will inflate that particular residual.
+So this is like a magic formula.
+It tells you that you can get your cross-validated fit by
+the simple modification of the residuals from the full fit.
+And that's much more efficient,
+and cheaper to compute.
+OK, so that's a slight detour.
+Now we're going to write our own function to do that.
+OK?
+And that's formula 5.2 in the book.
+So here we write our function.
+We'll call it LOOCV, LOO-CV, takes the fit as an argument.
+And it uses a function called ln.influence.
+And that's a post-processor for ln fit.
+And it'll extract the element h from that, which gives you
+those diagonal elements Hii, right?
+So we'll put that in a vector H. And then right on the fly,
+we'll compute that quantity on the right hand side of our
+panel over there.
+First of all, the residuals of the fit give you the residuals
+from the full fit.
+So those are the terms in the numerator.
+And then we divide by 1 minus h squared.
+And the residuals of fit is a vector.
+And 1 minus h is a vector.
+And the divide, now, does element by element division in
+that vector.
+And we take the whole lot, square them, and
+take the mean of that.
+And so that's going to be computing this
+formula over here.
+OK?
+So that we just build into our function.
+And then end off our function.
+And since that was the last quantity computed, that's will
+be what's returned.
+OK?
+So let's see if that works.
+We'll do LOOCV.
+And lo and behold, very quickly it produced the 24.23
+that we saw above for the first element of
+the results of cv.glm.
+So our function works.
+OK, great.
+So now we're going to use it.
+And the way we're going to use it is we can fit polynomials
+of different degrees to our data.
+Remember what the data looked like?
+Let's just go up here and plot it again.
+The data looks very nonlinear.
+So we plotted it again.
+And now we're going to fit some polynomials of
+degrees 1 up to 5.
+Right?
+And so we set ourselves up.
+We've got a vector for collecting the errors.
+OK?
+And now we create the variable degree, which
+takes values 1 to 5.
+And then we go into a loop for d in degree.
+Fit the glm using the polynomial of that degree, so
+we use the poly function, the function of
+horsepower and degree.
+And then we use our little function to compute the error,
+the leave-one-out cross-validation error, and
+put it in our error vector.
+OK?
+And look, it's finished already.
+It's done all of them.
+And if we plot this error against degree, we see that
+degree 1 does pretty poorly.
+Degree 2 jumps down from 24 down to just above 19.
+And then higher degrees really don't make much difference.
+And we might have guessed that, looking at the plot of
+the data, that a quadratic would do a good job.
+OK.
+Well that was leave-one-out cross-validation.
+Let's try 10-fold cross-validation out.
+So recall with 10-fold cross-validation, you do
+actually much less work.
+What you do here is you divide the data up into 10 pieces,
+and each 1/10 is a test set.
+And the 9/10 acts as a training set.
+So for 10-fall cross-validation, you don't
+have to fit the model 10 times.
+With leave-one-out you have to in principle fit the model n
+times, where n is the number of training points.
+Although we did have the shortcut for linear
+regression.
+The reason cv.glm doesn't use that shortcut is that it's
+also set up to work on logistic regressions and other
+models, and there the shortcut doesn't work.
+OK.
+So here we'll do 10-fold.
+And we'll again set up a vector to collect our errors.
+And the same thing, go through the list, we have a loop, a
+list of degrees, fit our model.
+And now we'll actually use a cv.glm function
+to compute the errors.
+And so we call cv.glm, and we tell it k is 10.
+So that tells the number of folds.
+OK?
+And that's pretty quick, because it's only fitting the
+model 10 times each time.
+And now we'll include the errors on our plot.
+We'll color them in red.
+And so we use the function lines.
+And it's not much difference.
+In this case, 10-fold and leave-one-out cross-validation
+pretty much told us the same story.
+In general we favor 10-fold cross-validation
+for computing errors.
+It tends to be a more stable measure than leave-one-out
+cross-validation.
+And for the most time, it's cheaper to compute.
