@@ -18,10 +18,10 @@ Started February 23
     - [ ] 5.4 The Bootstrap
     - [ ] 5.5 More on the Bootstrap
     - [ ] 5.R Resampling in R
-        - [ ] 5.R Cross Validation
-        - [ ] 5.R Bootstrap
+        - [x] 5.R Cross Validation
+        - [ ] 5.R Bootstrap - March 31
 - [ ] 6 Linear Model Selection and Regularization
-- [ ] Moving Beyond Linearity 
+- [ ] 7 Moving Beyond Linearity 
 - [ ] 8 Tree-Based Methods
 - [ ] 9 Support Vector Machines
 - [ ] 10 Unsupervised Learning

@@ -1,0 +1,268 @@
+Welcome back.
+In the last session, we talked about cross validation for the
+estimation of test air for supervised learning.
+Now we'll talk about a closely related
+idea called the bootstrap.
+It's a powerful method for assessing
+uncertainty in estimates.
+And particularly good for getting standard errors of an
+estimate, and getting confidence limits.
+It sounds like a powerful technique, Rob.
+Are there any good books on the topic?
+As a matter of fact--
+Rob has got a very famous book with Brad
+Efron on the bootstrap.
+Actually, speaking of famous, my supervisor was Brad Efron,
+who is now our colleague.
+And he's the inventor of the bootstrap.
+And there's a conversation with Brad in this course, in
+which he talks about how he came to
+think of the bootstrap.
+The bootstrap was something he thought of in 1979, and it's
+become one of the most important techniques in
+statistics in the last 30 years.
+So where does the name come from?
+Well, it's the idea of pulling yourself up by your
+bootstraps, which is from a fable by Rudolph Erich Raspe,
+"The Adventures of Baron Munchausen." The Baron had
+fallen to the bottom of a deep lake and couldn't get out.
+So he had an idea.
+He thought he'd pull himself up by his bootstraps, his own
+bootstraps.
+And in the fable, he managed to pull himself out of the
+lake and save his life.
+So that's thought where the term bootstrap came from.
+And that's the term we're using here.
+It's not the same as the term bootstrap that one uses in
+computer science to boot a computer.
+But it's the same idea.
+You're trying to pull yourself up from what you've got.
+In this case, we'll see the bootstrap-- the bootstrap, is
+we're going use the data itself to try to get more
+information about our estimator.
+So let's start with a simple example.
+Suppose we have a fixed sum of money which we want to invest,
+in two assets that yield returns x and y, where x and y
+are round quantities, depending on
+how the assets do.
+And we want to invest a fraction alpha of our money in
+x, and the remaining 1 minus alpha in y.
+You want to choose the fraction alpha to minimize the
+total risk or the variance of our investment.
+So we have random variables x and y.
+We want to choose the alpha to minimize the variance of alpha
+x plus 1 minus alpha times y.
+Now in this population model, you can show that the best
+fraction alpha is given by this formula.
+Sigma squared y, that's the difference of y, there's the
+variance of x.
+This is the covariance between x and y.
+And they're defined here.
+So in other words, if we know the variance of x, the
+variance of y, and their covariance, then this is the
+best amount proportion to put into x, and the remaining goes
+into y, to minimize the total variance.
+Those are population quantities, aren't they?
+Those are population quantities.
+So since they're population quantities, they're are not
+known to us in general.
+But if we have a data set from the population under study
+here, we can get an idea of these quantities, the
+variances and the covariances, from the sample values from
+the data set.
+And then plug them into the formula to get the alpha hat,
+which is the proportion that we should invest in x.
+So again, if we have a sample of x and y, we can get the
+empirical estimates of the variances and covariances,
+plug them in, and get an estimate of alpha.
+So in this next slide, we see we've created a simulated
+population.
+We've simulated investments x and y.
+There are four different simulations here, each one
+containing 100 pairs of x and y.
+And for each one, we take that data.
+We compute the variances and covariances.
+And we plug it into the formula to get an
+estimate for alpha.
+And here, we see the four estimates of alpha for the
+four panels.
+0.576 et cetera to 0.651.
+So they're averaging around 0.6.
+So if we want to get an idea of the standard deviation of
+alpha hat, we can just repeat this process lots of times.
+Let's say 1,000 times.
+So we would get 1,000 pounds like this.
+Each one gives us an alpha hat from the formula on the
+previous slide.
+And we do this 1,000 times.
+We take the standard error of those--
+well, actually, let's.
+If it's 1,000 times, we'll go to look at the histogram in a
+couple of slides.
+This histogram on the left shows the 1,000 values over
+1,000 simulations from this experiment.
+Each one is a value of alpha hat, and they
+average around 0.6.
+It's called the sampling
+distribution of that estimator.
+Right.
+And the true value, actually, since we know in this case--
+we're playing God, right?-- we know the true variances and
+covariances.
+We know the true alpha.
+And it's about 0.6.
+So I've indicated here with a purple line the 0.6.
+And the sampling distribution is averaging around 0.6, as we
+think it should.
+I should say--
+I've said this already--
+here's the histogram we've seen.
+For the simulations actually, these were the values, the
+parameters, that we set.
+And that implied a true of alpha of 0.6, which was that
+middle value in the histogram.
+That's the true value of alpha.
+And now we can also use this histogram to get the standard
+deviation of the estimates, just by picking the standard
+deviation of those 1,000 values of alpha hat.
+And here we've done that, and that's 0.083.
+So the standard error of alpha hat is roughly 0.083.
+The standard error of an estimator is the standard
+deviation in that sampling distribution.
+So if you're able to recompute the estimator many, many times
+from your samples, the standard deviation is called
+the standard error.
+Right.
+So if we repeat this experiment, we expect each
+time that, on average, alpha hat will be about 0.6, and
+would vary by a standard deviation of 0.0.83.
+Which we're seeing in this histogram, right?
+It's averaging about 0.08, and the standard deviation is
+about 0.08 of this histogram.
+OK.
+So that's all fine, except we can actually apply
+this with real data.
+If we had a sample of investments, x and y, we don't
+actually have the ability to sample from the population.
+We don't have the population.
+We have a single sample.
+So most of statistics, we don't have access to the
+population.
+All we have is a sample.
+If we had access to the population, we actually
+wouldn't need statistics at all, for the most part.
+We could learn all we wanted to know from the population.
+But in the real world, we have data.
+We don't actually know the populations from which that
+data arose.
+We have an idea of what it might look like, but we can't
+generate more data.
+So we can't actually.
+We can't produce the histogram on the left because we don't
+have the ability to generate more data.
+But the bootstrap is going to try.
+It's going to mimic this process by sampling not from
+the population, but from the data itself.
+So the data itself is going to act as the population.
+So instead of obtaining independent data sets from the
+population, which we can do without access to the
+population, we're going to sample from the data itself
+with replacement.
+And I'll remind you in a minute what that means.
+But basically, we're going to sample from the data set
+itself, and then use those samples to get an idea of the
+variability, in the same way that we use the samples from
+the population to produce this histogram.
+We're going to sample from the data, the data itself as a
+population.
+So here's an idea.
+This is an illustration of bootstrap sampling, which is
+sampling with replacement.
+I've created a data set here just with three observations,
+just so we could draw it on a single slide.
+Here's our original data.
+Here's our three observations.
+And now, each of these is a bootstrap sample.
+A bootstrap sample is drawn with replacement of the same
+size as original data.
+So the original data here's about three observations.
+So we're going to draw three observations with replacement.
+What does that mean?
+It means that the chance of each observation being sampled
+is the same, 1/3.
+But it's done with replacement.
+So imagine you put three balls into a bag, say,
+numbered 1, 2, and 3.
+We put our hand in the bag.
+We pull out one at random.
+Maybe we'll get number 1.
+That's our first observation.
+Now to get our second observation, we put the ball
+back in the bag.
+That's why it's called with replacement.
+And we sample again, from all three balls.
+So at every stage, each ball has the same probability of
+being sampled.
+And it can be sampled more than once, from
+stage one to end.
+So here, for example, we've got observation 3 twice,
+conservation 1 once.
+Observation 2 didn't get sampled at all.
+In this second bootstrap sample--
+and we're drawing three samples from these three
+observations--
+we happen to get to 2, 3, and 1.
+So each observation actually occurred once.
+This next sample, we've got observation 2 twice, and then
+observation 1.
+So just to summarize, we sampled the same number of
+observations as in our original sample, with
+replacement.
+Meaning, each observation can appear more than once, or
+maybe not at all, depending on what happens
+as we draw the samples.
+So these are called bootstrap samples, or
+bootstrap data sets.
+And then to each bootstrap data set, we apply the
+estimator-- in this case, the alpha.
+This is the proportion of investment x.
+We compute it from this sample just as we computed it from
+the original sample.
+And we use the standard deviation of these numbers to
+give us an idea of the standard error, the standard
+deviation of alpha hat.
+So having drawn 1,000 bootstrap samples and got our
+estimates of alpha hat, we can draw the
+histogram as we did before.
+Let's go back to the slide.
+So now, back on slide 29, remember on the left is the
+histogram, the one we sampled from the population, the
+histogram of alpha hat values.
+We can't sample from the population because we don't
+have the population.
+So we did bootstrap sampling.
+Look at the histogram in the middle, the blue histogram.
+It looks very much like the one on the left.
+It's averaging around 0.6, and its variability is about the
+same as we got sampled from the population.
+As a matter of fact, over here we've got the box plots of the
+alpha hat values, the true ones from the sample from the
+population and the bootstrap ones.
+And they're looking pretty similar.
+They're averaging around 0.6, although the bootstrap's a
+little lower in this case.
+But in general, this gives you a pretty good idea of what we
+get if we could sample from the population.
+In the standard error estimate--
+let's see, we have back here?
+Yeah, the standard error estimate is 0.087.
+Which is similar, we got 0.083 before when we used a sample
+from the population.
+So the bootstrap has use the data itself as the population
+and got us a good estimate the standard error, very similar
+to the one we'd get if we could sample from the
+population.
+So we've seen some examples of the
+bootstrap in simple problems.
+In the next session, we'll talk about the method in more
+generality.

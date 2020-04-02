@@ -1,0 +1,329 @@
+OK, so we're back.
+Some more discussion of the bootstrap--
+we saw an example of the bootstrap with the
+investments.
+And now, in general, we're going to talk about the
+bootstrap and think about it in more complex situations.
+So here's a schematic, which I think is
+very useful, actually.
+It's due to David Friedman at Berkeley.
+It's the real world bootstrap worldview of the bootstrap.
+So on the left, we have a cloud.
+And the ingredients we're imagining-- there's a real
+population that gives our data, which I'm calling
+genetically Z, observations Z1 through Zn.
+So these are like our training data?
+Right, that's our training data.
+For example, in the investment example we just saw, this
+training data was a set of investments x, y--
+x1, y1 to xn, yn.
+All right, but we're going to call each of these pairs a Z,
+Z1 through Zn.
+So we imagined in that situation that we have our
+training data from a population of investments.
+This is in the real world.
+We have a training sample.
+And from that training sample, we derive a
+statistic, an estimate.
+In that particular case, it was the alpha hat, which is
+the optimal proportion of investments for x.
+So this is a summary, in a sense, of what we did in the
+investment example for our training data.
+And what we wanted to get was an idea of the standard error
+of alpha hat.
+Now, we made the point earlier that ideally, if we had access
+to the population, we could get more training data.
+We could simply grab more samples of training data from
+the population, more investments from the possible
+population investments.
+You mean like a new sample, the same size?
+Yeah, exactly, a new sample--
+and from the new sample, do the same analysis, get an
+estimate alpha hat, and do that many times.
+And we showed how you could do that on the computer in the
+previous example.
+But we made the point that not often can you actually do that
+in practice.
+Because you don't have access to the population.
+You can't get more training data, typically.
+What you have to work with is just your
+given training example.
+So a way of thinking of the bootstrap in the abstract is
+to say, well, we don't have access to the population.
+Let's replace the population, which we don't have, by P hat,
+which in the bootstrap's case is the training sample itself.
+It's a population that puts probability 1 over n, n being
+the sample size, on each of the training points.
+So it says, our guess for the population--
+which we don't have access to but we have
+from a training sample--
+is we have no more information.
+We're going to say with equal probability, a training point
+can come from the first point we saw, the second point we
+saw, up to the nth point we saw.
+So that's what we'll call P hat--
+the empirical distribution function.
+That's another name for that--
+empirical distribution function.
+So when you draw from this empirical distribution
+function, that is sampling with replacement.
+And that's what the bootstrap does, right?
+It samples--
+we saw that we draw samples with replacement from the
+training sample.
+That's this random sampling here--
+P hat giving Z star.
+This is now the bootstrap sample.
+Remember, we're going to use a superscript star to indicate a
+bootstrap sample as distinct from a training sample, which
+has no superscript.
+So this is one bootstrap draw.
+It's the sample of size n from our training sample now, our
+bootstrap sample, giving us the bootstrap data.
+And from that, we derive the estimate.
+Again, in this case, it's alpha.
+And we'll call it alpha hat star.
+So bootstrap sampling simply repeats this operation a few
+hundred times, say.
+For each time, we get a bootstrap sample of size n,
+and we get a bootstrap quantity alpha hat star.
+And then, the standard error of alpha hat star is the
+bootstrap estimate of standard error of alpha hat.
+Since there's nothing new here, we're simply describing
+what we already saw in more general terms, OK?
+But we can now think about how we carry this out in more
+complex situations.
+So in general, we need to figure out how we can carry
+out bootstrap sampling.
+For example, suppose we have a time series.
+So let's draw the time axis here.
+And we have a series, like for example stock price.
+And let's just draw some imaginary data, all right?
+So this is--
+let's call it y1.
+This is stock price at time one, stock price at
+time two, et cetera.
+And we want, for example, to predict the stock price for a
+given day from the previous day's stock price.
+So we'll fit a model, a regression model like we've
+seen, to each stock price as a function of the stock price on
+the previous day.
+Well, that's fine.
+We can do that by least squares.
+But now, we might imagine doing bootstrap sampling like
+the way we just described where we sample with
+replacement from the data.
+Well, one problem with that that's a significant problem
+is that the data are not independent, right?
+There's correlation in the time series.
+We expect the stock price for a given day to be correlated
+with the stock price from the previous day.
+As a matter of fact, if we're trying to predict the stock
+price from a given day from the previous day, we hope
+there's correlation.
+If they were independent, the prediction
+wouldn't be very useful.
+But this creates a problem for the bootstrap.
+Because in the schematic, we were sampling here where we
+assumed that the sampling was IID from the population.
+But in this situation, that's not a reasonable assumption.
+Because the observations are not independent.
+So in general, when you set up the bootstrap and arrange for
+the sampling, you must figure out what parts of the data are
+independent.
+So one thing people do in a time series--
+because the observations are not independent-- to correlate
+across time is to use what's called the block bootstrap.
+The block bootstrap divides the data up into blocks.
+And between blocks, one assumes that things are
+independent.
+Oops, my spelling's not good.
+OK, so for example, if we use a block size
+of three, we might--
+these would be the first block, these three
+observations.
+These three would be the second block.
+These would be the next block.
+And now our sampling units are not individual observations.
+But they're entire blocks.
+So we would sample with replacement from all the
+blocks and then paste them together
+into a new time series.
+In other words, if this guy's sampled, he might become the
+first block, second block, et cetera.
+And then, we paste them together in order.
+And that becomes the bootstrap sample to which we apply the
+estimate-- in this case, a regression model.
+So the point is you have to sample the things that are
+uncorrelated.
+You have to arrange for--
+find the parts of the data that are uncorrelated and use
+that as a basis for bootstrap sampling.
+In this case, we use a block of size three under the
+assumption that beyond a time lag of three, things are
+somewhat uncorrelated.
+But within a block, we expect correlation.
+So we keep the blocks intact and sample them as units.
+That's called the block bootstrap.
+I say that here, OK?
+So we talked about the bootstrap for standard errors.
+The main use of the bootstrap is to estimate the standard
+errors of an estimate like the alpha hat in
+our investment example.
+Another very common use of the bootstrap is
+for confidence interval.
+So let's go back to confidence interval for our parameters.
+Let's go back to slide 29.
+And remember, this is the histogram we got from the
+bootstrap for the values of alpha hat over bootstrap
+sampling, 1,000 bootstrap samples.
+And if you look at this histogram, a reasonable way to
+derive a confidence interval is to take the percentiles
+from this histogram.
+Suppose I want a 0.9 confidence interval so that it
+contains a true value with probability 90%.
+It makes sense to grab the fifth and
+95th percent quantiles.
+In other words, find the 5% point of this histogram and
+the 95% point of that histogram.
+There's 1,000 points here.
+So actually, the 5% point would be the 50th biggest and
+9/50 biggest value of alpha.
+You mean smallest and biggest.
+Did I say that wrong?
+You said it wrong.
+I'm sure they understood, just like I did.
+OK, so if we do that, that provides a confidence
+interval for alpha.
+And what do we actually get?
+I've got that back on the slide.
+It's that, so 0.43 and 0.72.
+So this is actually an appropriate confidence
+interval for alpha.
+And remember how to interpret this confidence interval.
+What this means is that if we were to repeat this experiment
+from the population many times, it would be the case
+that the confidence interval that we obtain would contain
+the true value of alpha 90% of the time.
+That's what a 90% confidence interval is.
+We talked about that earlier.
+This particular way of constructing intervals is
+called a bootstrap percentile interval.
+And there's actually an entire field in statistics to do with
+confidence intervals in the bootstrap.
+And there's many, many, many papers and books that have
+been written about this topic.
+This bootstrap percentile interval is the simplest way
+of constructing a confidence interval from the bootstrap.
+And it's very useful.
+We just use the histogram of bootstrap values themselves,
+and use their percentiles.
+So we've talked about the bootstrap for standard errors
+and confidence intervals.
+How about prediction error like misclassification error
+that we've seen in the course already?
+Well, the major tool we talked about for that was
+cross-validation.
+And let's think back on
+cross-validation, how it worked.
+We have K folds in K fold cross-validation.
+We divide the data up into K parts, let's say five.
+And I'll just draw this again.
+Remember, what we did is our five parts created at random K
+fold cross-validation is like, remember, a five act
+play if K is 5.
+At one stage of the play, these four are the training
+set, these four parts.
+And the remaining fifth part is the validations part, set.
+And cross-validation fits to the four parts, fits a model,
+and then uses that model to predict the fifth part.
+And then, in turn, this guy gets to play the role of the
+validation set in the next stage, and
+this guy, et cetera.
+And this is five stages.
+But a crucial part of cross-validation was that when
+we do one stage like this, there's no overlap between the
+training set and the validation set.
+In other words, the observations in one do not
+appear in the other.
+And that's important, because we're trying to get an idea of
+test set error on new data.
+So cross-validation is taking a piece of data, separating it
+out from the training set so that when I fit on this data,
+predicted on this data, this data is, in a sense, new.
+It hasn't been seen by the model train on the first four.
+So there's a separation, a clean separation, between
+training and validation.
+Well, what if we were to try to use the bootstrap to
+estimate prediction error?
+Let's just draw in the bootstrap sampling process.
+Here's my training set.
+And I'm going to draw samples with replacement from the
+training set, bootstrap samples, each one of the same
+size, and a few hundred them.
+Well, the first kind of obvious idea is to say, well,
+let's train on a bootstrap data set and then predict the
+original training set as my validation set.
+I can do that for each bootstrap sample.
+Each bootstrap sample gets to play the role of the training
+set to fit.
+And then, I'm going to predict my original training sample as
+my validation set.
+Well, there's a big problem with that.
+And the problem is there's an overlap between the bootstrap
+data sets and the original data set.
+In particular, about 2/3 of the original data points
+appear in each bootstrap sample.
+And you should think about how to prove this.
+It's not hard, but you'll find out that about 2/3 of these
+points, so the training set points, are in
+the bootstrap sample.
+This creates a problem, because now when I train here
+and I do the prediction of a training set, 2/3 of the
+points in this training set have already
+been seen by the model.
+Because they're in the bootstrap data set.
+So on average, this 2/3 overlap means that most of the
+training points are not novel.
+So this is a big problem, because the prediction error
+from this process will be biased downward.
+It'll be a lot lower than the actual prediction error,
+because 2/3 of the points I'm predicting I've already seen
+in the bootstrap data set.
+So this is not a good way of estimating prediction error.
+OK, I say that it underestimates the true
+prediction error quite dramatically.
+Now, you can think about it the other way around.
+You could train on the training set and use the
+bootstrap samples as the validations sets.
+And that's even worse.
+And you can think about why that is.
+So it's even worse in the sense that it's going to be
+even more biased.
+Well, how do you fix this problem?
+You can fix it by, when you train on the bootstrap sample
+and then predict the training sample, just recording the
+predictions for the points that did not occur in the
+bootstrap sample-- in other words, the points that are
+actually novel points.
+But then, this gets complicated.
+And in the end, it's really not worth it.
+If you push this idea to its conclusion, you can get
+something which is about as good as cross-validation.
+But it's much more complicated.
+So our view is for this particular problem,
+cross-validation is easier, and better, and
+the thing we recommend.
+If I can just interrupt, Rob--
+that actually brings up an interesting point.
+A lot of the time, we have simple methods like
+cross-validation.
+And then, a new method comes along like using bootstrap to
+estimate prediction error.
+And we see it's quite a lot more complicated.
+And you don't get much in return.
+And so our general philosophy is if you can get the job done
+with a simple method, it's far better than using a more
+complicated method just because it maybe
+looks sexy or whatever.
+So keep it simple-- that's the idea.

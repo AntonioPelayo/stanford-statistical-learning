@@ -1,5 +1,4 @@
 # Files
-/ch4-classification/quiz24.md
 .DS_Store
 .swp
 *Rapp.history
@@ -13,10 +12,7 @@
 
 # Folders
 /references
-5.4-the-bootstrap
-5.5-more-on-the-bootstrap
 bootstrap
-
 /ch6-linear-model-selection-and-regularization
 /ch7-moving-beyond-linearity
 /ch8-tree-based-methods
