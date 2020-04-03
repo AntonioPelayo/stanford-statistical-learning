@@ -1,0 +1,137 @@
+OK, now we're going to have an R session to
+demonstrate the bootstrap.
+The bootstrap is one of the really powerful tools we have
+in modern statistics invented by our friend Brad Efron, just
+across the road from us here.
+And what it does is it lets you get at the sampling
+distribution of statistics, for which it's really hard to
+develop theoretical versions.
+So the bootstrap gives us a really easy way of doing
+statistics when the theory is very hard.
+And to illustrate it we'll use the example we used in the
+book in section 5.2 where we have a particularly non-linear
+formula for picking an optimal combination of two
+investments.
+OK?
+So let's have a look at that.
+OK, so remember you had two investments, x and y.
+And let's say they had risk, which we'll call variance of x
+and variance of y.
+This is a guy who cannot distinguish uppercase and
+lowercase letters.
+And we saw--
+well, we told you that the optimal formula for getting a
+minimum risk investment, if you're going to use alpha of x
+and 1 minus alpha of y, is given by the formula variance
+of y minus covariance of x and y divided by--
+there we go, lower case a again--
+plus variance of y minus 2 times covariance of x and y.
+OK?
+So that's a formula which, of course, if we have data on x
+and y we can just compute those variances and
+covariances and plug them in and compute
+our value for alpha.
+Now that's fine, but then you might say, well, what is the
+sampling variability of alpha?
+What's the standard error of alpha?
+Right?
+How variable is it going to be?
+Well, that's a non-linear formula of x and y.
+And we just wouldn't know a priori how to do that.
+This is a case where the bootstrap really helps out.
+So we'll write a function for computing that formula.
+It's a simple formula.
+Given two vectors, x and y, of actual data we write our
+function alpha and inside it we compute variance of x
+variance of y covariance of x and y and then we just write
+out that formula.
+And closed parens, which means that the function will return
+the last line that was evaluated, which is
+actually our alpha.
+OK?
+And so now we've got a data set portfolio, which has x and
+y in it, and we can run alpha on the x and y
+in that data frame.
+And when we do it we see that alpha comes up to 0.5758.
+OK, so in order to use the bootstrap function we need to
+make a little wrapper that allows a bootstrap to work.
+And this is this function we'll call alpha.fn.
+And what it does is it takes a data frame and an index, which
+indexes rows of the data frame, and then computes your
+statistic--
+in this case alpha index, for which it wants to compute the
+variance in this case, the standard error.
+Now what index does, it's going to be an index into the
+numbers 1 to n, it'll have values of 1 to n, and there
+will be n of them, and they can be repeats of course.
+Because the bootstrap, what the bootstrap does is does a
+re-sample of your training observations and some
+observations can be represented more than once and
+some not at all.
+And index will say which observations get represented
+and if they're repeated that'll be fine, because
+that's what the bootstrap does.
+And so what this function does is--
+let's just enter the function.
+OK?
+It uses the function, "with," which is very handy function.
+With takes first argument of data frame
+and then some commands.
+And what it says is, using the data in the data frame,
+execute the commands.
+So in this case, we use with data of index, so that gets
+the right observations for this
+particular bootstrap sample.
+Compute alpha of x and y.
+And the main value of with is that you can use the named
+variables x and y that are in the data frame.
+OK?
+Very handy.
+All right, let's see if this works.
+We'll run our function just once using the original index
+of the data, portfolio 1 to n, and we see we get the same
+value as we got before.
+So that works.
+And so now we'll run the bootstrap.
+And since a bootstrap involves random sampling, and if we
+want to get reproducible results just for purpose of
+demonstration, it's good to set the random number seed.
+So there we set seed 1.
+And now we run alpha.fn one more time, but we take a
+random sample instead of giving an index 1 to n.
+So here we've sampled the numbers 1 to 100, sample of
+size 100, with replace equals 2.
+This is the kind of thing the bootstrap's going
+to do over and over.
+Here we just do it once.
+OK?
+So we get a different value of index.
+That's like a bootstrap sample of size 1.
+Well, we'll let the bootstrap do the work for us.
+And so we call the function boot, we give it the data
+frame portfolio, we give it our little function alpha.fn,
+and we tell it to do 1,000 bootstraps.
+Look how fast that was.
+It's come back already.
+If we type boot.out it gives a little summary of the
+bootstrap and it tells us our original statistic was 0.575--
+the estimate--
+and it gives us the estimate of bias and standard error.
+We were interested in the standard error.
+The bias is negligible.
+The standard error in this case is 0.08.
+And that's computed by the bootstrap.
+And you can also plot the bootstrap.
+It's nice to see what the distribution looks like.
+And you get a two paddle plot.
+One is a histogram and it looks like a pretty nice
+symmetric distribution, maybe Gaussian.
+And in fact the second plot is a qqplot, which plots the
+ordered values against the ordered
+statistics of a Gaussian.
+And if it lines up on a straight line like it pretty
+much does here, you may say it looks close to Gaussian, maybe
+a slightly bigger tail on the right.
+So there's a bootstrap.
+Very handy way of getting very good reliable estimates of
+standard error for nasty statistics.
