@@ -11,17 +11,25 @@ Started February 23
 - [x] 2 Statistical Learning - March 2
 - [x] 3 Linear Regression - March 11 
 - [x] 4 Classification - March 30
-- [x] 5 Resampling Methods 
-    - [x] 5.1 Cross Validation - March 31
-    - [x] 5.2 k-fold Cross Validation - March 31
-    - [x] 5.3 Cross Validation, the Wrong and Right Way - March 31
-    - [x] 5.4 The Bootstrap - April 1
-    - [x] 5.5 More on the Bootstrap - April 1
-    - [x] 5.R Resampling in R April 3
-        - [x] 5.R Cross Validation - March 31
-        - [x] 5.R Bootstrap - April 3
+- [x] 5 Resampling Methods - April 3
 - [ ] 6 Linear Model Selection and Regularization
+    - [x] 6.1 Intro and Best Subset Selection - April 3
+    - [ ] 6.2 Stepwise Selection
+    - [ ] 6.3 Backward Stepwise Selection 
+    - [ ] 6.4 Estimating Test Error
+    - [ ] 6.5 Validation and Cross Validation
+    - [ ] 6.6 Shrinkage Methods and Ridge Regression
+    - [ ] 6.7 The Lasso
+    - [ ] 6.8 Tuning Parameter Selection
+    - [ ] 6.9 Dimension Reduction Methods
+    - [ ] 6.10 Principal Component Regression and Partial Least Squares
+    - [ ] 6.R Model Selection in R
+        - [ ] 6.R.1 Subset Selection Methods
+        - [ ] 6.R.2 Ridge Regression and the Lasso
+        - [ ] 6.R.3 PCR and PLS Regression
 - [ ] 7 Moving Beyond Linearity 
 - [ ] 8 Tree-Based Methods
 - [ ] 9 Support Vector Machines
 - [ ] 10 Unsupervised Learning
+
+!['statement of accomplishment'](files/soa.png)

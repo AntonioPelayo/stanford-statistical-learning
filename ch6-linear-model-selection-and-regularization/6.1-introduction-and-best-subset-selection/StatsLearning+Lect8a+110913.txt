@@ -1,0 +1,317 @@
+So, welcome back.
+Today we're going to cover model selection and
+regularization.
+But we have a special guest, my former
+graduate Daniela Witten.
+Hi.
+Welcome, Daniela.
+Thank you.
+Daniela's now at University of Washington.
+But maybe you want to tell students a bit about yourself
+and how you got to be here?
+Yeah.
+Well, in college I studied math and biology.
+And when I was graduating I knew I wanted to go to grad
+school in something.
+But I couldn't really decide on one particular thing that I
+wanted to study for the rest of my life.
+And so I ended up doing a Ph.D. In statistics.
+And I was lucky enough to do it at Stanford with Rob.
+And I graduated in 2010, moved up to Seattle, and I'm now an
+assistant professor at the University of Washington in
+the biostat department there.
+And I didn't invite Daniela here just because she's a
+great student and friend.
+But also she's a co-author of the textbook
+this course is based.
+So Daniela and I are going to give today's talk together.
+So we're going to talk about model section and
+regularization.
+So let's recall the linear model we've talked about
+already in course.
+We have response variable Y and we're going to model it as
+a function of some predictors or features, x1 through xp.
+And we've talked about at least squares for doing that
+earlier in the course.
+And later on in the course we'll talk about ways of
+making that model more general.
+Making it nonlinear for example.
+Or we'll have additive but nonlinear models in the
+lectures that cover chapter seven.
+We'll consider nonlinear models in chapter eight,
+things like trees in boosting.
+But today, actually, we're going to stick to the linear
+model and talk about a different way of fitting the
+linear model.
+Why?
+Well, because the model, though it's very simple-- and
+it's actually been around since probably
+the 1920s or 1930s--
+is it's a very important model because it's simple.
+Which means it can be interpreted.
+There's a small number of coefficients, typically, if we
+have a small number of features that are important.
+It also predicts future data quite well in a lot of cases,
+despite the fact it's simple.
+So we want to talk today about a faintly linear model that
+improving on least squares by selecting or shrinking the
+coefficients of features to make the model more
+interpretable, and in some cases to predict better.
+So we'll talk about a number of methods
+of doing that today.
+And just to say a little more about the two objectives, when
+the number of features is bigger than the number of
+samples-- and we've talked about that
+in the course already.
+This is a situation that comes up more and more often these
+days, where you have a lot of features you measure on
+patients or in business.
+Maybe on a stock.
+Or in other situations it's cheap to measure things now.
+And it's often the case that p might be much bigger than n,
+the number of samples.
+So in that situation, of course, we can't use full
+least squares, because the solution's not even defined.
+So somehow we have to reduce the number of features.
+And thus it becomes more and more important not just to
+obtain a solution, but to avoid fitting
+the data too hard.
+So when we want to predict better, we'll shrink, or
+regularize, or select features in order to improve the
+prediction.
+Along the same lines, when we have a small number of
+features the model becomes more interpretable.
+If we hand our collaborator a few features and say, these
+are important, that might be hard to interpret.
+If we can pare them down to the most important 5 or 10,
+it's easier to interpret and, from a scientific point of
+view, more useful.
+So feature selection is a way of choosing among features to
+find the ones that are most informative.
+So we'll talk about three classes of techniques in
+today's lecture.
+Subset selection, where we try to find among the p predictors
+the ones that are the most related to the response.
+And we'll see different flavors of subset selection.
+Best subset selection, we'll try to look among all possible
+combinations of features to find the ones that are the
+most productive.
+And then we'll talk about forward and backward stepwise
+methods which don't try to find the best among all
+possible combinations, but try to do an intelligent search
+through the space of models.
+So forward stepwise, backward stepwise, and all subsets.
+And then some more modern techniques known as shrinkage
+methods in which we don't actually select variables
+explicitly.
+But rather, we put on a penalty to penalize the model
+for the number of coefficients or the size of coefficients in
+various ways.
+So we'll talk about ridge regression and the Lasso in
+the shrinkage section.
+Now finally in the third section dimension reduction,
+we'll talk about ways of finding combinations of
+variables, extracting important combinations of
+variables, and then using those combinations as the
+features in regression.
+We'll talk about PCR, Principle Components
+Regression, and partial least squares in those settings.
+So three classes of methods we'll talk about today.
+And one of the things about today's lecture is that we're
+going to be looking at all of these ideas within the context
+of linear regression.
+So if you're trying to pick some quantitative response and
+you want to fit a less flexible but perhaps more
+predictive and also more interpretable model, these are
+ways that you can shrink, in a sense, your usual least
+squares solution in order to get better results.
+But these concepts can just as well be applied in the context
+of logistic regression or really your favorite model,
+depending on the data set that you have at hand and the type
+of response that you're trying to predict.
+And so even though linear regression is really what
+we'll be talking about here, these really apply to logistic
+and other types of models.
+OK, so Danielle's going to first of all tell us about
+subset selection.
+So best subset selection is a really simple idea.
+And the idea here is, suppose that we have access to p
+predictors but we want to actually have a simpler model
+that involves only a subset of those p predictors.
+Well, the natural way to do it is to consider every possible
+subset of p predictors and to choose the best model out of
+every single model the just contains some of the
+predictors.
+And so the way that we do this is in a very organized way.
+We first create a model that we're going to call m0.
+And m0 is the no model that contains no predictors.
+It just contains an intercept.
+And we're just going to predict the sample mean for
+each observation.
+So that's going to give us m0.
+And now we're going to try to create a model called m1.
+And m1 is going to be the best model that contains exactly
+one predictor.
+So in order to get m1 we need to look at all p models that
+contain exactly one predictor.
+And we have to find the best among those p models.
+Next we want to find a model called m2.
+That's going to be the best model that contains two
+predictors.
+So how many models are there that contain two predictors if
+we have p predictors in total?
+And the answer is p choose 2.
+So if you haven't seen this notation before, this notation
+is written like this.
+It's pronounced "choose." So this means p choose 2.
+And it's equal to p factorial divided by 2 factorial times p
+minus 2 factorial.
+And that is actually the number of possible models that
+I can get that contain exactly two predictors out of p
+predictors total.
+And so I can consider all p choose 2 models containing two
+predictors.
+I'm going to choose the best one.
+And I'm going to call it m2 and so on.
+I can keep on getting the best model with three predictors,
+four predictors, and so on, up to the best model with p
+predictors.
+So if I'm choosing the best model out of all models
+containing three predictors in order to get, let's say, m3, I
+can do that in a pretty straightforward way.
+Because I can just say that out of all models containing
+three predictors the best one is the one with the smallest
+residual sum of squares, or equivalently,
+the largest r squared.
+And so in this way I get a best model containing 0, 1, 2,
+all the way through p predictors.
+I've called them m0, m1, m2, all the way through mp.
+And now I'm on to step three.
+And in this final step, all that I need to do is choose
+the best model out of m0 through mp.
+And in order to do this, actually, this step three is a
+little bit subtle.
+Because we need to be very careful that we choose a model
+that really has the smallest test error rather than the
+model that has the smallest training here.
+And so there are number of techniques that we can use to
+choose the single best model from among m0 to mp.
+And these include prediction error estimated through cross
+validation, as well as some methods the we're going to
+talk about later in the lecture which you might not
+have seen before.
+And these include Mallow's Cp, Bayesian Information
+Criterion, and adjusted r squared.
+So we'll come back to some of those topics in a few minutes.
+So here's an example on the credit data set.
+And we saw this data set in one of the earlier chapters.
+And this is a data set that contains 10 predictors
+involving things like number of credit cards, and credit
+rating, and credit limit.
+And the goal is to predict a quantitative response which is
+credit card balance.
+And so what we can do is we can look at every single model
+that contains a subset of these 10 predictors.
+And these models are actually plotted here on
+the left hand side.
+So here, this x-axis is the number of predictors.
+It actually goes from 1 to 11 because one of these
+predictors is categorical with three levels.
+And so we used a couple of dummy
+variables to encode that.
+And on the y-axis is the residual sum of squares for
+each of the possible models.
+So for instance, like this dot right here indicates a model
+that contains one predictor with a pretty terrible
+residual sum of squares.
+And all the way down here we've got a model with 11
+predictors that has a pretty decent
+residual sum of squares.
+So the reason that there's a lot of dots in this picture is
+because there's a lot of possible sub models given 10
+total predictors.
+And in fact, as we're going to see in a couple minutes,
+there's 2 to the 10 sub models.
+So there's actually 2 to the 10 dots in this picture,
+although some of them are sort of on top of each other.
+And so this red line here indicates the best
+model of each side.
+So this red dot right here is m0.
+Excuse me, this is m1, what I just showed you is m1.
+So that's the best model containing one predictor,
+because that is the smallest residual sum of squares.
+This is the best model containing two predictors,
+this is m3, best model containing three
+predictors, and so on.
+So when we perform best subset selection, what we really do
+is we trace out this curve to when we get m0 through mp.
+And now we're just going to need to find a way to choose,
+is m10 better than or worse than m4 and so on?
+We're just going to have to choose
+among that lower frontier.
+So on the left hand side here we see number of predictors
+against residual sum of squares.
+And on the right hand side, we've got number of predictors
+against r squared.
+And as we saw in Chapter three, r squared just tells
+you the proportion of variance explained by a linear
+regression model, by a least squares model.
+And so once again we see a whole lot of gray dots
+indicating every possible model containing a subset of
+these 10 predictors.
+And then the red line shows the best model of each size.
+So again, this is the m1 that we saw earlier.
+This is m2.
+Over here is m10.
+And what we noticed is that as the models get bigger, as we
+look at larger and larger models, the residual sum of
+squares decreases and the r squared increases.
+So do we have any idea of why that's happening?
+Maybe Rob can tell us.
+I can tell you that.
+So it's because as you add in variables,
+things can not get worse.
+If you have a subset of size three, for example, and you
+look for the best subset of size four, at the very worst
+you could set the coefficient for the fourth
+variable to be 0.
+And you'll have the same error as for the
+three variable model.
+So a curve can never get worse.
+It can be flat, if you clear slide here we can see.
+It looks like is actually flat from 3
+predictors about up to 11.
+But it's certainly not going to go up.
+I can be flat as it is in this case.
+But we can't do any worse by adding a predictor.
+And actually what Rob just said
+relates to the idea that--
+remember on the previous slide here in step three when we
+were talking about best subset selection.
+We had this step, and I said that in order to choose among
+the best model of each size we're going to need to be
+really careful.
+We're going to have to use cross validation or Cp, BIC,
+adjusted r squared.
+And that really relates to what's going on here.
+Because if I asked you, hey, what's the best model with
+eight predictors?
+You'd say, OK, here are all of the models with eight
+predictors.
+And clearly this is the best one.
+It's got the smallest residual sum of
+squares, there's no argument.
+But if I ask you, which is better, this model here or
+this model there?
+Suddenly it's not so straightforward.
+Because you're kind of comparing apples and oranges.
+You're comparing a model with four predictors to a model
+with eight predictors.
+You can't just look at which one has a smaller residual sum
+of squares because of course the one with eight predictors
+is going to have a smaller residual sum of squares.
+So in order to really in a meaningful way choose among a
+set of models with different predictors, we're going to
+have to be careful.
+And we'll talk about that in a few minutes.
+Good.

@@ -1,0 +1,163 @@
+So here we are in a group meeting.
+Rob and I planned a group meeting with Jonathan Taylor
+who is sitting over there.
+Hello, Jonathan.
+Hello.
+And this is a meeting we have once a week with our research
+graduate students.
+And we are going to say hello to some of them.
+And you are going to see how excited they are about the
+research they are doing.
+Hi, I am Will.
+I guess to me one of the most exciting things about being in
+statistics is that it just applies to so many different
+substitute fields.
+So anything you might be interested in, from sports to
+biology to physics to finance, there is probably some
+question that you will want to ask eventually.
+And if you have got data to ask that question, then you
+need to use statistics.
+So, especially being at a university, we get to talk to
+really smart computer scientists and really smart
+political scientists and really smart biologists and
+play a helpful role in what they are doing pretty often.
+Hi, I am Sam.
+I am a graduate student in statistics.
+One thing that really excites me about statistics is that we
+live in a world where we have more and more data available
+to ourselves.
+People are walking around wearing these bracelets that
+track every step they take, they monitor their sleep.
+And so now we have more data than we know what to do with,
+just terabytes of data sitting around on hard drives.
+And statistics and machine learning gives us a chance to
+try and understand that data.
+Hi, I am Lydia.
+So I decided to get into statistical learning after
+working at a startup that were working in DNA analysis.
+And so they were trying to find snips and structural
+variations in the DNA.
+And that made me realize how important the problems that
+are solved by statistical learning are.
+And it also made me realize how much data there is and how
+important it is to develop methods that are very fast and
+very accurate at the same time in order to
+analyze all that data.
+So that is why I decided to get into grad school and
+statistical learning.
+Statistics and data science has become really popular.
+And so we have even got some converts in our group.
+And so we have got Christo over here who is a convert
+from computer science.
+Yeah, I am jointly working with the computer science and
+statistics department.
+And that is one of the things I really love about stats is
+that you can get as theoretical as you want
+mathematically, but at the end of the day you can implement
+this on a computer.
+And even minute little things that you might not think would
+make a difference do.
+And you can see this with actually data and actual
+applications.
+It is really awesome.
+Christo, did not you work on some capture data recently?
+Yeah, we actually showed that using essentially regression
+you could actually beat what humans can do in terms of
+understanding audio captures, which was pretty remarkable.
+And that had some profound implications for a number of
+security systems.
+It pretty much made everyone change their
+audio capture schemes.
+Hi, I am Dennis.
+One of the projects that really interests me right now
+is I am interested in using statistics to study different
+educational interventions in the classroom.
+So we are conducting experiments in actual Stanford
+classrooms to test hypotheses about whether online homework
+will help students learn.
+Or whether peer grading can help students learn.
+When I was looking at Ph.D. programs, I was actually
+deciding between doing neuroscience and computer
+science and stats.
+And one of my big goals at that time was, how do we
+tackle this question of what is the
+algorithm behind the brain?
+And it is a little naive just to say how statistics directly
+applies to what the brain is doing.
+But, surely, if you think about how we are trying to
+make sense of the world statistically, there must be
+something we can learn from that about what the brain
+might be doing as well to make sense of everything we are
+doing in a very noisy world.
+So I think that is a very interesting motivation to
+solve one of the greatest mysteries of our time.
+I am actually a student in neuroscience.
+I was lucky enough to do a Master's in statistics here at
+Stanford and worked with Jonathan analyzing whole brain
+human fMRI analysis, and now I am working with Karl
+Hayes-Roth imaging thousands of
+neurons in behaving animals.
+And both of these situations obviously afford a lot of data
+that is quite complicated.
+And we still in biology don't really know how to
+make sense of it.
+So being able to have relationships with departments
+like statistics, like if you sit in on meetings and other
+things, is really-- and to collaborate with this is
+incredibly useful and very enjoyable.
+I think one of the core things that fascinates me about
+statistics is it has always been true in the world, but it
+is increasingly true that we have all of this information
+in the world.
+It comes in the form of data.
+But information is not the same thing as knowledge.
+And one of the things that our brains are really good at is
+taking in information from all these different sources and
+turning it into actionable insights.
+And, in statistics, we are not doing things the same way as
+your brain does them.
+But I think that we are trying to figure out the same thing,
+which is how do we go from information to knowledge?
+Another good thing that our brains are at doing is
+deceiving ourselves.
+So seeing patterns in noise, for example, I think that is
+called apophenia or something.
+There is a Wikipedia article.
+And I think one of the important things about
+statistics is it helps us to avoid deceiving ourselves when
+we are trying to answer important questions about
+complicated issues.
+Hi, I am Natali.
+I am a second year PhD in statistics.
+And the thing I really like about statistics is, if you
+look at the spectrum of academic fields, on one side
+you have fields like mathematics
+that are super rigorous.
+Everything they know they know with complete certainty
+because they have proved it.
+But, unfortunately, I think the things that they prove
+theorems about do not have as many practical applications as
+we would like.
+So they know everything there is to know about a billion
+groups, say, but you can't go and take that to
+the bank, so to speak.
+On the other end of the spectrum, you have fields like
+economics, sociology, philosophy that ask really,
+really important questions.
+So what should the Fed do this quarter?
+That affects literally billions of
+people in the world.
+Or what is the meaning of life, in philosophy?
+But, unfortunately, they do not know the things that they
+know in those fields with very much certainty at all.
+In philosophy, specifically, they have been arguing about
+what the meaning of life is for 2,000 years.
+So the thing I like about statistics is that we have the
+rigor of mathematics, but we also talk about
+very important questions.
+So statistics is used in medicine, in the tech
+community, in the sciences, in the social sciences as well.
+We answer important questions.
+But the things that we know in statistics, we also prove
+theorems about.
+And we know these things with a lot of certainty.
