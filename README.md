@@ -5,9 +5,11 @@ along with the book An Introduction to Statistical Learning with Applications in
 Quizzes and video transcripts are documented once I have finished reading the section
 in the book.
 
+!['textbook cover'](./files/islr-cover.jpg)
+
 ### Chapters
 Started February 23 
-- [x] 1 Introduction - March 1
+- [x] 1 Introduction - February 24
 - [x] 2 Statistical Learning - March 2
 - [x] 3 Linear Regression - March 11 
 - [x] 4 Classification - March 30
