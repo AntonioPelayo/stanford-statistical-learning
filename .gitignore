@@ -11,8 +11,6 @@
 *.gz
 
 # Folders
-6.2-stepwise-selection
-6.3-backward-stepwise-selection
 6.4-estimating-test-error
 6.5-validation-and-cross-validation
 6.6-shrinkage-methods-and-ridge-regression

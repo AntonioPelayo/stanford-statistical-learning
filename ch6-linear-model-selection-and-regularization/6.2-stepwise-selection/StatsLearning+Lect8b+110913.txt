@@ -1,0 +1,280 @@
+So as I mentioned earlier, we're talking about best
+subset selection here for a least squares.
+But we can just as well do this for logistic regression,
+or for any other type of model.
+And in particular, when we're talking about other types of
+models, we don't usually talk about residual sum of squares.
+Instead we talk about something that's called the
+deviance, which is negative 2 times the log likelihood.
+And in the case of least squares, the deviance and the
+residual sum of squares are equivalent.
+But for other model types the deviance is really just a
+generalization of residual sum of squares.
+But here we're going to talk about residual sum of squares
+for simplicity.
+So in that figure we were looking at a couple slides ago
+with the credit data, we saw that there were all
+of those gray dots.
+And I mentioned that there's actually 2 to the 10 gray dots
+in that picture.
+And the idea is that if I have access to p predictors, and I
+want to consider every possible sub model, I'm
+actually looking at 2 to the p subsets.
+And that is an absolutely huge number.
+So just to put this in perspective, 2 to he 10,
+that's like 1,000.
+So that's OK.
+Fitting 1,000 models, if you've got a decent computer
+is no problem.
+But 2 to the 40 is a really big number.
+And so the idea is that when p is large, we're really not
+going to be able to do best subset selection.
+And 40 predictors isn't large.
+I work on data out where there's easily tens or
+hundreds of thousands of predictors.
+And so best subset selection just does not scale for many
+of the types of problems that people are
+interested in today.
+I think the limit for most packages that do subset
+selection is about 30 or 40.
+And beyond that they just say, I can't look at all the
+combinations.
+Right.
+So putting aside computational concerns, though, best subset
+selection also suffers from statistical problems.
+And the idea is if I'm considering,
+gosh, what is this?
+This is a trillion models.
+If I have 40 predictors, and I'm considering a trillion
+models, I'm going to over fit the data.
+I'm just looking at so many models, I'm going to choose a
+model that looks really, really great on
+this data by chance.
+But it's not going to look great on an independent test
+set that I didn't use in training the model.
+And so I'm going to have a problem with over fitting.
+And so for these two reasons-- computational and
+statistical--
+best subset selection isn't really great unless p is
+extremely small.
+And in this setting, we can use stepwise methods, which
+sort of are the same ideas as best subset selection.
+But they look at a more restrictive set of models.
+So instead of looking at 2 to the p models, they look at
+more like p squared models.
+And of course, 2p is much more than p squared for any p of
+any reasonable size.
+So at this point that [? Daniela ?] made is actually
+somewhat counter-intuitive.
+Especially people in computer science might think it's
+always best to do the most exact computation you can.
+If you can do the optimization over all models, it's usually
+thought to be better.
+But [? Daniela ?] said something that's actually
+somewhat counter-intuitive, that actually to avoid fitting
+too hard it's good to actually not look at all possible
+models, but only a subset of the models.
+So for stepwise, and forward stepwise in particular,
+doesn't try to look at all possible models.
+In cases when p is less than 40, so you can look at all
+possible models, it may not be the best thing to do that.
+So forward stepwise on purpose looks only at a
+subset of the models.
+And that can actually be helpful.
+Yeah, so Rob, best subset selection, what p be if you
+were going to use it?
+What would be your limit, where if p is larger than that
+number you wouldn't want to go beyond best subset?
+I wouldn't want to use best subset maybe not
+beyond 10 or 20.
+Yeah, I don't think I would probably even use it for 20.
+I think I would use best subset if I've got a handful
+of predictors.
+And if I've got 10, I wouldn't be using that
+anymore, most likely.
+So the point is not always best to do a full search, even
+when you can do it.
+Because you pay a price in variance.
+So now we're going to talk about these two stepwise
+methods-- forward and backward stepwise.
+And these are really pretty similar.
+But there's just one fundamental difference, which
+is whether you're starting with a model with no
+predictors or you're starting with a model with all the
+predictors.
+So in forward stepwise selection we start with a
+model that contains no predictors.
+This is just a model with only the intercept.
+It's what we were calling the null model M0 earlier.
+And then we're going to add predictors to the model, one
+at a time, until all of the predictors are in the model.
+So this sounds like best subset selection.
+But there's actually a really major difference, which is
+that at each step we're not looking at every single
+possible model in the universe that contains k predictors.
+We're just looking at the models that contain the k
+minus 1 predictors the we already chose in the previous
+step, plus one more.
+So at the k-th step, we're looking at a much, much, much
+more restricted set of models than we are
+in best subset selection.
+In particular, at each step we're just going to choose the
+variable that gives the biggest improvement to the
+model we just had a moment earlier.
+So the idea behind forward stepwise selection is that
+once again we start with this model, M0.
+It's the null model.
+And it just contains an intercept.
+So you're just going to predict the mean for every
+observation.
+And then we're going to try to create a model M1.
+And the model M1 is going to just contain one more
+predictor than M0.
+So we're just going to take M0, and we're going to look
+for the best predictor to add that's going to lead to the
+smallest RSS or the largest R squared.
+So that gives us M1.
+And now, in order to get M2 we're going to take M1.
+And we're going to consider adding all p minus 1 possible
+predictors to M1.
+And we're going to see which of those p minus 1 predictors
+gives us the best model M2.
+And you get M3 we look at M2.
+We consider adding all p minus 2 predictors
+that aren't in M2.
+We choose the best one.
+And that gives us M3, and so on.
+So the really key thing here is that, in this step this is
+different from what we were doing in the best subset
+selection case.
+Because here we're not looking at every possible model
+containing k predictors.
+Instead, we're just looking at every possible model that
+contains one more predictor than Mk minus 1, where we're
+going to take the model we just got, and we're just going
+to add one predictor to it to get a slightly bigger model.
+So just like in best subset selection, we're going to get
+p plus 1 models from M0 to Mp.
+But the difference is that these models are nested.
+So M1 contains the predictor in M0, plus one more.
+M2 contains M1 plus one more predictor.
+M3 contains the predictors in M2 plus one more, and so on.
+These models are nested in a way that wasn't the case for
+best subset selection.
+So after we get these p plus 1 models, we're going to choose
+among them.
+And as I mentioned earlier, we can't use RSS or R squared to
+choose among these p plus 1 models.
+Because they all have different sizes.
+And in a few minutes we'll talk about some approaches
+like cross validation and AIC and BIC to choose among these
+p plus 1 models.
+So we've said that forward stepwise selection has a
+computational advantage over best subset selection.
+And just to really reiterate why that's true, in best
+subset selection we're considering 2 to the p models.
+Which, as we said, is like a trillion when p equals 40.
+But in contrast, in forward stepwise selection for M0
+we're just considering one model.
+And to get M1 we're considering adding p different
+predictors.
+So we're considering p models.
+For M2 we're considering adding p minus 1 additional
+predictors.
+So that's p minus 1 models, and so on.
+And so actually, when we do forward stepwise selection
+we're considering around p squared models.
+And so p squared is much less than 2 to the p.
+So we're considering far fewer predictors when
+we do forward stepwise.
+And here's another picture to help see what's going on.
+See if I can draw it.
+But if you think of the RSS picture as a function of model
+size, and this is RSS.
+And for best subset, remember, we said the
+curve keeps going down.
+It might flatten out.
+But this is for best subset.
+We saw that before.
+But forward stepwise is also going to have the same shape.
+But it's not going to go down.
+It's going to be above that curve.
+It'll start in the same place.
+Because for one variable it's going to pick
+the same best variable.
+But it's going to be typically above that curve--
+I'm not drawing it very well--
+until the very end.
+Whoops.
+These are meant to join at the end.
+So the point is that forward stepwise is not doing a search
+among all possible models.
+So for a given model size, it's going to have an RSS that
+typically will be above that for best subset.
+So, yeah.
+That relates to the fact that forward stepwise isn't
+actually guaranteed to find the best possible model out of
+all 2 to the p models that best subset considers.
+So if you look at Rob's picture, right here the
+forward stepwise and best subset curves
+have the same RSS.
+Because they each contain just the null model.
+And then over here, these two models are the same.
+Because forward stepwise and best subset are each
+considering the model with all p predictors.
+So those are the same.
+But in between there is this gap.
+And the reason for the gap is because that subset selection
+is going to find the best model with, let's say, k
+predictors.
+But forward stepwise might not.
+And the reason that it might not is because it could be
+that the best model containing k predictors is not a superset
+of the best model containing k minus 1 predictors.
+So we can actually see an example of that if we look a
+little more carefully at the credit data.
+So this table shows the results that you get if you
+look for M0, M1, M2, M3, and M4 on the credit data.
+So this is M1, M2, and M3, and M4.
+And so if we do best subset selection, then M1 just
+contains rating, the reading variable.
+And if we do forward stepwise, M1 just
+contains the rating variable.
+So, so far so good.
+If we look at M2 then best subsets, M2 contains rating
+and income.
+And same with forward stepwise as M2.
+If we look at M3, best subset has rating, income, student.
+And same thing with forward stepwise--
+rating, income, student.
+But when we get to M4, things suddenly change.
+Because now, in the context of a model with four variables,
+the best that we can do is cards, income,
+student, and limit.
+But that is not a model that forward stepwise can give us.
+Because remember, forward stepwise can only give us a
+model that contains rating, income, student,
+and one other variable.
+So forward stepwise is going to give us rating, income,
+student, and it's going to add in limit when we ask for the
+best model with four variables.
+And in contrast, best subset isn't going to have rating.
+It's instead going to have cards.
+And it's lost rating.
+And so at this M4 the best subset gives us is going to
+have a smaller residual sum of squares.
+It's a different model than we would have gotten
+with forward stepwise.
+But just because best subset has a better model on the
+training data doesn't mean that it's really going to be a
+better model overall in the context of test data, which is
+what we really care about.
+One more point about that, you might wonder why this happens.
+It only happens when there's
+correlation between the features.
+It's pretty easy to show that if the variables had no
+correlation, then the variables chosen by the two
+methods would be exactly the same.
+Because of the correlation between the features, which is
+typically there, you can get a discrepancy between best
+subset and forward stepwise.
