@@ -1,0 +1,214 @@
+Welcome back.
+We're going to have our R session now.
+This time on model selection.
+So we've got a script ready, we're going to look at using
+validation sets, cross-validation, for
+selecting the tuning parameters in stepwise
+regression, Lasso, ridge regression, and the like.
+This will be broken up into a few sessions.
+And we're going to do something a little
+different this time.
+In the past I've just shown you an R script that we've
+used in RStudio where we click through the commands.
+Well this time we're going to do it also in RStudio, but
+using something called Markdown mode.
+And what that is, it it's a way of
+merging text with R code.
+And at the end of the day, you can produce a document.
+In this case an HTML document or web page.
+And as you'll see it's just about as easy to
+do as using a script.
+And it just becomes much more useful, especially for making
+demonstrations.
+So let's see how this works.
+OK, so here's our Markdown script.
+It's the beginning of it.
+And you'll see it's got actual text written in the beginning
+that says this is an R [? dot ?]
+Markdown document.
+And it's got model selection at the top.
+And it's underlined with a double-- with equal signs.
+And there's a few conventions in Markdown.
+I'll just click this help pane over here.
+And you see very simple instructions on how to
+structure Markdown on the right.
+So it's very easy to learn.
+And the R code actually sits in chunks.
+And so here's a chunk over here.
+And we just execute code in the chunks
+just like we did before.
+Notice the chunks begin with this back-quote, back-quote,
+back-quote, and then R. It's a little incantation which you
+can invoke by using a key stroke.
+And we execute the commands just as before.
+So here we are.
+We go library, hit ILSR.
+And we're going to use the Hitters database--
+which is a baseball database, which has a recording of a
+whole lot of statistics for different baseball players--
+and including a response variable salary, which we're
+going to use as the target for a regression model.
+And so there we see salary.
+We notice it's got a bunch of missing values--
+59 missing values.
+Which is going to be a little unpleasant for us, so we're
+going to do something about that.
+But just for the moment look at the summary and you can see
+all the names of the variables.
+These are statistics that have been collected during the
+baseball season.
+And we're going to try and use these statistics to predict
+the salary of the player.
+So missing values, there are various ways of
+dealing with them.
+We're going to take the easy way out here and we're going
+to eliminate any row in the data frame that's got a
+missing value in it.
+And there's a nice function called na.omit that
+does that for you.
+And we run na.omit and that will produce a new data frame,
+which we just overwrite on Hitters here, and won't have
+any missing values.
+It'll have less rows, of course.
+And then we can just check if there's any na's in this new
+data frame, Hitters.
+And here we use our [? with ?] function again, because it's
+kind of cute.
+So [? with ?] data frame Hitters look at the sum of
+any-- well, is na?
+Are there any na's in the variable salary?
+And when we do that we get zero,
+which is what we expected.
+OK?
+All right.
+So the first thing we're going to do is we're going to see
+how to do best subset regression.
+So if you recall from the lectures, best subset
+regression looks through all possible regression models of
+all different subset sizes and looks for the
+best of each size.
+And so produces a sequence of models which is the best
+subset for each particular size.
+OK?
+And that sounds like a lot of work, but luckily we've got a
+library called leaps that will do that for us.
+And there's a function in leaps called regsubsets
+that'll do the best subset modeling for us.
+And so here we assign to reg [? fit.fl ?]
+these regsubsets.
+With salary as the response it takes a formula and the data
+is Hitters.
+And it's amazingly fast.
+We've got over 200 baseball players here,
+and it did all subsets.
+And we've got 19 variables and it did all subsets regression
+in no time at all.
+And if we do a summary we get a kind of print out that
+summarizes the best subset models.
+And what it does is for each subset size, so for example
+subset size 1 it puts a star next to the variable that's in
+the best subset of size 1.
+So that's CRBI.
+And then the best subset of size 2, of course there's
+going to be 2 with stars, and 3, and so on.
+And for the beginning it looks like these subsets are nested,
+but they don't have to be nested.
+And if you study this output you'll see that at some point
+they're not nested.
+And so that's one way of looking at our best subset.
+By default it only goes up to subsets of size 8.
+Maybe that's why it was so fast.
+But we've got 19 variables, so we're going to actually go all
+the way and get best subsets all the way up to size 19.
+So we'll run that one.
+Well, that was just as fast.
+It's instantaneous.
+And if we do the summary of that--
+well, we didn't print it out, but we ran the summary.
+And then we'll look at the--
+oops, beg your pardon--
+names on the summary.
+And the summary, we've just now printed the summary, but
+this tells you what's on the summary.
+And it has various things.
+Like for each of the models, the best subset models, it has
+the r squared, the residual sum of squared, the adjusted r
+squared, the Cp statistic, the BIC statistic,
+and a few other things.
+All the things that we're going to use to help us select
+the particular model.
+So happily there's a plot method for--
+well, actually there's not.
+We're going to plot the Cp component of regsummary.
+We'll just make our own plot.
+There it is.
+And remember Cp is an estimate of prediction error.
+And here it's plotted.
+We plotted it against the number of
+variables and the Cp statistic.
+And the idea is to pick a model with the lowest Cp.
+Well, in this case it looks like the model with 10
+variables is the smallest.
+And we can just use the function [? which.mn ?]
+to identify the smallest index of the smallest element of the
+Cp component.
+And let's just annotate our plot by indicating the point
+that we've chosen, the best subset model.
+There we used points to color the point red the one that's
+going to be the chosen model.
+So that's pretty straightforward using Cp to do
+best subset selection using the function regsubsets.
+There is a plot method for the regsubsets object.
+It wasn't the one I was--
+that we just produced.
+So let's use it.
+And it's like a patent picture.
+And at first you have to figure out how to
+interpret this plot.
+What it shows is on this axis here is the Cp statistic.
+Small is good, so this is the smallest Cp.
+This will have corresponded to our model of size 10.
+And then you Cp getting worse and worse.
+And then for each value of Cp, or each unique value of Cp,
+black squares are ones indicating that variable's in
+and white squares are the variables are out.
+OK?
+And so it's an interesting picture.
+So what you notice is near the bottom of the Cp is the models
+are reasonably stable.
+Like this whole band stays the same.
+There's a little bit of fluctuation over here.
+What you also notice is that, as we should expect from that
+previous plot, that bad Cp's corresponded to models that
+had all the variables in, or ones that had hardly any
+variables in.
+And so you get used to interpreting this plot.
+And it sort of gives a quick summary of all the models, as
+opposed to just seeing the Cp statistics.
+And now, having chosen model 10 as a coefficient method for
+regsubsets, and we ask it for the coefficients for the model
+indexed 10.
+And we get a coefficient vector.
+And it gives you the coefficients of those
+variables, those 10 variables that are in the model.
+And there they are.
+OK, well so that's the end of the first little session.
+We'll carry on with subsequent sessions using different
+methods for model selection.
+Before we leave I want to show you how you actually get a
+nice summary, the HTML file, of everything that
+we've done so far.
+So you'll notice at the top here there's a
+command Knit HTML.
+So we're going to issue that.
+And it shows us, this is the web page that shows us
+everything that we've done.
+But it's formatted nicely.
+So we get all our commands, we get headings, the model
+selection, we get our commands, the text is nicely
+formatted, and we also get the output.
+The R output is commented with two hashes on the side, and
+then any graphic that we produced also
+appears in this plot.
+So that's a very nice way of retaining everything that
+you've done in the R session.

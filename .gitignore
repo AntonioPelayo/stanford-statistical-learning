@@ -18,7 +18,8 @@
 6.8-tuning-parameter-selection
 6.9-dimension-reduction-methods
 6.10-principal-components-regression-and-partial-least-squares
-6.R-model-selection-in-R
+pcr-and-pls-regression
+ridge-regression-and-lasso
 quiz43.md
 /ch7-moving-beyond-linearity
 /ch8-tree-based-methods
