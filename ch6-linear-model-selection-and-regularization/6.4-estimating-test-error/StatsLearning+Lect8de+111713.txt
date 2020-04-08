@@ -1,0 +1,309 @@
+So what I need is actually a way to estimate the test error
+for each of these models, M0, M1, M2, all the way through
+Mp, so that I can choose among them.
+And basically in order to estimate the test error, I
+have two approaches.
+And one approach is that I can indirectly estimate the test
+error by somehow computing the training error and then
+adjusting it.
+And the idea behind this adjustment is that if I can
+somehow adjust the training error to account for the bias
+due to overfitting, then that can give me an estimate of
+test error that's again, based on the training error, but
+somehow looks more like a test error.
+And the alternative approach is that I can try to directly
+estimate the test error.
+And I can do that using some of the approaches that are in
+chapter five of this book.
+And those involved either cross-validation or a
+validation set approach.
+So that's a really direct approach to estimating the
+test error where I fit models on part of the data, and then
+I evaluate them on a holdout set.
+So we're now going to talk about both of these
+approaches.
+So Cp, AIC, BIC, and adjusted R squared all adjust the
+training error in order to give us an estimate of the
+test error.
+And they all can be used to select among models with
+different numbers of variables.
+So we're now going to look at a figure showing us Cp, BIC,
+and adjusted R squared for the best model of each size that
+we get using best subset selection on the Credit data.
+So we're first going to look at this figure, and then we'll
+talk about how these quantities are defined.
+So again, this is on the Credit data example.
+And on the x-axis here, we have the number of predictors
+in each of these figures.
+And on the y-axis, we have Cp, BIC-- which stands for
+Bayesian Information Criterion--
+and adjusted R squared.
+And again, we'll define all three of these
+quantities in a minute.
+But the idea is, roughly speaking, we want these
+quantities to be small.
+So we prefer a model in which Cp, BIC
+are as small as possible.
+And actually, I misspoke.
+We want adjusted R squared to be as large as possible.
+So if I look at the shape of this curve, I can see that Cp
+is minimized when we look at the model with six predictors.
+BIC is smallest when we look at the model with four
+predictors.
+And adjusted R squared is smallest when we look at a
+model with six predictors again.
+So that suggests that we should use somewhere between
+four and six predictors.
+And actually, if we look at these figures a little more
+closely, we can see that basically these curves are
+more or less flat after we get to around three or four
+predictors.
+And so on the basis of these figures, I would say I really
+don't think we need more than three, or max four, predictors
+to do a good prediction on this Credit data.
+And now I've scribbled all over this slide.
+Oops.
+On this picture--
+it's hard to see here-- but actually, the curve is going
+upright as we go to the right, despite the fact it's flat.
+That's right.
+Unlike the RSS curve.
+Exactly.
+It's a little hard to see, but this is slightly increasing.
+Its smallest with four predictors, and then it goes
+up a little bit.
+But I don't really think that there's compelling evidence
+here that four is really better than three
+or better than five.
+So if it were me, I think simpler's always better.
+So I would probably choose a model with three predictors,
+maximum four predictors.
+Agreed.
+So now we're going to talk about Mallow's Cp.
+And once again, this is an adjustment to the training R
+squared, the training RSS that gives us an estimate
+for the test RSS.
+And it's defined in this formula.
+So let's say we're looking at a model with d predictors.
+So then we're going to calculate the RSS for that
+model with d predictors.
+And we're going to add to the RSS two times d, where again,
+d is the number of predictors, times sigma-hat squared, where
+sigma-hat squared is an estimate of the variance
+associated with each error epsilon in the linear model.
+And so the idea is we can calculate Cp for those models,
+M0, M1, M2, through Mp, that we were looking at a few
+minutes ago.
+And we can just choose the model with the smallest Cp.
+So if we're looking at the model M3, then that model
+contains three predictors and an intercept, so that model
+has d equals 4.
+And we can calculate the RSS for the model M3.
+And we just calculate sigma-hat squared.
+There's a formula for that.
+It gives us the Cp.
+And out of all these models, M0 to Mp, we're just going to
+choose the one for which the Cp is smallest because that's
+the one we believe is going to have the
+smallest test set RSS.
+And just to clarify a bit about the sigma-hat squared--
+first of all, if p is bigger than n, we're
+going to have a problem.
+Because typically, sigma-hat squared, the same estimate is
+used for all models being compared.
+So usually what you do is you fit the full model, all p
+predictors, then you take the mean square residual for that
+model to give you sigma-hat squared.
+So that's the way you do it.
+Of course, that's going to create a problem when p is
+bigger than n because that full model was not defined and
+the error will be zero.
+So already we see that Cp is restricted to cases where
+you've got n bigger than p.
+That's right.
+And even if p is close to n, you're going to have a problem
+because your estimate of sigma squared might be far too low.
+So that's Mallow's Cp.
+And then another very closely related idea is
+called the AIC criterion.
+So the AIC stands for Akaike Information Criterion.
+Akaike was the name of the guy who came up with this idea.
+And the way that this is defined is negative 2 log L
+plus 2 times d, where d is, once again, the number of
+predictors in the model that I'm looking at.
+So for M3, d equals 4.
+And now capital L here is the maximized value of the
+likelihood function for the estimated model.
+So this looks a little bit complicated.
+And in fact, it's written in this very general way because
+AIC is a quantity that we can calculate for many different
+model types, not just linear models, but also logistic
+regression and so on.
+But it turns out that in the case of a linear model,
+negative 2 log L is just equal to RSS over sigma-hat squared.
+So if you look at that and you plug in RSS over sigma-hat
+squared for negative 2 log L, then what you realize is that
+AIC and Mallow's Cp are actually
+proportional to each other.
+And since we're just going to choose the model for which Cp
+is smallest, that's equivalent to choosing the model for
+which AIC is smallest.
+So AIC and Cp are actually really the same thing for
+linear models.
+But for other types of models, these things are not the same
+and AIC is a good approach.
+So we've talked about Cp and AIC.
+And another very related idea here is the BIC, where B
+stands for Bayesian.
+So this is the Bayesian Information Criterion.
+And it's like the AIC and Mallow's Cp, but it comes from
+sort of a Bayesian argument.
+And once again, we've got a very similar formula.
+We calculate the residual sum of squares.
+And then we add an adjustment term which is the log of the
+number of observations times d, which is once again, the
+number of predictors in the model I'm looking at.
+So like M3--
+since it has three predictors and an intercept--
+M3 has d equals 4.
+And once again, sigma-hat squared is an estimate of the
+error variance which may or may not be available depending
+on whether n is greater than p or less than p.
+And so once again with BIC, we're estimating the test set
+RSS, or rather the average test set RSS across the
+observations.
+And so we want it to be as small as possible, so we're
+going to choose the model with the smallest BIC.
+So what's the difference between BIC and AIC?
+Well, remember AIC, it looked just like this, but in AIC,
+this term was actually 2d sigma-hat squared.
+So the only difference between AIC and BIC is the choice of
+log n versus 2.
+BIC has this log n here and AIC has a 2.
+And so in general, if n is greater than 7, then log n is
+greater than 2.
+And so what that means is that if you have more than seven
+observations in your data, BIC is going to put more of a
+penalty on a large model.
+And in other words, BIC is going to tend to choose
+smaller models than AIC is.
+So BIC is going to give you the selection of models that
+have fewer variables then either Cp or AIC.
+So we see that these three ideas, BIC, Cp, and AIC, are
+really almost identical.
+They just have slightly different formulas.
+We want to minimize them.
+And they all require an estimate for sigma-hat
+squared, which again, is not available necessarily.
+It's only going to be available if n is
+greater than p.
+So the last of these approaches that I'm going to
+talk about that sort of indirectly adjusts the
+training error to get an estimate of the test error is
+the adjusted R squared.
+And so we saw in chapter three the idea of the R squared.
+And remember, R squared was defined, just as a little
+refresher, R squared is defined as 1 minus the
+residual sum of squared, divided by the total sum of
+squares, where--
+in case we need a reminder--
+the total sum of squares is just the sum of
+yi minus y-bar squared.
+So y-bar is the average response.
+yi is the i-th response.
+And we're just taking the sum of those squared values.
+And so this was the R squared.
+And as we know, a big R squared indicates a model that
+really fits the data well.
+But unfortunately, you can't compare models of different
+sizes by just taking the one with the biggest R squared
+because you can't compare the R squared of a model with
+three variables to the R squared of a model with eight
+variables, for instance.
+So the adjusted R squared tries to fix this.
+And the way that it does that is that it makes you pay a
+price for having a large model.
+So the idea is adjusted R squared adjusts the R squared
+so that the values that you get are comparable even if the
+numbers of predictors are different.
+So the way that it does this is by adding a denominator to
+RSS and to TSS in this ratio.
+So instead of just taking 1 minus RSS over TSS, we take 1
+minus RSS over n minus d minus 1, divided by TSS over n minus
+1, where again, d is the number of variables in the
+model that we're considering.
+And so basically, the idea here is that when d is large,
+this denominator is really large.
+And so you're dividing the RSS by a really big number, and
+you're going to end up with the smaller R squared.
+So what's happening is that we're going to pay a price for
+having a large model in the adjusted R squared, unlike the
+classical r squared, where we pay no price for having a
+large model with a lot of features.
+So the adjusted R squared, we want it to be large.
+If it's large, then that indicates a model that really
+fits the data well.
+And again, the idea is that adjusted R squared is
+something that we can actually compare in a meaningful way,
+regardless of the number of predictors in the model.
+Something I just noticed--
+it doesn't require an estimate of sigma squared.
+That's good.
+And you can also apply it when p is bigger than n.
+Yeah, that's right.
+So that's a really nice advantage of RSS.
+As Rob said, we don't need to estimate sigma squared, which
+can be a problem.
+And in principle, we can apply it when p is larger than n.
+So we want a large value of adjusted R squared.
+And so the adjusted R squared, in practice,
+people really like it.
+It tends to work really well.
+Some statisticians don't like it as much as
+Cp, AIC, and BIC.
+And the reason is because it sort of works well
+empirically, but some statisticians feel that it
+doesn't have the theoretical backing of some other
+approaches.
+What do you think of that, Rob?
+That's true.
+There is a bias in our field towards things which have more
+theory behind them.
+And I guess this is an example of that.
+But one nice thing about adjusted R squared is if
+you're working with someone who's not a statistician--
+like scientists who aren't statisticians are really
+familiar with R squared.
+And so to understand R squared, adjusting R squared
+is just a really small one off.
+And it's kind of easier to explain to someone, in a
+certain sense, than AIC, Cp, or BIC.
+And so that's one really nice thing about it.
+But adjusted R squared, you can't really generalize to
+other types of models.
+So if you have logistic regression, you can't do this.
+So you'll see in the next section, we'll talk about
+cross-validation, which is our favorite method, which you can
+generalize.
+One major advantage is you don't need to know d.
+So the d in this method, in adjusted R squared and Cp and
+AIC, is the number of parameters.
+But in some methods like regression and the Lasso,
+which we'll also talk about again in a few minutes, the
+value of d is not even known.
+So we can't apply any of these methods.
+But cross-validation can still be applied.
+Yeah, that's true.
+So in this whole discussion, I've been talking about least
+squares models.
+And then I've been occasionally mentioning
+logistic regression.
+But I could have some totally crazy model that I come up
+with that is like something that
+nobody's ever seen before.
+And it would be totally hopeless to apply an AIC type
+of idea to it or an adjusted R squared type of idea.
+But I can always perform cross-validation, or the
+validation set approach, no matter how wacky my model is.
+And that's actually a really nice thing about those two
+approaches.

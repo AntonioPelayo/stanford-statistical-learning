@@ -18,8 +18,8 @@ Started February 23
     - [x] 6.1 Intro and Best Subset Selection - April 3
     - [x] 6.2 Stepwise Selection - April 5
     - [x] 6.3 Backward Stepwise Selection - April 5
-    - [ ] 6.4 Estimating Test Error
-    - [ ] 6.5 Validation and Cross Validation
+    - [x] 6.4 Estimating Test Error - April 7
+    - [x] 6.5 Validation and Cross Validation - April 7
     - [ ] 6.6 Shrinkage Methods and Ridge Regression
     - [ ] 6.7 The Lasso
     - [ ] 6.8 Tuning Parameter Selection

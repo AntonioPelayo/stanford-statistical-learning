@@ -1,0 +1,207 @@
+So validation and cross-validation we actually
+talked about in quite a bit of detail in this section along
+with the bootstrap.
+So I won't cover it in much detail now.
+Just to remind you, so the basic problem.
+We have a sequence of models like, for example, from subset
+regression-- forward stepwise or backward stepwise--
+each one with a model size k.
+And we want to choose the best model size.
+We just talked about some methods based on adjusting the
+RSS, Cp, AIC, and BIC.
+Validation and cross-validation, rather than
+making an adjustment, they're more direct.
+So just to remind you what the idea of the validation is, we
+divide the data up into two parts, a training set and a
+validation part.
+So let's just draw that.
+So here's my training part at random.
+Maybe I'm going to choose, say 1/2 or 3/4 to be my training
+set and the balance to be the validation set.
+And then the basic idea is we're going to fit the models
+of various sizes, of various k.
+For example, if it's forward stepwise I'm going to find the
+best forward stepwise model of each size k
+on my training set.
+And then evaluate its error on the validation part.
+And the validation error as a function of k will be what I
+use to estimate prediction error and to
+choose the model size.
+So this is validation.
+And the cross-validation is much like that, except it's
+sort of a k act play.
+So it's five fold cross-validation.
+I'll divide the data up into five parts.
+Two, three, four, five.
+And then at each stage of the play, four of the parts are
+the training set.
+So let's say these first four parts are the training set.
+And this last guy is the validation in this phase.
+So I will fit the models of a all size k to these four parts
+of the data, the train set, and evaluate the error on the
+validation part.
+And I'll do that in turn for the five different
+possibilities.
+Where at each stage one of the pieces is the validation and
+the other four pieces are the training.
+And then we'll summarize the results together to get an
+idea of the error as a function of k.
+That's called cross-validation error estimate.
+And then we'll find the minimum of that curve.
+So again, I said that quickly because we've gone over that
+in detail in the previous section of this course.
+So here I have said this again in words on the
+second bullet item.
+So either using validation or cross-validation we'll get an
+idea of the error for each model size k.
+And then select the k that gives us the lowest test error
+over the validation part of the process.
+And this is actually a very attractive approach.
+And we've said this already, but it's good to say it again.
+Compared to the other method we've talked about, there's a
+number of advantages.
+One big advantage, it doesn't require an
+estimate of sigma squared.
+You might think that's a small advantage, but it's actually
+quite important.
+Because if p's bigger than n, as it is quite often in data
+that we see these days, to get an idea of an estimate of
+sigma squared is very difficult.
+We can't fit a full model, because a full model will
+totally saturate and give an error of 0.
+So we have to pick some kind of a smaller model.
+But it's quite arbitrary the model we pick.
+And it's hard to know--
+we'd like to fit a model that has all the good variables and
+leaves out the noise variables.
+But we don't know, of course, what's the signal
+and what's the noise.
+If we did know that we wouldn't have
+to find these models.
+So getting an idea of sigma squared seems like it may be a
+trivial matter.
+But it's actually very challenging for models, for
+situations with large numbers of features.
+And that's actually challenging to the point where
+it's an open area in statistical research.
+So I'm an associate editor for a journal.
+And we get submissions from statisticians at top tier
+universities who are coming up with ways to
+estimate sigma squared.
+So maybe in 10 years this will no longer be a challenge.
+But right now it's really hard to do.
+And that's actually one of the reasons it's so much fun to be
+a statistician.
+Because we get new kinds of data, for example, high
+dimensional data with large numbers of variables.
+And it presents challenges to--
+things which were simple with smaller numbers of variables
+now become very challenging but are very important.
+So the technology and the kinds of data that we see
+bring new challenges to our field every day.
+So cross-validation help us solve that problem by avoiding
+an estimate sigma squared.
+We don't need to plug in sigma squared anywhere.
+The other point is you don't need to know d.
+Remember these previous formulas, for example, the
+adjusted r squared had a d in it.
+And Cp, and AIC, and BIC all had the number of parameters.
+Well again, that might seem sort of a silly thing.
+Well, of course you know the number of
+parameters in your model.
+Well, that's true when your model is a linear model.
+And you're choosing predictors as coefficients.
+But for methods like ridge regression and Lasso, which
+are shrinkage methods we'll talk about next, it's not at
+all clear what d is.
+And it's actually another whole area of research,
+figuring out what is meant by d, the number of parameters,
+in a model which is not fit by least squares.
+So again, cross-validation finesses that problem by not
+requiring you to plug in a value for d.
+So d and sigma squared are both challenges.
+And cross-validation relieves the worry of having to come up
+with good estimates of those.
+So I've said all these things.
+So let's see what it looks like on
+the credit data example.
+So again, the number predictors.
+Here we apply to the square root BIC, just to make it
+comparable to the other two estimates, the validation set
+error and the cross-validation error.
+So here we did, actually, validation set was 3/4, 1/4.
+So 3/4 of the data was randomly chosen to be the
+training set, 1/4 was the validation set.
+And we see the error tracked as a function of the number of
+predictors.
+We have marked the minimum.
+In here it's about six predictors.
+cross-validation, I think this was--
+do I say here?
+A 10 fold cross-validation.
+We like 5 or 10 fold cross-validation in general.
+They're good values.
+It's producing about the same model size, 6, as the minimum.
+Again, the curve is very flat.
+It's hard to see here.
+It's rising very slightly to the right.
+But there's not much to choose between, say, 4 and 11
+predictors.
+They give you basically the same error.
+BIC as is often the case, remember we said when compared
+to AIC it imposes a stronger penalty on the model size.
+It tends to produce models which are
+a little bit smaller.
+And it did so here.
+Here's it's about 4.
+But again, the curve is so flat.
+There's not much we can really say about these models between
+three and eleven predictors.
+And actually, I mention at the bottom here the ones standard
+error rule.
+We talked about this a bit in the cross-validation section.
+Let me just remind you what that is.
+The one standard error rule says, well we're not going to
+put the actual minimum of the curve.
+But we'll acknowledge the fact that
+the curves have variation.
+Because they're random variables just
+like the data are.
+They're functions of the data.
+So the one standard error rule.
+Let's draw it just in pictures here.
+So let's suppose we have one of these curves.
+Here's the actual minimum.
+The standard error of the curve which we didn't indicate
+in these examples but we should have, we can get.
+The cross-validation just an average over the k folds.
+So the standard error of that mean of k fold
+things, like k is 10.
+The standard error of those ten numbers give us the
+standard error of this curve.
+So we could draw plus or minus one standard
+errors from the minimum.
+So the one standard error rule says-- remember this is the
+number of predictors along the horizontal axis.
+Says don't choose the minimum.
+But take the simplest model that comes within one standard
+error of the minimum.
+So that would be, we'd come across to here and we'd choose
+this model.
+So the idea being, well, if these models are within one
+standard error of each other, we really can't tell them
+apart on the basis of the data.
+Because the error is almost the same.
+So all else equal, we'd rather have a simpler model.
+So that's why we moved to a model to the left here which
+has fewer predictors.
+And its error is no more than one standard error away from
+the error of the best model.
+So the one standard error rule, which is pretty popular
+now, is not use the model with the absolute minimum.
+But use a simpler model that comes within one standard
+deviation of the minimum.
+So the rationale for this, again I've said it, is that if
+the models are within one standard error of each other,
+let's choose the simplest one.
+Because it's easier to interpret.
