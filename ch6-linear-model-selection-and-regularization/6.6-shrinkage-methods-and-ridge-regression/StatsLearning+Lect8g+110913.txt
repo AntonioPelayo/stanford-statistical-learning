@@ -1,0 +1,291 @@
+So welcome back.
+So we've talked about a forward stepwise selection and
+backward stepwise and all subsets as well as some
+techniques for choosing the model size.
+All of those methods fit by least squares.
+So whenever you consider model, the subset, we always
+fit the coefficients by least squares.
+Now we're going to talk about a different method called
+shrinkage--
+namely two techniques, the ridge regression and LASSO.
+And as we'll see that these methods do not use full least
+squares to fit but rather different criterion that has a
+penalty that will shrink the coefficients towards,
+typically, 0.
+And we'll see these methods are very powerful.
+In particular, they can be applied to very large data
+sets, like the kind that we see more and more often these
+days where the number of variables might be in the
+thousands or even millions.
+And one thing that's worth mentioning is that ridge
+regression, LASSO, and shrinkage methods like this
+are a really contemporary area of research right now.
+There's papers every day written by statisticians about
+variants of these methods and how to improve them, as
+opposed to some of the other things that we've covered so
+far in this course where the ideas have been
+around for 30, 40 years.
+Although, actually, ridge regression I think was
+invented in the '70s.
+But it is true that it wasn't very popular
+for many, many years.
+It's only with the advent of fast computation in the last
+10 years that it's become very popular along with the LASSO.
+So some of these methods are old.
+Some are new.
+But they're really quite hot now in their applications.
+So ridge regression--
+well, let's first of all just remind ourselves what least
+squares is, the training error.
+So the RSS or training error is the sum of squares of
+deviation between y and the predictions.
+So when you do least squares, we simply find the
+coefficients that make this as small as possible.
+Now with the ridge regression, we're going to do something a
+little bit different.
+We're going to use training error, RSS.
+We're going to add a penalty to that, namely a tuning
+parameter, which we'll choose in some ways-- and as you can
+guess, it will be by cross-validation--
+times the sum of the squares of the coefficients.
+So we're going to try to make this total quantity small,
+which means we're going to try to make the fit good by making
+the RSS small.
+But at the same time, we're going to have something which
+is going to push us the other direction.
+This is going to penalize coefficients
+which get too large.
+The more non-zero a coefficient is,
+the larger this is.
+So we're going to pay a price for being non-zero.
+And we'll pay a bigger price the larger the
+coefficients are.
+So it's basically fit versus the size of the coefficients.
+And that penalty is called a shrinkage penalty because it's
+going to encourage the parameters to be
+shrunk toward 0.
+And the amount by which they are encouraged to be 0 will be
+determined by this tuning parameter, lambda.
+Let's go back to this.
+If lambda is 0, of course, we're just doing least
+squares, because this term will be 0.
+But the larger lambda is, this tuning parameter, the more and
+more of a price we'll pay for making these
+coefficients non-zero.
+If we make lambda extremely large, then at some point, the
+coefficients are going to be very close to 0 because
+they'll have to be close to 0 to make
+this term small enough.
+No matter how good they help the fit, we're going to pay a
+large price in the penalty term.
+So in other words, this term has the effect of shrinking
+the coefficients towards 0.
+And why 0?
+Well 0 is a natural value.
+Remember 0, of course, if a coefficient is 0, the feature
+is not appearing in the model.
+So if you're going to shrink towards some value, a 0 is a
+natural place to shrink towards.
+And the size of the tuning parameter, it trades off the
+fit versus the size of the coefficients.
+So as you can imagine, choosing a good value for the
+tuning parameter, lambda, is critical, and cross-validation
+is what we're going to use for this.
+So let's see what happens for the credit data.
+Well, let me just go back here.
+So if we think of this for a fixed value of lambda, we have
+to define the smallest value of this criterion.
+And again, it's just an optimization problem with an,
+actually, very simple solution.
+And there are computer programs for doing that.
+So I've used such a program.
+And we'll talk, actually, in the R session about an R
+function [? for the ?] ridge regression.
+But let's see what it looks like in this example, in the
+credit example.
+So here you've plotted the coefficients, standardized
+coefficients versus lambda, for the credit data.
+And let's see what happens.
+Well first of all, on the left-hand side, lambda is
+close to 0, so there's almost no constraint on the
+coefficients.
+So here we're pretty much getting the full
+least squares estimates.
+And now, as lambda gets larger, it's pushing the
+coefficients towards 0 because we're paying more and more of
+a price for being non-zero.
+In the extreme, over here, where lambda is a little more
+than 10,000, the coefficients are all essentially 0.
+In between, they're shrunken towards 0 as lambda gets
+larger, although not uniformly so.
+The rating variable actually gets bigger for a while and
+then shrinks back down to 0.
+And I remember when I was a student, seeing this figure
+again and again--
+actually, it was in a class the Rob was teaching--
+and being totally confused for three lectures.
+So I just want to spare everyone this confusion in
+case anyone shares the confusion I had.
+So if we look here, this red line indicates the spot at
+which lambda equals 100.
+And at that spot, the income coefficient takes on a value
+of negative 100.
+These other six coefficients here are all around 0.
+Student takes on a value of around 100.
+Limit and Rating take on values of around 250.
+And so the point is, what we're plotting here is a ton
+of different models for a huge grid of lambda values.
+And you just need to choose a value of lambda and then look
+at that vertical cross-section.
+Good.
+So as Daniella said, if we chose the value of lambda
+about 100, then it seems like it chooses about three
+non-zero coefficients, the black, the blue, and the red--
+oh, maybe four.
+And then these guys here are basically
+essentially 0, the gray ones.
+So they're not quite 0, but they're small.
+Right-- exactly.
+So an equivalent picture on the right now, we've plotted
+the standardized coefficient as a function of the l2 norm,
+the square root of the sum of the squares of the
+coefficients divided by the l2 norm of the full least squares
+coefficient.
+So Rob, what's the l2 norm?
+OK, so the l2 norm of the vector beta 1 through beta p
+in written this way--
+so the l2 norm.
+So it's the square root of the sum of beta J squared.
+So that's the l2 norm, and so that's it.
+So we see here, when the l2 norm is 0--
+so when the coefficients are all 0, the l2 norm is 0--
+that corresponds to the right side of this picture.
+So the lambda is very large here.
+It's large enough that it's driven the l2 norm
+down almost to 0.
+So the coefficients are basically 0.
+And then on the right, lambda is very small, and we get the
+full least squares estimates.
+And in between, we get, again, a shrunken coefficient.
+So these two pictures are really the same, but they've
+been flipped from left to right.
+And the x-axes are parametrized
+in a different way.
+So Rob, why does this x-axis on the right hand side
+go from 0 to 1?
+Why does it end at 1?
+It ends at 1 because we're plotting as a function of this
+standardized l2 norm.
+So at the right-hand side, we have basically the full least
+squares estimate, so these numerator and
+denominator are the same.
+Right.
+So on the right-hand side here on this right-hand plot,
+lambda is 0.
+And so your ridge regression estimate is the same as your
+least squares estimate.
+And so that ratio is just 1.
+Exactly.
+I think we've actually just said all this, thanks to the
+questions from Daniella.
+So there's the l2 norm defined.
+I wrote it in the previous slide.
+And that's what was used for the plotting axis.
+One important point with ridge regression is that it matters
+whether you scale the variables or not.
+Now just to remind you, if you just do standard least
+squares, so standard least squares is what we call
+scale-invariant.
+If I multiply feature by a constant, it's not going to
+matter, because I can divide the coefficient by the same
+constant, and I get the same answer.
+So in least squares, the scaling of the variable
+doesn't matter.
+So whether I measure a length in feet or inches is not going
+to matter because the coefficient can just account
+for the change in units.
+But it's a little bit subtle here now.
+For ridge regression and penalized methods like ridge
+regression, the scaling does matter in an important way.
+And that's because, if we go back to the definition of
+ridge regression, these coefficients are all put in a
+penalty together, and there's a sum of squares.
+So if I change the units of one variable, it's going to
+change the scale the coefficients.
+Well if I change the units of one variable, the coefficient
+has to change to try to accommodate for that change.
+But it's competing against the
+coefficients for other features.
+So because they're all put together in their penalty in
+[? a sum ?], the scale of the features matters.
+And as a result, it's important to standardize the
+predictors in regression before applying ridge
+regression.
+So in most cases, before you do a ridge regression, you
+want to standardize the variables.
+What does that mean, to standardize the variables?
+Well, you take the variable or feature, and you divide it by
+the standard deviation of that feature over all the
+observations.
+And now the standard deviation of this guy is 1.
+And you do that for each feature.
+And that makes the features comparable and makes their
+coefficients comparable.
+So let's see an example of ridge regression compared to
+least squares.
+Here's a simulated example with 50 observations and 45
+predictors in which all of predictors have been given
+non-zero coefficients.
+So on the left, we see the bias in black, the variance in
+green, and the test error in purple for a ridge regression
+as a function of lambda and the same thing on the right as
+a function of the [? 2 norm ?]
+of ridge regression divided by the [? 2 norm ?]
+of full least squares.
+So again, these are the same pictures, essentially, but the
+x-axes have been changed.
+But let's look over here.
+We can see that the bias--
+so full least squares is over here on the left.
+lambda is close to 0.
+As we make lambda larger, the bias is pretty much unchanged,
+but the variance drops.
+So a ridge regression, by shrinking the coefficient
+toward 0, controls the variance.
+It doesn't allow the coefficient to be too big, and
+it gets rewarded because the mean square error, which is
+the sum of these two, goes down.
+So here's the place where the mean square is minimized, and
+it's lower than that for, then, the full
+least squares estimate.
+So in this example, ridge regression has improved the
+mean square error of full least squares by shrinking the
+coefficients by a certain amount.
+And we see the same thing in this picture.
+And actually, this U-shaped curve that we see for the mean
+squared error in this figure in purple comes up again and
+again where, when we're considering a bunch of
+different models that have different levels of
+flexibility or complexity, there is usually some sweet
+spot in the middle that has the smallest test error.
+And that's really what we're going for.
+So that's what's marked as an X in these two figures.
+So I want to go back to this picture of ridge.
+And let me clear the--
+and one thing you might have notice here and that we
+mentioned is that the coefficients are
+never exactly 0.
+They're close to 0.
+Here, these gray guys are all close to 0.
+But they're never exactly 0.
+As a matter of fact, you can show mathematically that,
+unless you're extremely lucky, you're not going to get a
+coefficient exactly of 0.
+So ridge regression shrinks things in a continuous way
+toward 0 but doesn't actually select variables by setting a
+coefficient equal to 0 exactly.
+But it seems like a pity in this example because all those
+gray variables are so tiny.
+It would just be more convenient if they were 0.
+Which is a great set-up for the next
+method, called the LASSO.

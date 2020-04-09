@@ -1,0 +1,364 @@
+And we just said this, that one drawback of ridge
+regression, it doesn't actually select variables, and
+set things to zero, when, as you said, in situations like
+that previous picture, when things are small, it'd be nice
+if you were able to say if these are zero, we can forget
+about them.
+So the Lasso is a more recent technique for shrinking
+coefficients in regression.
+It looks very much like ridge regression,
+but with one change.
+So here's the Lasso criterion.
+Again, we have the RSS as before.
+Now, we have a penalty, but whereas before, the penalty
+was the sum of the squares of the coefficients, now it's the
+sum of the absolute values of the coefficients.
+So it's a shrinkage towards zero using an absolute value
+rather than a sum of squares.
+And this is called an L1 penalty.
+By analogy to the L2 penalty, the L1 penalty is just the
+some sum of the absolute values.
+It's a norm, but it's called the L1 norm,
+rather than the L2 norm.
+So what's the effect of changing this from a square to
+an absolute value?
+It's actually a small change, but it's quite important.
+It turns out that the Lasso, like the ridge,
+shrinks toward zero.
+But it has the effect of actually setting the
+coefficients of variables exactly equal to 0 when
+lambda's large enough.
+So it's neat.
+It shrinks, but also, it does subset selection, in a similar
+way to best subset selection.
+So it'll set coefficients to 0 exactly if that feature's not
+important and lambda's large enough.
+There's a term for this.
+It's called sparsity.
+So the Lasso used what's called sparse models.
+Models which only involve a subset of the variables.
+And again, it's a function of this tuning parameter, lambda,
+which, as in ridge regression, we have to choose somehow, and
+we do so by cross-validation.
+So wow.
+The Lasso seems like a really good idea.
+That's so clever.
+I wonder who came up with it, Rob?
+Thanks.
+So Danielle was trying to embarrass me.
+So this is actually a paper that I wrote in 1996.
+And at the time, actually, it was published, and didn't get
+a lot of attention, but in the last, about, 10 years or so,
+it's become a very hot topic, both in statistics, and
+computer science, and other areas.
+And there's been a lot of work in sparsity in general, not
+just in regression, but the use of L1 penalties in a lot
+of different areas.
+I think one reason for its popular now is computation.
+This computation's, actually, this is what's called a convex
+optimization.
+So that's good news.
+And there's a lot of work in convex optimization,
+especially in the last 10 or so years.
+And along with the progress in convex optimization and fast
+computation, fast computers, people can solve this problem
+now, a Lasso, for very large values of p and n.
+And this actually has just been a fun thing
+that I've even seen.
+Like, when I started grad school, there was, like, one
+approach that statisticians were using to fit this model.
+And this was a famous paper that had just come out when I
+started, and it was written by Rob, and Trevor, and a few
+other people at Stanford in statistics.
+And then, a new paper came out with a better idea, and then
+20 more papers came out with better ideas for how to fit
+this model.
+And this has suddenly become something that anyone can
+solve on their laptop, no matter how big
+your data is, basically.
+And so it's just become an incredibly useful tool in a
+way that it even wasn't when I started grad school.
+So we'll talk about the GLM now, which is in our library,
+which we use a lot in this book, and in
+the book in the course.
+And we'll show you how you can solve a problem, like, solve a
+Lasso using GLM [INAUDIBLE] in R. Again, with numbers or
+variables, it might be in the tens of thousands, you can
+solve it on a standard desktop computer
+in less than a minute.
+So we'll talk about computation
+later on in the course.
+But let's first see what it looks like in the
+same example now.
+So again, the credit dataset, and we're plotting the
+[? standards, ?] coefficients as a function of
+lambda for the Lasso.
+Again, we haven't talked about how to choose lambda.
+Now, it's going to be important.
+We use cross-validation.
+But let's, for now, look at the solutions as a function of
+lambda for all values of lambda.
+And now you can see, again, when lambda is small, we get,
+essentially, the full least squares estimates.
+When lambda's 0, we get exactly least squares, if I
+plotted this all the way to the left.
+Now, as we increase lambda, we get shrinkage, as we did for
+ridge regression.
+But something special happens.
+At this point, for example, here, beyond this point, all
+of these gray variables, the coefficients are exactly 0.
+And whereas, for ridge regression, they were small,
+but they weren't 0.
+So actually, it tells us you can throw away all these
+variables at this point, and just retain these three, the
+blue, red, and orange.
+Similarly, this plot shows you the same thing
+in the other direction.
+So it's a combination of both shrinkage and
+selection of variables.
+And so, one thing that's worth mentioning is that in a lot of
+applications, selecting variables is actually really
+important, because let's say I'm working with a doctor who
+wants to come up with a really good way to test for some
+particular disease.
+And he might start out by getting 30,000 gene expression
+measurements for patients with this type of disease.
+So he starts out with p equals 30,000.
+And he wants to find a really great model that can be used
+to test for this disease.
+But when push comes to shove, and he's actually going to use
+this test in the clinic, he doesn't want a test that
+involves all 30,000 genes, because a test like that would
+be too expensive.
+It just wouldn't be feasible to actually use.
+But if he can get a test that works really well that only
+involves 6, or 8, or 25 genes, that could be a real
+breakthrough in testing for this disease.
+And so, just from a practical perspective, the Lasso is just
+hugely useful, because it allows us to efficiently find
+these types of sparse models that involve just a really
+small subset of the features.
+You should be my personal salesman.
+You're doing a good job.
+But seriously, and Danielle is right.
+And I, myself, I use the Lasso in schools, and projects here
+at the medical school.
+And it's very satisfying to apply it And to see it helping
+scientists to find the signal in their data, and come up
+with interpretable subsets among the thousands of
+features they present to me.
+So at this point, it might seem like magic.
+Why it is that just using absolute value penalty gives
+us this sparsity property.
+Why do we get exactly 0.
+And I'm going to show you that in the picture.
+So let's think about that.
+First of all, we can formulate the problem in
+an equivalent way.
+Rather than putting a penalty, remember, before I had the RSS
+plus lambda times the sum of the absolute values, and
+equivalent way to pose the Lasso problem is to say,
+minimize the RSS with a constraint, a budget, on the
+total L1 norm of the coefficients.
+So this is an equivalent problem in the sense that if
+you give me a budget, s, there's a lambda in the
+previous formulation that corresponds to the same
+problem, and vice versa.
+And by the way, if that looks like a total mystery, if you
+can reach back to your distant or not so distant past, if you
+ever took AP calculus, and you saw Lagrange multipliers in
+high school, this is really something that you might have
+truly seen in high school calculus a long time ago, but
+for simpler types of problems.
+And this is just a more complex
+application of the same idea.
+But in a way, its bound form is, to me, more intuitive than
+the Lagrange form, because think of it this way.
+Suppose that you do a full least squares, and you get a
+certain answer.
+And let's suppose the sum of the absolute values of your
+coefficients is 10.
+So you give me an answer, and I say, well, actually, I want
+to make your budget smaller.
+You've spent too much coefficient.
+So rather than 10, I want to give you a budget of maybe 5.
+So now, I ask you to solve the same problem, but you're not
+allowed to use the coefficients as
+large as you want.
+The total budget you have is 5.
+And that's the bound here.
+So the Lasso is giving you a budget on that total
+[? out of a ?] norm that you can spend, and within that
+budget, you have to fit as well as possible.
+And as that budget gets smaller and smaller, the
+coefficients get smaller and smaller.
+If the budget is 0, the coefficients have to be 0.
+If the budget is large enough, you're free
+use full least squares.
+But in-between, the budget's going to trade off the size of
+the coefficients with the fit.
+So I think that it's quite an intuitive way of looking at
+these problems.
+For ridge regression, you get exactly the same analogy, but
+now the budget is in terms of the sum of squares.
+So again, this is equivalent to the Lagrange formulation
+for ridge regression we saw earlier.
+But the reason I want to bring this up is this following
+picture, which helps to explain why
+the Lasso gives sparsity.
+So on the right is ridge regression, and on
+the left is the Lasso.
+And this is a bit more math-y than most things in this
+course, but hang in there, and I think if you do, there'll be
+some payoff.
+So this picture is ridge regression.
+So what's going on here?
+First of all, p is 2, so there's 2 coefficients.
+And I've indicated here the full least squares estimate,
+so there's no penalty.
+I just did least squares on the 2 variables.
+I'll call this solution beta hat, and that's this point.
+And now, the sums of squares in the RSS, the contours of
+the function, it's lowest here, because that's the least
+squares estimate.
+But now, as I move away, I think of this, like, as maybe
+a cereal bowl, and I slice the cereal bowl.
+Here the contours.
+So here's the value at which RSS is a bigger value.
+This next counter is a higher contour of RSS.
+So these are the contours of RSS as I move away from the
+minimum, OK?
+And this is the constraint region.
+Remember in ridge regression, in this formulation here says,
+you have a budget on the total sum of squares of the base.
+So the budget is the radius of a circle, right?
+And here, I have a fixed budget.
+And so, in words, the ridge problem says find me the first
+place these contours fit the constraint region.
+In other words, find me the smallest RSS you can get
+within the budget defined by this circle.
+That's ridge aggression.
+And the solution in this picture is right here.
+So this is the ridge estimates for this budget and the data,
+this particular data, and that the data is determining the
+shape of these contours, and the location of beta hat.
+So ridge regression says, find me the first place the
+contours hit this constraint region.
+It's this solution.
+And you can see, because the constraint region, the sum of
+squares, is a circle.
+This is where the sum of squares of beta 1, beta 2 is
+less than the budget.
+It's a circle, right?
+And unless you're very lucky that you're not going to hit
+exactly the place where one or the other is 0, right?
+Now, let's move over to the Lasso.
+Same picture, least squares, same thing.
+The sum of squares function is the same,
+all the same up here.
+But the constraint equation is now the sum of
+the absolute values.
+So rather than a circle, it's a diamond.
+A diamond has corners.
+So in this picture, I've hit this corner, and now I get a
+place where beta 1 hat is 0, all right?
+So here's the Lasso estimate.
+So in other words, to summarize, the absolute
+value's going to be a constraint region that has
+sharp corners.
+In high dimensions, you have edges and corners.
+And along an edge or a corner, if you hit there, you get a 0.
+So this is, geometrically, why you get sparsity in the Lasso.
+Here's our case.
+First of all, returning to the example where we had, was it,
+45 variables and they all had nonzero coefficients.
+So now I'm looking at comparing the Lasso to ridge.
+So on the left picture, for the Lasso, we see the bias,
+variance, and mean square error, as
+a function of lambda.
+And the right, we've superimposed the biased,
+variance, and mean square error of ridge regression with
+a broken line, and the Lasso.
+And we can see that, overall--
+so again, the solid line here for mean square error is the
+Lasso, the broken line is ridge--
+they're very similar.
+Ridge is a little better, perhaps, right?
+So we don't do much better.
+We don't do better at all with the Lasso here.
+And the reason is, is that the true model is not sparse.
+The true model actually involves 45 variables, all of
+which of the given nonzero coefficients in the
+population.
+So it's not surprising we don't do better than
+ridge in this case.
+And one thing we should mention is, on this right-hand
+panel, the x-axis, is something we haven't seen
+before, which is the r-squared on the training data.
+And the reason we have that x-axis is, because in this
+figure, on the right-hand side, we're plotting both
+ridge regression and the Lasso.
+So it wouldn't make sense to show ridge regression and the
+Lasso with lambda on the x-axis, because the lambda
+means two different things for those two models.
+So when we look at r-squared on the trading data on the
+x-axis, that's kind of a universally sensible thing to
+measure, regardless of what the type of model is.
+You must have drawn this picture [INAUDIBLE]
+[INTERPOSING VOICES]
+Yeah, I made this picture, so I remember.
+It's a beauty.
+Thank you.
+Yeah.
+OK.
+I would have noticed that detail otherwise.
+OK.
+So now here's a situation where we do perform better
+with the Lasso.
+And this is a case where, now, in the population, only two of
+the predictors have nonzero coefficients.
+So in the previous situation, it was dense, or non-sparse.
+This situation is sparse.
+There's only two predictors in the true model that are
+nonzero coefficients.
+And now, we can see what happens.
+Well, the Lasso's mean square error here is minimized for
+quite a large value of lambda, because it wants to make the
+model sparse, as it needs to.
+There's only two nonzero coefficients.
+And now, when we compare the Lasso to ridge--
+remember ridge is the broken line, and the
+Lasso is a solid line--
+you can see we did quite a bit-- here's the Lasso's mean
+square area, and ridge is here.
+You can see we're doing quite a bit better using the Lasso
+in this situation.
+And again, it's not surprising.
+The true model is sparse.
+So it pays to use a technique which encourages sparse models
+coming out of its estimation.
+Whereas, with ridge, we don't get a sparse model, we get a
+dense model.
+So in conclusion, comparing these two techniques, as is
+usually the case in most things in statistics, and
+science in general, there's no simple rule that means that
+you should always use one technique over another.
+It depends.
+You always hear that from statisticians, it depends.
+Well, it depends on the situation.
+In this particular case, if the true model is quite dense,
+most predictors have nonzero coefficients, we expect to do
+better with ridge.
+If the true model is quite sparse, only few coefficients
+are nonzero, then the Lasso can be expected to do better.
+Of course, we don't know that usually.
+We hope, actually, that things are sparse, because life is
+simpler then.
+But going into a data analysis, we have no idea
+whether the true number of nonzero
+coefficients is large or small.
+So it's typical that you would apply both methods, and use
+cross-validation to determine the best model coming out of
+each method.
+And then compare the cross-validated error for the
+two methods.

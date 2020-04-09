@@ -11,8 +11,6 @@
 *.gz
 
 # Folders
-6.6-shrinkage-methods-and-ridge-regression
-6.7-the-lasso
 6.8-tuning-parameter-selection
 6.9-dimension-reduction-methods
 6.10-principal-components-regression-and-partial-least-squares

@@ -20,8 +20,8 @@ Started February 23
     - [x] 6.3 Backward Stepwise Selection - April 5
     - [x] 6.4 Estimating Test Error - April 7
     - [x] 6.5 Validation and Cross Validation - April 7
-    - [ ] 6.6 Shrinkage Methods and Ridge Regression
-    - [ ] 6.7 The Lasso
+    - [x] 6.6 Shrinkage Methods and Ridge Regression - April 8
+    - [x] 6.7 The Lasso - April 8
     - [ ] 6.8 Tuning Parameter Selection
     - [ ] 6.9 Dimension Reduction Methods
     - [ ] 6.10 Principal Component Regression and Partial Least Squares
