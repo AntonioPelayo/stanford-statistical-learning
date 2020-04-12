@@ -26,9 +26,13 @@ Started February 23
     - [ ] 6.9 Dimension Reduction Methods
     - [ ] 6.10 Principal Component Regression and Partial Least Squares
     - [ ] 6.R Model Selection in R
-        - [x] 6.R.1 Subset Selection Methods - April 7
-        - [ ] 6.R.2 Ridge Regression and the Lasso
-        - [ ] 6.R.3 PCR and PLS Regression
+        - [x] 6.5.1 Best Subset Selection - April 5
+        - [x] 6.5.2 Forward and Backwards Stepwise Selection - April 7
+        - [x] 6.5.3 Choosing Models Using Validation Sets and Cross Validation - April 7
+        - [x] 6.6.1 Ridge Regression - April 11
+        - [ ] 6.6.2 The Lasso
+        - [ ] 6.7.1 Principal Components Regression
+        - [ ] 6.7.2 Partlal Least Squares
 - [ ] 7 Moving Beyond Linearity 
 - [ ] 8 Tree-Based Methods
 - [ ] 9 Support Vector Machines

@@ -1,0 +1,207 @@
+OK, well, we're going to carry on with our
+model selection session.
+We've done base subset selection.
+Now, we're going to do forward stepwise selection.
+So base subset is quite aggressive looking at all
+possible subsets.
+Forward stepwise is a greedy algorithm.
+Each time it includes the next best variable.
+But it produces a nested sequence.
+So it's a much less adventurous search.
+It keeps a nested sequence of models each time you just add
+the variable that improves the set the most.
+So we're also back using our markdown formatting.
+And so we'll continue with that.
+So let's have a look at the screen.
+And we've got our heading, forward stepwise selection.
+And we're back using raked subsets.
+And it's the same function that did base subsets.
+But we tell it method equals forward.
+And we also want the number of variables.
+We want to use the full number of variables, which is 19.
+And so that's really fast as well.
+And there's a summary for that just as there was
+for the base subset.
+And now, this one, if you look through the models that were
+selected, you'll find that they exactly nested.
+So each new model includes all the variables that were before
+plus one new one.
+So if you study that, you'll discover that.
+And we can plot the CP statistic.
+I beg your pardon.
+We make the plot for this model, the schematic plot,
+like we did before.
+And it looks very similar to what we saw for base subsets.
+Different in some places, but the same kind of structure
+near the good, which is low CP end, where there's a
+consistent group of variables that are in a little bit of
+fluctuation down at this end over here, in terms of which
+of those variables are in.
+OK, so we've got base subset and forward stepwise.
+And we can select the models using CP.
+There's also adjusted r squared and BIC.
+But here we're going to actually use a validation set.
+So what we're going to do is we're going to pick a subset
+of the observations and put them aside and use them as a
+validation set and the other as a training data set.
+So let's see how we might do that.
+And this is a little different to the way we
+do it in the book.
+And so, first of all, we see the dimension of header sets.
+There's 263 rows.
+So we're going to roughly go for a 2/3
+training and 1/3 test.
+And approximately 2/3 training is 118 observations.
+And so that's what we'll do.
+And just for reproducibility, we'll set the
+random number seed.
+And you can set it to any number.
+We set it to one.
+It doesn't matter.
+Well, it does matter.
+But for our purposes, we're not particular.
+OK, so here we go.
+There's a command here.
+First of all, inside sequence 263 creates, SEQ 263, it just
+creates numbers one, two, three, four up to 263.
+That's a shortcut for doing that.
+And here we're using the sample command.
+So we're going to sample from that sequence.
+We're going to take a sample of size 180.
+And we're going to say replace equals false.
+So this will sample 180 indexes of observations.
+And let's just look at them.
+Well, there they are.
+There's 180 numbers chosen at random from the
+sequence 1 to 263.
+So those we're going to use.
+That set of index, those rows we're going
+to use for our fitting.
+So raking that forward now, we run rake subsets again, and
+everything's the same as before.
+Except now, we tell it to use data frame headers but indexed
+by the rows in train.
+And so that will use the subset of data.
+So that's fit the model.
+Now, we're going to work out the validation errors on the
+remainder of the data.
+So we know there's 19 subset models, because
+there are 19 variables.
+So we'll set up a vector having 19 slots.
+And we'll make an x matrix corresponding to our
+validation data set.
+So here we use a model matrix, because we want to use the
+formula that we used in building the model, which was
+salary twiddle dot, which means model salary as a
+function of all the other variables in the
+headers data frame.
+But salary is the response.
+And so we put that formula.
+We give that as an augment to model matrix.
+And we tell it that the data it should use is headers.
+But now rather than indexing by train, we indexed by minus
+train, which is a really nice device in r for excluding the
+observations indexed by train.
+So that just leaves the remainder.
+So that's a negative index set.
+So we build that test model matrix.
+And now, we're going to make our
+predictions for each model.
+So we go in a loop for y equals 1 to 19.
+We use a coef function to extract the coefficients for
+the model of size id equals i.
+So i is going to index the size.
+And we're going to loop and do it for each size.
+Now, the unfortunate thing, there's not a predict method
+for raked subsets, which would have been handy.
+So we've basically got to do it all ourselves.
+And so the coefficient vector that comes back, if we look at
+it, well, we can't yet because we're in a loop, it's just got
+the subset of variables that are used in that model.
+And so to get the right elements of x test, we have to
+index the columns by the names that are on
+the coefficient vector.
+So that's one way of doing that.
+So that's the subset of columns of x test that
+correspond to the variables that are in this current
+coefficient vector.
+And then we do a matrix multiplied by
+the coefficient vector.
+So it's a little bit of a loaded line.
+And then having got the prediction, so that gives our
+predictions.
+And then we compute the mean squared error.
+So there's the headers dollar salary minus train minus the
+predictions.
+Square it and take the mean and put that
+in validation errors.
+And that's end of our loop.
+So that worked pretty quickly.
+And then we're going to plot the root mean squared error.
+So we plot that in a plot.
+And there we have it.
+So that's a validation error.
+It's slightly jumpy, which is OK.
+I mean, these are data.
+There's less than 90 observations in
+the validation set.
+So there's going to be a bit of noise.
+But there seems to be a minimum here around five.
+The 10 that we chose before is a little bit
+higher than the minimum.
+We may as well put the residual sum of squares for
+the model on the same plot.
+So notice we removed the first one.
+This corresponds to the null model, which was not included
+in our validation plot here.
+And so there's the residual sum of squares.
+And notice, of course, as it must do, this is a root mean
+residual sum of squares.
+It's monotone decreasing as it has to be.
+Because forward stepwise, each time includes a variable that
+improves the fit the most.
+And so therefore, by definition, it's got to
+improve the residual sum of squares on the training data.
+And we may as well annotate our plot with a legend.
+It's very easy to do.
+We tell the legend command to put the legend in the top
+right corner.
+We give it the legend and a few more details.
+We tell it, let's just do it and see it.
+And you see in the command how we achieved that.
+I use PCH, plotting character 19 quite often.
+It gives you a solid dot, which is often nice to
+visualize on the screen, especially if
+you're doing it in color.
+And so this was a little tedious.
+We had to write our own, basically, method.
+We had to write code for doing the prediction.
+We're going to make predictions from raked subsets
+models in the future.
+So we're going to end the session by actually just
+writing a function for doing that.
+And we often do this in our--
+when we find ourselves repeating code that's tedious,
+we write a little function to do it for ourselves.
+So this is actually writing a method for raked subsets
+object, so predict.rake subsets.
+And we give it argument object.
+That's going to be the raked subset object that we want to
+predict from.
+We give it new data.
+And id, which is going to be the id of the model.
+It's slightly technical but not too hard to understand.
+Raked subset objects got a component called a call.
+And that's the call that was used to create it.
+And part of the call is a formula.
+And so we can extract that formula through this little
+incantation here.
+And then using the formula, we make a model matrix from it,
+much like we did before.
+Then we extract the coefficient and
+do the matrix multiply.
+And so we put that all together in a function, which
+we'll just enter into our session now.
+And so now that function is defined and will be ready for
+us to use in the next session where we can actually use
+cross validation.

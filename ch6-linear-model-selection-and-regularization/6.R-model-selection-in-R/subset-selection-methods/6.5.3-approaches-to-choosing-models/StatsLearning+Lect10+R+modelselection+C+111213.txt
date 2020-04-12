@@ -1,0 +1,108 @@
+OK well, we're back again.
+We're in our session on model selection.
+We've seen back subset to regression, forward stepwise
+regression.
+And we've seen how to use a validation set to do model
+selection as well as using the bulletin CP statistic that's
+recorded by regsubsets.
+Now we're going to use cross validation, which is one of
+our preferred methods for doing the model selection.
+And we'll use a tenfold cross validation.
+And once again, we're using our markdown session.
+So we can record text and the R commands at the same time.
+And at the end of it all we'll be able to produce a nice
+document showing what we've done.
+So let's look at the script and see how we do this.
+OK, so these are our markdown code.
+This is a second-level heading, so model selection by
+cross validation.
+And as I said, we're going to use tenfold cross validation.
+And it's really easy.
+And you can write functions for doing this.
+But it's so easy to do, that it's actually good just to
+know how to do it on the fly.
+So we'll set a random number seed, just like we did before.
+We'll use a different one this time.
+So we'll set the seed to be 11.
+And so yeah, we're going to sample from the
+numbers 1 to 10.
+Each observation's going to be assigned a fold number.
+And there are 10 folds.
+So we're going to sample from the numbers 1 to 10.
+So we create a vector, 1 to 10, of length the number of
+rows of hitters, OK?
+So that'll try and make an equal number of ones, equal
+number of twos, up to equal number of 10s.
+And then we're going to random basically, shuffle that.
+And that's what the Sample command does here.
+So we do that.
+And then if we look at it, there's our random assignment
+of folds to each of the observations in hitters.
+And if we tabulate that-- these are just numbers
+between 1 and 10--
+you'll see it's pretty balanced.
+It couldn't be exactly balanced with a sample size of
+263, but as close as can be.
+So there's either 26 or 27 in each fold.
+OK, so we make, now, a matrix for our errors.
+And it's going to have 10 rows and 19 columns.
+Because there are 19 variables.
+So there are going to be 19 subsets and 10 rows for each
+of the 10 folds.
+And so now we're going to go through a double loop.
+And so we go for k equals 1 in 10.
+And now we foot a reg subsets model.
+with cell ray as a response.
+And the training data is going to be all the observations
+whose fold ID is not equal to k.
+For this k-fold, we're going to train on all the
+observations but those in the k-fold, OK?
+So having done that, we only need to do that once.
+And now we're going to go and look at each of the subsets in
+that train model.
+So now we go through our loop for i equals 1 to 19.
+And now we can use our Predict method that we just made.
+And when I say Predict method I mean it.
+Because we wrote our Predict function in a way that the
+generic Predict understands.
+And so we just call Predict.
+And the first argument is based on foot, which is a
+regsubsets object.
+And so the generic function Predict knows to find the
+method which was called Predict.regsubsets.
+And now we're going to make predictions at those
+observations whose fold ID is equal to k.
+So those were the guys that were left out.
+And we're doing it for each subset size i, which is given
+to our Predict function but ID.
+So we make predictions.
+And then we compute the mean squared error of the
+predictions.
+And assign that into the kth row of our CV errors.
+And we do that for all the i and for all k.
+And that's done already.
+Well, actually it's not.
+Now it's done.
+So that was pretty quick.
+That was fit in 10 models.
+So it's not so bad, but making predictions for 19 different
+sub-models of each.
+We now process our output matrix.
+So first of all, we use the Apply function to the columns.
+So
+We take the column means.
+Because there were 10 rows.
+And each row was the mean squared error for
+a particular fold.
+But we want to average those.
+So we average down the columns.
+And then we use square root to get the root
+mean squared error.
+And now we can make a plot of that.
+And so there's our tenfold cross validation curve.
+It's not quite as jumpy as the validation curve because this
+is averaged over the full training set.
+The errors are computed over the full training set.
+But of course, done fold by fold but then averaged.
+So it's a little bit smoother.
+And this seems to favor models of size 11 or 12.
