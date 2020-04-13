@@ -1,0 +1,116 @@
+So let's talk a bit about selecting the tuning parameter
+for Ridge Regression and the Lasso.
+The first point is that it's important that the lambda very
+strongly determines the solution over a broad
+spectrum. when lambda's 0, we get full least squares.
+There's no regularization.
+When lambda's infinity, we get a 0 solution in both cases.
+So choosing lambda is extremely important.
+And cross-validation is a good technique for doing that.
+Note, also, that we couldn't use the other methods, because
+the D isn't know.
+What other methods am I talking about?
+CP and AIC and BIC--
+they all require a number of parameters D. And it's not
+clear what D is now.
+That's actually something interesting to think about.
+Suppose I've done a Ridge Regression.
+I've started with the 45 variables so I can
+acquire that data.
+I've used a certain lambda.
+Let's go back to that just so I can point at
+something, an example.
+Here's our Ridge example.
+Suppose I decide to use the lambda of 100.
+And I'm here.
+And I ask you, what's for the D for that model?
+How many parameters have I fit?
+Well, if I count the number of parameters, the number of
+nonzero coefficients, it's still the full number, 11,
+because none of the coefficients are 0.
+So in a sense, all of my variables are still there.
+So my D, number of parameters, is still P, 11.
+But that doesn't somehow seem right, because I've shrunken
+the coefficients, so the number of degrees of freedom
+isn't as large.
+So there's a bit of a subtle point here that the number of
+parameters is not just how many parameters I've used, but
+how I fit them.
+So with Ridge Regression and Lasso, the shrinkage actually
+affects the very idea of what we mean by number of
+parameters.
+So that was a long way of saying that for selecting the
+tuning parameter for Ridge Regression and Lasso, it's
+really important to use a method that doesn't require
+the value of D, because it's hard to know what D is.
+So cross-validation fits the bill perfectly.
+We do exactly what we did for the other methods.
+For a subset selection, for example, we divide the data up
+into K parts.
+We'll say K equals 10.
+W fit the model on nine parts, say, we apply Ridge Regression
+for a whole range of lambdas, for the nine parts.
+And then we record the error on the 10th part.
+We do that in turn for all 10 parts, playing the role of the
+validation set.
+And then we add up all the errors together, and we get a
+cross-validation curve as a function of lambda.
+Same for the Lasso--
+so conceptually, cross-validation is exactly
+the same as we applied it for other methods.
+So let's see what it looks here for Ridge Regression.
+Here's the result of cross-validation--
+I'm not sure.
+It was either five or 10 fold.
+We can check.
+Here's cross-validation as a function of lambda.
+Again, remember, lambda equals small means, essentially, the
+least squares model, full least squares over here.
+When lambda equals large, it means the coefficients have
+been driven to 0.
+So this is the cross-validation error as a
+function of lambda.
+And the minimum is occurring around here,
+right around 0.05.
+Here's the same thing now, but we plot it as a functional of
+lambda of the standardized coefficient.
+So here are the coefficients for each of the predictors,
+their profiles, and we see how they vary as
+a function of lambda.
+So again, over here, there's full least squares.
+And here, they've been moved to the right.
+They've shrunken.
+And at the minimum value of the curve, this broken line,
+we get a bunch of guys which are essentially 0, but not
+exactly 0, because this is Ridge, not Lasso.
+And then here are the coefficients for the three
+active variables.
+And this is the simulated data with N equals 50.
+I think there were two or three truly nonzero
+coefficients in the population.
+For the Lasso, this is now the result of cross-validation.
+So we plotted the cross-validation error versus
+the L1 norm of the Lasso solution divided by the L1
+number of the full least squares solution.
+This is just to give you a convenient way of scaling the
+x-axis so that it goes from 0 to 1.
+The full least squares estimates gives a value of 1.
+And the estimates of zero give you a value of 0.
+And in between, we have the intermediate Lasso solutions.
+So here, it's a cross-validation curve.
+Again, it's got that U shape that [? Daniela ?]
+mentioned before.
+And it's [INAUDIBLE]
+is around here, about 0.1, which is quite severe
+shrinkage, which is good here, because we know that the true
+model has only three nonzero coefficients.
+And I think it's actually two-- even better.
+Two-- yeah, OK.
+Two coefficients--
+very good, because here, we seem to have picked up exactly
+two nonzero coefficients, the green and the red.
+And the rest are exactly 0.
+So in this made up example, it's done
+exactly the right thing.
+It's found the correct two nonzero features and set
+everything else exactly equal to 0.
