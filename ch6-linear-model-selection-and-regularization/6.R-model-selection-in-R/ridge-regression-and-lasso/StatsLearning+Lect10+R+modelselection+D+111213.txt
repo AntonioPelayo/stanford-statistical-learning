@@ -1,0 +1,287 @@
+So here we're going to do our final session in the model
+selection chapter, and we're going to look at ridge
+regression and lasso.
+And once again, we're using our R markdown in RStudio
+that'll help us create a nice document at
+the end of the session.
+And as we've seen, it's just as simple as having a script,
+but it's better because you get nice annotation at the end
+of the day.
+So let's have a look at the screen, and I see our heading,
+we've got a ridge regression and the lasso, and for this
+we're going to use the package glmnet.
+Glmnet's a package that I actually manage on CRAN, and
+it's being created by myself, Jerome Friedman, and Rob
+Tibshirani for fitting lasso models, ridge models, and a
+whole class of models in between, elastic net--
+which we won't cover in this class--
+and for a lot of different loss functions, so we can do
+logistic regressions, ordinary regressions, and a variety of
+other models.
+We'll be using ordinary regression yet.
+So we'll run library glmnet, and glmnet doesn't use a
+formula language, we are require to give it a matrix x
+of predictors and a response vector, in this case.
+So we create those by using methods by this time we know
+how, so we make an x and a y, which is the predictor matrix
+and the response.
+And we'll first fit a ridge regression model.
+So glmnet's got a alpha argument, and alpha equals 1
+is lasso, and alpha equals 0 is ridge.
+And if you look on the help file, you'll see instructions
+on some of the other arguments.
+And for alphas in between 0 and 1, you get what's called
+elastic net models, which are in between ridge and lasso.
+But for us now, we'll just focus on alpha equals zero,
+which is ridge.
+And so we do that, and it comes back very quickly.
+Glmnet's extremely fast, and this isn't a big data set, so
+it's especially fast.
+Let's use the plot method for a glmnet object, and this is
+kind of interesting.
+It makes a plot as a function of log of lambda, and what
+it's plotting are the coefficients.
+So if you go back to the lectures on ridge regression
+and lasso, we'll see that the models are penalized
+according--
+ridge regression is penalized by the sum of squares of the
+coefficients.
+So penalties put on the sum of squares of the coefficients,
+and that's controlled by parameter lambda.
+So the criterion for ridge regression is residual sum of
+squares, which is the usual for linear regression, plus
+lambda times the summation j equals 1
+2 p of beta j squared.
+So it's trying to minimize the residual sum of squares, but
+it's been modified by a penalty on the sum of squares
+of the coefficients.
+So if lambda is big, you're going to want the sum of
+squares of the coefficients to be small so that will shrink
+the coefficients towards zero.
+And as lambda gets very big, the
+coefficients will all be zero.
+And so what glmnet does is it actually develops a whole part
+of models on a grid of values of lambda--
+quite a fine grid--
+about 100 values of lambda.
+And so we see on the log scale, when log of lambda is
+12, all the coefficients are essentially zero.
+Then as we relax lambda, the coefficients grow away from
+zero in a nice smooth way, and the sum of squares of the
+coefficients is getting bigger and bigger until we reach a
+point where lambda is effectively zero, and the
+coefficients are unregularized.
+And so these would be the coefficients that you get from
+an ordinary least squares fit of these variables.
+So glmnet will create the whole path the variables.
+So unlike subset and forward stepwise regression, which
+controls the complexity of a model by restricting the
+number of variables, ridge regression keeps all the
+variables in and shrinks the coefficients towards zero.
+So it gives a whole path, we need to pick a
+value along the path.
+And glmnet's got a built-in function, called CV.glmnet,
+that'll do cross validation for you, k-fold cross
+validation.
+And so we'll run CV.ridge, stand by default 10-fold cross
+validation, and then we can do a plot.
+There's a problem method for that, and it gives you a nice
+plot of the cross validated mean squared error, and there
+it goes, and you see it dips down.
+In the beginning, the mean squared error is very high,
+and the coefficients are restricted to be too small,
+and then at some point, it kind of levels off.
+This seems to indicate that the full model is it is doing
+a good job.
+There's two vertical lines.
+The one is at the minimum, and the other vertical line is at
+one standard error of the minimum, within
+one standard error.
+So it's a slightly more restricted model that does
+almost as well as the minimum, and sometimes
+we'll go for that.
+And at the top here, it's indicating that at all stages,
+there's all 20 variables in the model, so that's our 19
+variables plus the intercept.
+So that's ridge regression using glmnet.
+Let's use a lasso model.
+Now, if you recall, the lasso was similar to ridge
+regression.
+The only thing that was different was the penalty.
+So let's get the pin [INAUDIBLE].
+So for lasso, we minimize the residual sum of squares plus
+lambda, and there's a very subtle change.
+We've got j equals 1 2 p.
+Instead of the sum of squares of the coefficients, we
+penalize the absolute values of the coefficients.
+It's also controlling the size of the coefficients, and it
+seems like absolute value and sum of squares would be rather
+similar, but the lasso's got a somewhat magical quality, and
+by penalizing the absolute values, that's actually going
+to restrict some of the coefficients
+to be exactly zero.
+So we're going to get back to our controller.
+So let's run that.
+Again, it's fits the whole path, and when we make the
+plot against a lot of lambda, indeed what you see is that
+initially all the coefficients are 0, and then the first
+coefficient seems to be a purple, there's a
+pair of them there.
+And then the blue ones being 0 up to this point,
+then it jumps in.
+Then this red one jumps in.
+So you see the coefficients jump in, having been zero for
+a length of the path.
+And at the top of the plot, you actually see, as a
+function of lambda as well, how many non-zero variables
+are in the model.
+So as we saw in the lectures, lasso is doing shrinkage and
+variable selection.
+When we fit the lasso using glmnet, we didn't tell it
+alpha because the default for alpha is one, which
+gives you the lasso.
+We plotted the lasso against x 4 equals lambda.
+If you look at the help file for the plot, you'll see that
+there's various choices, and one of them is a really
+interesting choice, and it's deviance.
+And what it means is the percentage of deviance
+explained, or percentage of, in case of regression, your
+sum of squares explained, which is the r squared.
+So if we make that plot, it's changed the orientation, and
+at the bottom of here, it says
+fraction of deviance explained.
+So that's like the r squared.
+And what you find out here is that a lot of the r squared
+was explained for quite heavily shrunk coefficients.
+And towards the end, with a relatively small increase in r
+squared from between 0.4 and 0.5,
+coefficients grow very large.
+And so this may be an indication that the end of the
+path is overfitting.
+So there's different ways of plotting the coefficients give
+you different information about the coefficients and
+about the nature of the path.
+We can use cross validation again, and plot it, and see
+yes, cross validation for the lasso, and it's telling us
+that the base model, the minimum cross validation areas
+at full size 15.
+And within one standard error, we have a model of size 6, and
+it's somewhat flat in between.
+And so we may make our choice based on that.
+There's a coefficient function extractor that works on a
+cross validation object, and it--
+remember the fit.lasso will have the whole path of
+coefficients.
+So it's got roughly 100 coefficient vectors dependent
+on each value, indexed by different values of lambda.
+But if we extract the coefficient from the CV
+object, it'll pick the coefficient vector
+corresponding to the best model, which in this case, was
+the model of size--
+let's see, what size?
+One, two, three, four, five, so I guess it's picked this
+model over here.
+So it's within one standard error of the minimum.
+It's erring on the more parsimonious side.
+We know that the cross validation error is measured
+with some variance, and so that's the model that's
+actually chosen.
+All right, we'll end the session by using our earlier
+validation and training division to use a validation
+set to select the lasso model.
+And that's also easy to do.
+So we've still got our variable train hanging around
+in the x variable, so we'll fit the path of lasso models
+using x train and y train.
+And you can do a summary of the fit, it actually tells us
+the summary of a glmnet fit.
+For each of the models in the path, it gives you the degrees
+of freedom, which is the number of non-zero
+coefficients, the percentage deviance explained, which is
+like r squared for generalized linear models, but in this
+case, it's greater or lesser, that's just r squared on the
+[INAUDIBLE] loss scale.
+And the lambda value that corresponds to that fit.
+And it actually tries to fit 100 values of lambda, but if
+it reaches a point where nothing much is changing, like
+you can see nothing much is changing here, it stops.
+It's not really making any progress.
+So as lambda is getting smaller here, the model's
+really not changing, that's pretty much at the ordinary
+least squares fit of the unpenalized model.
+So now we can make predictions on our left r data.
+So that's indexes x by minus train,
+much like we did before.
+And if we do demo predict, there's 83 observations in the
+validation set.
+And we've got 89 values of lambda, so there's going to be
+89 different columns in this prediction matrix.
+Here's an interesting little command here.
+Want to compute our sum of squared errors.
+Well, y minus train is a vector of length 83, but print
+is a matrix 83 by 89.
+And here we happily say y minus train minus print.
+Well what it does is it recycles this vector 89 times,
+and it does it column-wise.
+So that can compute this difference.
+So the results of this is a matrix that's 83 by 89, even
+though we only gave y as a vector.
+It recycled it, which is kind of a trick, but
+it's a handy trick.
+We square those errors, we then use apply to compute the
+means in each column of the squared errors, and we put
+that in, and then we take the square root.
+So there's a whole bunch of commands all in one, there.
+And now we can plot that as a function of lambda, and we see
+a nice validation curve that goes down and
+then climbs up again.
+This will be over-fitten, this is under-fitten, and this
+seems to be the sweet spot over here.
+And we can extract the base lambda, and
+I do this by indexing.
+There's a component on the glmnet object called lambda,
+so this extracts that component.
+Then our index that by order of rmac, so that's our root
+meet squared error.
+Order puts them in ascending order, and so we want the
+index of the first or the smallest value.
+And that will pick out the base lambda.
+So that's the way of doing that, and we find the base
+lambda is 19.98.
+And so now we can look at the coefficients corresponding to
+that variable, and that'll give us a subset of the
+coefficients.
+And the dots correspond to the zero, so those are the ones
+that are missing.
+And so they're not missing, but they're zeroes.
+This is actually printed out in what's known as sparse
+matrix format.
+Which means only the non-missing values--
+only the non-zero values are actually recorded.
+So there's our coefficient vector.
+And that's the end of the session.
+So to summarize, in the last two sessions, we've looked at
+model selection, we've looked at a variety
+of different methods--
+base subset, forward stepwise, ridge regression, and lasso.
+We've used validation sets to select models, we've used cp
+to select models, and we also use k-fold cross validation.
+We've also seen how to use R Markdown to actually produce a
+nice recording of everything we've done.
+And we hit the net HTML at the top of the page here, and this
+is for the entire set of sessions on model selection,
+and you get a really nice summary of
+everything you've done.
+All the output, all the plots, nicely formatted and it makes
+for good report.
+Think about if you're doing a data analysis for a client,
+this is a really nice way of showing the output.
+It shows what you did, and the results of what you did.
+And so that's available, it's a web page, and so you can
+distribute the link to that web page, you can put it in a
+blog, you can do what you like with it.
+What we didn't cover was principal component regression
+and partially squares.
+There's a lab in the end of the chapter, but by now you'll
+have learnt enough tools, you'll be able to go through
+that lab on your own.
