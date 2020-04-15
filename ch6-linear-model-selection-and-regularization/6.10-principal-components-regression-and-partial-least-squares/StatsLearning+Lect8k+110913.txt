@@ -1,0 +1,373 @@
+So by far, the most famous dimension reduction approach
+is principal component regression.
+And principal components regression
+involves a 2-step procedure.
+In step one we find what are called principal components of
+the data matrix x.
+And we're going to cover principal components in detail
+in chapter 10 of the textbook.
+And so I'm not going to cover that in great detail here.
+So in step one we get principal components, and then
+in step two we're just going to perform least squares
+regression using those principal components as
+predictors.
+So basically, principal components are
+an interesting idea.
+And the first principle component is just the linear
+combination of the variables that has the highest variance.
+The second principle component is the linear combination that
+has the large variance out of all linear combinations that
+are totally unrelated to the linear combination that we
+just got, and so on.
+And so the principal components give us linear
+combinations or dimensions of the data that are really high
+in variance and that are uncorrelated to the ones that
+we previously got.
+And so the idea is that if you give me a data set with 35
+variables, I can compute a few principal components.
+And those might capture most of the variation in the data,
+but in a very succinct way involving just a few new
+variables, z1 through z3 or z1 through z4.
+So here's an example of principal components analysis
+on a very simple data set that we saw in
+chapter three already.
+And so what we're showing here is a plot where the x-axis
+shows population and the y-axis shows ad spending for
+100 different cities.
+And so those are these purple dots.
+And so this is a simple data set with just
+p equals two variables.
+And so I can say, all right, what's the linear combination
+of these variables that has the most variance?
+Or equivalently, what's the direction along which this
+data varies the most?
+And so we can see that the direction in which the data
+varies the most actually falls along this green line.
+This is really the direction with variation in the data.
+And so that's actually the first
+principal component direction.
+And then if we say, hey, what's the direction along
+which the data varies the most out of all directions that are
+uncorrelated with that first direction?
+That's this blue dashed line here.
+And so that's the second principle
+component in this data.
+So in this example, p equals 2.
+And there's only two principal components.
+But in general in a data set with lots is variables, if p
+is large there's a lot of principal components.
+And we can look at the first one, or the second one, or the
+third, or the fourth, and so on.
+So here's sort of a zoom in a little bit on
+what's happening here.
+And the idea is, on the left hand side here we just have
+about 20 locations shown as purple circles.
+And the reason that this green line here is the first
+principle component is because it's the direction along which
+the data varies the most.
+It's the line such that the points are the most spread out
+possible along the line.
+If I drop each point--
+oops--
+if I drop each of these locations down to the line,
+then this sum of square distances is really as large
+as possible.
+And so all these little red lines indicate the distance
+from a location to the principal component line.
+It's actually the smallest possible, right?
+Oops, yeah.
+time I misspoke.
+This green line is the principal component.
+It's the direction along with the data varies the most.
+And it's also the direction along which the distances from
+the purple points to the green line, which I'm showing in
+red, is as small as possible.
+And on the right hand side here, I'm really seeing the
+same picture again.
+But now it's been rotated so that that principle component
+line is horizontal, just to make it a
+little easier to see.
+So if I want to understand these principle components
+better, I can actually plot each principal component.
+So each linear combination of the variables that I got on
+the x-axis.
+And I can plot it against population
+and against ad spending.
+And what I can see is that the first principle component is
+really highly correlated with population and highly
+correlated with ad spending.
+And so what that means is that I'm really summarizing the
+data very well if, instead of using those original two
+variables, population and ad spending, I instead use just
+the first principle component.
+So that's suggests the idea, hey, if I want to predict some
+response like sales, instead of using population and ad
+spending to predict sales, I can just use the first
+principle component.
+I can just treat that as a predictor in a model, fit the
+model using least squares, and I bet those results are going
+to be pretty good.
+So now this figure is just like the previous one.
+But instead of showing the first principle component on
+the x-axis it's showing the second principle component
+against, again, population and ad spending.
+And we can see that there's very little relationship
+between population and the second principle component and
+between ad spending and the second principle component.
+So that suggests that really the first principle component
+here does a great job of summarizing the data.
+And in this case that's happened because population
+and ad spending are really correlated with each other.
+And so one new variable, which is the first principle
+component, can really summarize both of those two
+variables very well.
+So the idea is, I take my data.
+I get the first couple principal components,
+as many as I want.
+And I use those as predictors in a regression model that I
+fit using least squares.
+And that can actually in a lot of settings
+give really nice results.
+So here's an example on a simulated data set where I
+have a bunch of observations.
+And I perform principal components regression with
+various numbers of principal components.
+So over here I have one principal component all the
+way through to around 45 principal
+components in this example.
+And so what I'm plotting here is the bias shown in black.
+This is the bias.
+This is the variance in green.
+And this is the mean squared error.
+And so as I get more and more components in my model, as I
+use more and more principle components, I'm going to get
+less amounts bias.
+Because I'm going to be fitting a more and more
+complex model.
+But I'm going to pay a price in that my variance is going
+to increase as the number of components increases.
+And remember, the mean squared error is just the squared bias
+plus the variance.
+So my mean squared error, which is shown here in purple,
+has approximately that U shape that we've been talking about.
+And I can see that my mean squared error is really
+smallest for a model with around 18 principal
+components.
+So using principal components regression with 18 predictors
+works really well here.
+In this example over here, the situation's
+a little bit different.
+Now my mean squared error once again decreases as I add more
+components.
+But it doesn't really increase again.
+It's pretty flat from around here outwards.
+So any of these models looks around the same in terms of
+test mean squared error.
+And since I always prefer the simplest model possible, in
+this context I might choose maybe this model with around
+25 components.
+So
+The idea is to summarize--
+right-- to summarize the features by the principle
+components, which are the combinations with the highest
+variance, right?
+Why is that a good idea?
+Or could it be a bad idea?
+Yeah, that's a good question.
+And one thing that we notice here is that when I compute
+those principle components, I'm not actually looking at
+the response.
+I'm literally just looking at my predictors, my x's.
+And I'm looking for a linear combination of them that has
+high variance.
+And it's making this assumption that a linear
+combination of the predictors that has high variance is
+probably going to be associated with the response.
+And that's kind of a hunch that we often have as
+statisticians.
+It's an assumption we often make.
+But really, there's no reason that that has to be the case.
+And in fact, it might not be.
+[INAUDIBLE] so let me just draw a picture to talk about
+that a bit more.
+I'm just looking for some space.
+So if we think of our plot here,
+say there's two variables.
+And here's my scatter plot of points.
+And the first principle components direction is going
+to be along this red line.
+That's the first component.
+So as Daniella said, if we summarize these two variables
+by the principle component, we're really assuming that
+this direction variation's the important one.
+So we think of y coming out of the slide, we're really
+assuming that the regression plane varies along the red
+line and doesn't vary in the orthogonal direction, right?
+Because if we choose one component we're going to
+ignore the second direction.
+Is that a good assumption?
+Well, it's not always going to be the case.
+But it tends to be quite reasonable.
+Because one way to think about it is if this is observational
+data, the fact that we've measured the variables at all
+probably means that they're likely to be important.
+We measure things in an
+experiment to predict something.
+The things we measure, we're more likely to measure things
+which are important.
+So the things that matter are probably going to vary in the
+direction of the response.
+Not always, but it's a good hunch that, all else equal,
+let's look in the direction of variation of the predictors to
+find the places where the responses is
+most likely to vary.
+OK, so let's go back to.
+Where were we?
+We were talking about the number of directions, OK.
+Yeah.
+So when we perform principal components regression, we need
+to somehow select the number of directions m.
+And we just saw that the test mean squared error we want it
+to be as small as possible.
+So we've got to estimate the test mean squared error.
+And by now you've probably seen that Rob and I really
+prefer cross validation over any other approach.
+So we would suggest using cross validation in order to
+choose the number of principal component directions that you
+want to use.
+So here that's what we did on the credit data.
+So on the left hand side we can see the results of
+performing just plain principal components
+regression on the data.
+So for instance, if we want to look at the principal
+components regression model with six principal components,
+so m equals 6, that's this blue line.
+And so we can see that a few of these
+coefficients are nonzero.
+And then a few others are basically zero.
+Over here we've got 11 components.
+And that's actually the full least squares model.
+Because when m equals p you've just got regular least squares
+on the original data.
+And we can on the right hand side see for each of those
+same models, we can see the cross validated
+mean squared error.
+So this is an estimate of the test error.
+And here we actually see something that's pretty
+disappointing.
+Remember we like to pick a model for which the mean
+squared error is the smallest possible.
+And so here, the mean squared error is really as small as
+possible when we have a model with 10 or 11 components.
+And remember, when m equals 11, that is just going to be
+regular least squares on the original data.
+So basically, principal components regression just
+tells us to, when you choose the number of components by
+cross validation on this particular data set, it tells
+us to just forgot it and just do least squares on the
+original data.
+So this is sort of disappointing.
+It means that principal components regression doesn't
+give us any gains over just plain least squares that you
+guys saw in chapter three.
+But this is also something that
+happens in a lot of contexts.
+You can try to beat least squares, but it might not work
+on a particular data set.
+So as Rob mentioned, with principal components
+regression we're just coming up with these new transformed
+variables which were the principal components, just in
+a totally unsupervised way.
+We're just looking at the x variables, and we're just
+going to cross our fingers that the directions on which
+the x variables really vary a lot are the same directions in
+which the variables are correlated with
+the response y.
+But if we don't want to just have to keep our fingers
+crossed and hope for the best, we can instead perform what's
+called partial least squares.
+And partial least squares is just like principle components
+regression.
+But it selects these new predictors, z1 through zm, in
+a supervised way.
+It's going to choose z1 through zm that are linear
+combinations of the original features.
+That are directions along which the original features
+vary a lot.
+But that are also directions that are related to y.
+So instead of just looking for a direction in which z varies,
+we're going to look for a direction in which z varies
+that also has to be related to the response.
+And so the goal here is to be able to more effectively
+predict the response.
+Because we explicitly think about the response when we're
+choosing these new features z1 through zm.
+So the idea behind partial least squares is we get the
+first direction of partial least squares by doing a
+regression of y into x1 that gives us v1-1.
+We do a regression of y onto x2, that gives us v1-2.
+And so on until we do a regression of y onto xp.
+And that gives us v1-p.
+And so, in fact, the first principal
+component direction z1--
+the first partial least squares direction that we get,
+z1, is really proportional to the correlation between y and
+the data matrix x.
+So that's how we get z1.
+And then we get the other partial least squares
+directions just by iterating this procedure.
+And so in principle, partial least squares seems like it
+should be a huge gain over principle components
+regression.
+Because we're choosing those z's in such a clever way that
+actually involves looking at the response, which seems like
+it can only help us.
+But in practice, we have found that partial least squares
+often does not give us a huge gain over principle components
+regression.
+I think it's very similar to ridge aggression and PCR,
+principle components regression.
+So although some people do like partial least squares,
+I've never found it very useful.
+And founded that ridge and principle components
+regression work as well and are both simpler.
+And actually, one thing that's interesting is Rob mentioned
+ridge regression.
+And it might seem like going back, ridge regression is
+really different from principal components
+regression and partial least squares.
+But it turns out that mathematically these ideas are
+all very closely related.
+And principle components regression, for example, is
+kind of just a discrete version of ridge regression.
+Ridge regression is continuously shrinking
+variables, whereas principal components is doing it in a
+more choppy sort of way.
+Exactly.
+So we've covered a lot today.
+And now you've seen a lot of different model selection
+methods which are really useful in settings where you
+might have a lot of observations, but you have a
+lot of variables.
+So if someone comes to you with some data with a million
+observations on four variables,
+then do least squares.
+Knock yourself out.
+Or even use some of the approaches that you're going
+to see in Chapter seven, eight, and nine, which are
+even more flexible and more complex
+alternatives to least squares.
+But if someone comes to you with data with 400
+observations and 300 variables, or even 30,000
+variables, you're going to need ways to simplify the
+problem and to fit really simple models that are even
+simpler than what least squares is going to give you.
+And those are really some of the ideas
+that we covered today.
+So this is a really exciting topic.
+And a lot of modern statistical research really
+focuses on how we can improve prediction in settings like
+the ones we covered today, where we just want a simple
+model that's simpler than least squares.
+Because the least squares fit is really going to
+over fit the data.

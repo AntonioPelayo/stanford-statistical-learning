@@ -11,9 +11,6 @@
 *.gz
 
 # Folders
-6.9-dimension-reduction-methods
-6.10-principal-components-regression-and-partial-least-squares
-quiz43.md
 /ch7-moving-beyond-linearity
 /ch8-tree-based-methods
 /ch9-support-vector-machines

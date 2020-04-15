@@ -1,0 +1,98 @@
+OK, so we've talked about subset selection methods,
+ridge regression and the LASSO.
+And now we're moving on to the last class of method that
+we're going to talk about in this lecture, which is
+dimension reduction.
+And so, if we remember, in the subset selection methods, we
+were just taking a subset of the predictors and using least
+squares to fit the model.
+And then in ridge regression and the LASSO, we were really
+doing something different, where we were taking all of
+the predictors, but we weren't using least squares.
+We were using a shrinkage approach to fit the model.
+And now we're going to do something different, which is
+we're going to use least squares, but we're not going
+to use least squares on the original predictors, X1
+through Xp.
+Instead, we're going to come up with new predictors, which
+are linear combinations of the original projectors.
+And we're going to use these new predictors to fit a linear
+model using least squares.
+So this is known as dimension reduction.
+And the reason it's called dimension reduction is because
+we're going to use those p original predictors to fit a
+model using M new predictors, where M is going to
+be less than p.
+So we're going to shrink the problem from one of p
+predictors to one of M predictors.
+So in a little bit of detail here, we're going to define M
+linear combinations Z1 through Zm, where M is some number
+less than p.
+And these are going to be linear combinations of the
+original p predictors.
+So for instance, Zm is going to be some of the p predictors
+where each predictor is multiplied by phi mj, where
+phi mj is some constant.
+And in a minute, we'll talk about where this
+phi mj comes from.
+But the point is, once we get our new predictor, Z1 through
+Zm, we're just going to fit a linear regression model using
+least squares.
+But instead of using the Xs, we're going to use the Zs.
+So in this new least squares model, my predictors are going
+to be the Zs.
+And my coefficients are going to be theta 0 through theta m.
+And the idea is that if I can just be really clever in how I
+choose this linear combinations, in particular,
+if I'm clever about how I choose these phi mjs, then I
+can actually beat least squares that I would have
+gotten if I had just used the raw predictors.
+So one thing that we should notice is that on the previous
+slide here, we had this summation over theta m Zim.
+And if we look at that a little bit more carefully, and
+we plug in the definition of Zim, which, remember, was just
+a linear combination of the original Xs, and we switch the
+order the sums and we do a little bit of algebra, we see
+that what we actually have here is the sum over the p
+predictors times this quantity times the p-th predictor.
+So this is actually just a linear combination of the
+original Xs where the linear combination involves a beta j
+that's defined like this.
+So the point is that when I do this dimension reduction
+approach and I define these new Zs that are linear
+combinations of the Xs, I'm actually going to fit a linear
+model that's linear in the original Xs.
+But the beta js in my model need to take a very, very
+specific form.
+So these dimension reduction approaches, they're giving me
+models fit by least squares, but I'm fitting the model not
+on the original predictors.
+It's on a new set of predictors.
+And I can think of it actually as ultimately a linear model
+on the original predictors, but using different
+coefficients that kind of take this funny form here.
+So in a way, it's similar to ridge and LASSO, right?
+It's still least squares, it's still a linear model in all
+the variables, but there's a constraint on the
+coefficients.
+That's exactly right.
+But we're getting a constraint a different way.
+We're not getting a constraint like in the ridge case by
+saying, OK, my sum of squared betas needs to be small.
+Instead, we're saying my betas need to take this really funny
+form, if you look at it.
+But it's got a simple interpretation in terms of
+least squares on a new set of features.
+And the idea here is really it boils down to the
+bias-variance tradeoff.
+By saying that my betas need to take this
+particular form, I can win.
+I can get a model with low bias and also low variance
+relative to what I would have gotten if I had just done
+plain vanilla least squares on the original features.
+One thing that I should mention is that this is only
+going to work nicely if M is less than p.
+And instead, if my M equaled p, then I would just end up
+with least squares.
+And this whole dimension reduction thing would have
+just given me least squares on the raw data.
