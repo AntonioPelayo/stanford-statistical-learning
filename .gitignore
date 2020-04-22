@@ -11,7 +11,11 @@
 *.gz
 
 # Folders
-/ch7-moving-beyond-linearity
+ch7-moving-beyond-linearity/7.2-piecewise-polynomials-and-splines
+ch7-moving-beyond-linearity/7.3-smothing-splines
+ch7-moving-beyond-linearity/7.4-generalized-additive-models-and-local-regression
+ch7-moving-beyond-linearity/7.R-nonlinear-functions-in-R
+quiz49.md
 /ch8-tree-based-methods
 /ch9-support-vector-machines
 /ch10-unsupervised-learning

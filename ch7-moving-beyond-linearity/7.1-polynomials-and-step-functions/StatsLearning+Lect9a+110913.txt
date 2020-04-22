@@ -1,0 +1,317 @@
+Well, good to see you again.
+Sorry you got two old guys again.
+In this section, we're going to talk about fitting
+nonlinear functions and nonlinear models.
+Up to now, we've focused on linear models.
+And what you'll see is that it is actually very easy to bring
+in nonlinearity into your model in a somewhat seamless
+way, and you'll see the tools are almost as easy as they
+were when we were fitting linear models.
+And we'll talk about a hierarchy of methods, some
+completely straightforward and some slightly more
+sophisticated.
+And some of actually what you see today is, for Trevor and
+I, somewhat historical.
+The very first paper we ever wrote together was called
+Generalized Additive Models actually as graduate students
+here at Stanford.
+And the last part of this section, we'll talk
+generalized additive models which are a way of using the
+tools for nonlinearity for more than one predictor.
+Oh, yeah, and you know, Rob, it just occurred to me that
+that paper we wrote 30 years ago.
+It's still good.
+It's still a good paper.
+OK, so, here we go.
+Well, the first fact is the truth is never linear.
+It's a shocking thing for a statistics professor to say.
+Maybe I should qualify, almost never.
+Well, that is the truth.
+Linearity is an approximation.
+And often a linearity assumptions is good enough.
+And that's why we lack a linear model.
+The approximation is good enough.
+And it gives us a nice simple summary.
+But we need to go beyond linearity often.
+And we have lots of tools to do that.
+And in this section, we're going to talk
+about some of those.
+So there's the list, polynomial, step function,
+splines, local regression, and generalized additive models,
+kind of increasing in complexity as
+we go down the list.
+And as you'll, they're just as easy to work
+with as linear models.
+So polynomial regression, we've really covered before.
+And when we introduce these nonlinear methods, we're going
+to introduce them, for the most part, except when we get
+to generalized additive models,
+with a single variable.
+But you'll see it's just as easy to do it in many
+variables as well.
+And so, here's a polynomial regression model.
+We've got not only a linear term, but we've got polynomial
+terms as well.
+So there is x squared, x cubed, and so on.
+And we can go up to whatever degree we like.
+And for the linear model, it's linear in the coefficients,
+but it's a nonlinear function of x.
+And in the left panel, we see on the wage data a polynomial
+function to age.
+That's a third degree, I believe, polynomial.
+And you see the fitted function.
+And you see the pointwise standard error bands.
+That's these dotted bands here.
+That's plus and minus 1 standard error.
+And it's a nonlinear function that seems to capture what's
+going on in the data.
+I notice these standard error brands are wider at the ends
+there, Trevor.
+Why is that?
+That's a good point, Rob.
+And that's a result of the--
+it's called leverage.
+The points right at the end, you'll notice the data thins
+out at the end.
+So there's not so much data there.
+And so the information for fitting the curve at the end
+is much less, so the standard error gets wider.
+But also points at the end, we call it wagging
+the tail of the dog.
+A polynomial is a very flexible function.
+And it is especially flexible at the end.
+And those tails tend to wag around.
+And that standard error indicates it.
+In fact, in this figure on the right, here we're using a
+polynomial to fit a logistic regression.
+And to do that in this section, we just turn wage
+into a binary variable by looking at whether wage is
+bigger than 250k or not.
+And so that's a logistic regression now, trying to
+model the probability of that event.
+And notice how wide the standard errors are at
+the end right now.
+When I first saw that, I thought it was crazy.
+But now I realize the vertical scale is
+pretty stretched, right?
+So it's only ranging up to 0.2.
+Oh, good point, Rob, good point.
+If you saw that from zero to one, it would
+look a lot more narrow.
+That's a very good point and that's something to always
+bear in mind, the plotting scales.
+It's important how you decide on what scales to use.
+And in this case, as Rob said, it's only going up to 0.2.
+What you also notice here is we've got this
+so-called rag plot.
+We see at the bottom of the plot where all the zeros
+occur, that's these little spikes here.
+It's kind of uniform here across the range.
+And then above, we've got where all the ones occur.
+And you'll notice there's one in the middle of the range and
+not many ones at the end.
+So there's really not any data at all to estimate this
+function right at the end.
+So in detail, with polynomial regression, what you do is you
+create new variables.
+And in this case, they're just transformations of the
+original variable.
+So x, we make x1 as the original x. x2 is x
+squared, and so on.
+And then just treat the problem as a multiple linear
+regression model with these new derived variables.
+And in these case, we're not really interested in the
+coefficients.
+We're more interested in the fitted functions at any
+particular value x0.
+We're interested in the composed function.
+So once we fit the model, we might say, well, what does the
+function look like at a new value x0.
+And so the coefficients themselves aren't that
+interesting.
+And since the fitted function is actually a linear function
+of the coefficients, the beta l's, l hats, we can get a
+simple expression for the pointwise variances.
+So you say what is a variance of the fitted function at x0?
+Well, that fitted function at x0 is just a linear
+combination of the parameters.
+And so by using the covariance matrix of the fitted
+parameters, you can then get an expression, a simple
+expression, for the variance of this fitted value.
+We describe this in more detail in the book, in
+somewhat more detail.
+And it seems like in the plot, we actually plot the fitted
+function plus or minus two standard errors.
+I said one earlier.
+And so, getting these pointwise standard errors is
+fairly straightforward.
+Pointwise means that the standard
+error band is pointwise.
+So the band is showing at any given point what the
+standard error is.
+This is not to be confused with global confidence bands,
+which is another story.
+The other thing is, what degree do we use?
+Here, we were actually using a fourth degree polynomial.
+I said third, but we use fourth.
+So that d is obviously a parameter.
+And often we just pick d to be some small number like two, or
+three, four, in this case.
+Or otherwise, we can actually select d by cross-validation.
+Think of it as a tuning parameter.
+For logistic regression, the details are
+pretty much the same.
+As I said, in the figure, this is what we were modeling.
+And so there's our inverse logistic function.
+And it's just a polynomial instead of a linear function.
+And one small detail that's somewhat important is to get
+confidence intervals.
+What you do is, if you're trying to get confidence
+intervals for the probabilities using direct
+methods, you might get outside of the range 0 and 1.
+So what you do is you get confidence intervals for the
+fitted logit, and then you put them, the upper and lower
+confidence band endpoints, through the inverse logit
+transformations.
+And those give you the confidence intervals, in this
+case, for the fitted probabilities.
+So that's a useful trick to bear in mind.
+OK, a few other points.
+So we've just talked about with a single variable.
+For several variables, you can do it
+separately on each variable.
+So you just generate these
+transformations on each variable.
+And then just stack them together in one big matrix and
+fit a big linear model in all these new derived variables.
+So if you've got a variable x, you might make x1,
+x2, up to, say, x4.
+If have another variable z, you can make z1 up to z4.
+And then you just stack them all together and make a big
+model matrix and fit your linear model.
+And then you have to unpack the pieces
+to compose the functions.
+And we'll see later on that the GAM technology,
+generalized additive model technology, helps you do this
+in a seamless way.
+There's some caveats with polynomial regression.
+Polynomials, as I mentioned before, have notorious tail
+behavior, very bad for extrapolation.
+Those tails tend to wiggle around.
+And you really wouldn't want to trust predictions beyond
+the range of the data or even to near the ends of the data.
+And finally, fitting a polynomial
+in r is very simple.
+Yes, a simple expression for fitting a
+polynomial in x to y.
+This is the model formula that you'd use as a poly function
+that generates these transformations for you.
+And it's as simple as that.
+And we'll see in the lab.
+We'll get some experience with that.
+Step functions, that's another way of fitting nonlinearities,
+especially popular in epidemiology and biostatistics
+in the last 20 or so years.
+And what you do is you cut you continuous variable into
+discrete sub-ranges.
+For example here, we've cut age at 35 and again at 65.
+There's actually a cut at 50 as well.
+You can't see it here.
+And then the idea is you fit a constant model
+in each of the regions.
+So it's a piecewise constant model.
+So you can see here, when you fit it and plot them all
+together, you see the constant in the first range, second
+range, the third range is hardly visible that it's
+different, and then the fourth range.
+And so this becomes, when put together as a nonlinear
+function, that's a piecewise constant function.
+And this is often useful if there is some natural cut
+points that are of interest.
+So what is the average income for somebody
+below the age of 35?
+So you can read it straight off the plot.
+This is often good food for summaries in newspapers, and
+reports, and things like that, which has led to its
+popularity.
+And, you know, to do it is just as easy as it was for
+polynomials.
+If you think of this function over here,
+it's a binary variable.
+You make a binary variable.
+Is x less than 35?
+If yes, you make it 1.
+If not, you make it a 0.
+And for each of these, it's the same.
+And so you create a bunch of dummy
+variables, zero-one variables.
+And you just fit those with the linear model.
+You can already see the advantage this has over
+polynomials.
+This is local.
+With polynomials, it's a single function for the whole
+range of the x variable.
+So, for example, if I change a point on the left side, it
+could potentially change the fit on the right side quite a
+bit for polynomials.
+That's a good point, Rob, which I forgot to say.
+But for step functions, a point only affects the fit in
+the partition it's sitting in and not the other partitions.
+That's a great point.
+And thanks for reminding us.
+The polynomial, the parameters affect the function everywhere
+and can have dramatic effect.
+Here we've done the same thing as we did before for the
+logistic regression but with a piecewise constant function.
+Everything else is the same.
+But the fitted function is kind of blocky.
+And it may be considered not as attractive.
+Step functions are easy to work with.
+As I said, you make a bunch of dummy variables and just fit
+the linear model.
+It's also a useful way of creating interactions that are
+easy to interpret.
+So, for example, think of the interaction effect of year and
+age in a linear model.
+So what you can do is, for example, make a
+dummy variable of year.
+So let's say cut year less than 2005 and have another one
+here bigger than or equal to 2005.
+And then if you multiply that with age, what you've done is
+create an interaction.
+And that will fit a different linear model as a function of
+age for the people who worked before 2005
+and those after 2005.
+And so, visually, that's nice.
+You'll see two different linear functions.
+That's the easy way of seeing the effect of an interaction.
+And in r, creating these dummy variables is really easy.
+Creating an indicator function is pretty much the same
+expression we've shown up until now.
+There is a function, In R, which is
+basically an indicator.
+And year less than 25 turns into a logical.
+But when wrapped in a indicator, it's essentially a
+zero-one variable.
+And if you want to cut in more than one place, there's a
+function called Cut.
+So you can cut age.
+And you give it the cut points.
+You need to give cut the two boundary points as well.
+And so, in this case, 18 and 90, those are the ranges of
+the ages, well, beyond the range actually, and then an
+interior cut point.
+And it'll create a factor for you, an ordered factor, that
+cuts the variable into those bins.
+Now, the choice of the cut points, or knots as we're
+going to call them, can be a little problematic.
+For creating nonlinearities, smooth
+alternatives are available.
+And we're going to talk about them next.
+You might just pick an unfortunate
+choice of cut points.
+And it doesn't show the nonlinearity at all.
+So there's somewhat of an art.
+Usually, these piecewise constant functions are
+especially good if they are natural cut points that you
+want to use.
